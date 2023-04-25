@@ -3,25 +3,23 @@ package int221.YuuuHooo.project.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.ZonedDateTime;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "announcement")
+@Table(name = "announcements")
 public class Announcement {
     @Id
     private int idAnnouncement;
     private String announcementTitle;
     private String announcementDescription;
-    private Timestamp publishDate;
-    private Timestamp closeDate;
-    private enum announcementDisplay {Y, N};
+    private ZonedDateTime publishDate;
+    private ZonedDateTime closeDate;
+    private String announcementDisplay;
 
     @ManyToOne
-    @JoinColumn(name = "announcementCategory" )
+    @JoinColumn(name = "announcementCategory")
     private Category announcementCategory;
 }
