@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 const { params } = useRoute();
 
 const announcementsDetails = ref([])
+
 onMounted(async () => {
     const announcementId = params.idAnnouncement;
     try{
@@ -31,7 +32,7 @@ onMounted(async () => {
                 </tr>
                 <tr>
                     <th>Category</th>
-                    <td>{{ announcementsDetails.announcementCategory}}</td>
+                    <td>{{ announcementsDetails.announcementCategory }}</td>
                 </tr>
                 <tr>
                     <th>Description</th>

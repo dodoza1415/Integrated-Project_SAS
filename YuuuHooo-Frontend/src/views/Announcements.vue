@@ -7,7 +7,6 @@ const announcements = ref([])
 onMounted(async () => {
   announcements.value = await getAnnouncements()
 })
-console.log(typeof announcements)
 const router = useRouter();
 const announcementDetailPage = (id) => {
   router.push({ name: "Announcement", params: { idAnnouncement : id} });
@@ -39,7 +38,7 @@ const announcementDetailPage = (id) => {
                 :key="announcement.idAnnouncement"> 
                     <td>{{announcement.idAnnouncement}}</td>
                     <td>{{announcement.announcementTitle}}</td>
-                    <td>{{ announcement.announcementCategory }}</td>
+                    <td>{{announcement.announcementCategory.categoryName }}</td>
                     <td>{{announcement.publishDate}}</td>
                     <td>{{announcement.closeDate}}</td>
                     <td>{{announcement.announcementDisplay}}</td>
