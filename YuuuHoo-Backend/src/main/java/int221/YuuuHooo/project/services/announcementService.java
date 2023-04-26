@@ -15,4 +15,9 @@ public class announcementService {
     public List<Announcement> getAnnouncement(){
         return announcementRepository.findAll();
     }
+
+    public Announcement getAnnouncementById(int idAnnouncement) {
+        return announcementRepository.findById(idAnnouncement).orElseThrow(
+                ()-> new RuntimeException(idAnnouncement + " does not exist !!!"));
+    }
 }

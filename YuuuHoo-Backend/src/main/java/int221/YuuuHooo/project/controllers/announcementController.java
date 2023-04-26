@@ -3,20 +3,26 @@ package int221.YuuuHooo.project.controllers;
 import int221.YuuuHooo.project.entities.Announcement;
 import int221.YuuuHooo.project.services.announcementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/announcements")
+@RequestMapping("/api")
+@CrossOrigin
 public class announcementController {
     @Autowired
     private announcementService announcementService;
 
-    @GetMapping("")
+    @GetMapping("/announcements")
     public List<Announcement> getAnnouncement(){
         return announcementService.getAnnouncement();
     }
+
+    @GetMapping("/announcements/{idAnnouncement}")
+    public Announcement getAnnouncementById(@PathVariable Integer idAnnouncement) {
+        return announcementService.getAnnouncementById(idAnnouncement);
+    }
+
+
 }
