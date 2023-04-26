@@ -7,7 +7,7 @@ const announcements = ref([])
 onMounted(async () => {
   announcements.value = await getAnnouncements()
 })
-
+console.log(typeof announcements)
 const router = useRouter();
 const announcementDetailPage = (id) => {
   router.push({ name: "Announcement", params: { idAnnouncement : id} });
@@ -17,9 +17,12 @@ const announcementDetailPage = (id) => {
 </script>
  
 <template>
-<div>
+<p v-if="announcements.length === 0" class="text-3xl font-bold text-center">No Announcement</p>
+<div v-else>
     <div>
+    <div class="text-3xl font-bold">
     SIT Announcement System(SAS)
+    </div>
         <div>
             Date/Time shown in Timezone:<span>Asia/Bangkok</span>
             <table>
