@@ -1,53 +1,65 @@
 <script setup>
-import {getAnnouncements} from "../composable/getAnnouncements.js"
+import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
-const announcements = ref([])
+const announcements = ref([]);
 onMounted(async () => {
-  announcements.value = await getAnnouncements()
-})
+  announcements.value = await getAnnouncements();
+});
 
 const router = useRouter();
-const announcementDetailPage = (id) => {
-  router.push({ name: "Announcement", params: { idAnnouncement : id} });
+const announcementDetailPage = (announcementId) => {
+  router.push({ name: "Announcement", params: { id: announcementId } });
 };
-
-
 </script>
- 
-<template>
-<div>
-    <div>
-    SIT Announcement System(SAS)
-        <div>
-            Date/Time shown in Timezone:<span>Asia/Bangkok</span>
-            <table>
-                <tr>
-                    <th>No.</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Publish Date</th>
-                    <th>Close Date</th>
-                    <th>Display</th>
-                    <th>Action</th>
-                </tr>
-                <tr v-for="announcement in announcements"
-                :key="announcement.idAnnouncement"> 
-                    <td>{{announcement.idAnnouncement}}</td>
-                    <td>{{announcement.announcementTitle}}</td>
-                    <td>{{ announcement.announcementCategory }}</td>
-                    <td>{{announcement.publishDate}}</td>
-                    <td>{{announcement.closeDate}}</td>
-                    <td>{{announcement.announcementDisplay}}</td>
-                    <td><button @click="announcementDetailPage(announcement.idAnnouncement)">view</button></td>
-                </tr>   
-            </table>
-        </div>
-    </div>
-</div>
-</template>
- 
-<style scoped>
 
+<template>
+  <div>
+    <div>
+      <div class="text-2xl font-['Chicle'] m-10">SIT Announcement System (SAS)</div>
+      <div class="overflow-x-auto m-10">
+        <div class="text-2xl font-['Chicle']">
+          Date/Time shown in Timezone: Asia/Bangkok
+        </div>
+        <div v-if="announcements.length === 0">
+          <h3 class="text-2xl font-['Chicle']">No Announcement</h3>
+        </div>
+        <table v-else class="table table-compact w-full">
+          <tr>
+            <th class="text-lg">No.</th>
+            <th class="text-lg">Title</th>
+            <th class="text-lg">Category</th>
+            <th class="text-lg">Publish Date</th>
+            <th class="text-lg">Close Date</th>
+            <th class="text-lg">Display</th>
+            <th class="text-lg">Action</th>
+          </tr>
+          <tr
+            v-for="announcement in announcements"
+            :key="announcement.id"
+          >
+            <td>{{ announcement.id }}</td>
+            <td>{{ announcement.title }}</td>
+            <td>{{ announcement.categoryName }}</td>
+            <td>{{ announcement.publishDate }}</td>
+            <td>{{ announcement.closeDate }}</td>
+            <td>{{ announcement.display }}</td>
+            <td>
+              <button
+                @click="announcementDetailPage(announcement.id)"
+                class="btn btn-info"
+              >
+                view
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Chicle');
 </style>

@@ -14,4 +14,5 @@ public class Category {
     @Id
     private int idCategory;
     private String categoryName;
+
 }

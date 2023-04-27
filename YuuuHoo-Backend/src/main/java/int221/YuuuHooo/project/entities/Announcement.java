@@ -1,5 +1,6 @@
 package int221.YuuuHooo.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,14 +13,18 @@ import java.time.ZonedDateTime;
 @Table(name = "announcements")
 public class Announcement {
     @Id
-    private int idAnnouncement;
-    private String announcementTitle;
-    private String announcementDescription;
+    @Column(name = "idAnnouncement")
+    private int id;
+    @Column(name = "announcementTitle")
+    private String title;
+    @Column(name = "announcementDescription")
+    private String description;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
-    private String announcementDisplay;
+    @Column(name = "announcementDisplay")
+    private String display;
 
     @ManyToOne
     @JoinColumn(name = "announcementCategory")
-    private Category announcementCategory;
+    private Category category;
 }
