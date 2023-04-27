@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 
 const announcements = ref([]);
 onMounted(async () => {
+
   announcements.value = await getAnnouncements();
 });
 
