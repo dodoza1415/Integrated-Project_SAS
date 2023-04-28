@@ -3,6 +3,7 @@ import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+
 const announcements = ref([]);
 onMounted(async () => {
 
@@ -13,6 +14,23 @@ const router = useRouter();
 const announcementDetailPage = (announcementId) => {
   router.push({ name: "Announcement", params: { id: announcementId } });
 };
+
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// console.log(typeof timezone)
+
+const convertTZ = (date) => {
+  if(typeof date === "string"){
+    const convertDate = new Date(date)
+    const options = {  day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: timezone};
+    return convertDate.toLocaleDateString('en-GB', options)
+  }else{
+    return "-"
+  }
+
+}
+
+
+
 </script>
 
 <template>
@@ -21,7 +39,7 @@ const announcementDetailPage = (announcementId) => {
       <div class="text-2xl font-['Chicle'] m-10">SIT Announcement System (SAS)</div>
       <div class="overflow-x-auto m-10">
         <div class="text-2xl font-['Chicle']">
-          Date/Time shown in Timezone: Asia/Bangkok
+          Date/Time shown in Timezone: {{ timezone }}
         </div>
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Chicle']">No Announcement</h3>
@@ -37,14 +55,14 @@ const announcementDetailPage = (announcementId) => {
             <th class="text-lg">Action</th>
           </tr>
           <tr
-            v-for="announcement in announcements"
+            v-for="(announcement, index) in announcements"
             :key="announcement.id"
           >
-            <td>{{ announcement.id }}</td>
+            <td>{{ ++index }}</td>
             <td>{{ announcement.title }}</td>
             <td>{{ announcement.categoryName }}</td>
-            <td>{{ announcement.publishDate }}</td>
-            <td>{{ announcement.closeDate }}</td>
+            <td>{{ convertTZ(announcement.publishDate) }}</td>
+            <td>{{ convertTZ(announcement.closeDate) }}</td>
             <td>{{ announcement.display }}</td>
             <td>
               <button

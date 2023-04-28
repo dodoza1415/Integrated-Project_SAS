@@ -19,6 +19,20 @@ onMounted(async () => {
     console.log(error);
   }
 });
+
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// console.log(typeof timezone)
+
+const convertTZ = (date) => {
+  if(typeof date === "string"){
+    const convertDate = new Date(date)
+    const options = {  day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: timezone};
+    return convertDate.toLocaleDateString('en-GB', options)
+  }else{
+    return "-"
+  }
+
+}
 </script>
 
 <template>
@@ -43,11 +57,11 @@ onMounted(async () => {
           </tr>
           <tr>
             <th class="text-left text-[30px]">Publish Date:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.publishDate }}</td>
+            <td class="pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.publishDate) }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Close Date:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.closeDate }}</td>
+            <td class="pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.closeDate) }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Display:</th>
