@@ -1,5 +1,6 @@
 package int221.YuuuHooo.project.controllers;
 
+import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
 import int221.YuuuHooo.project.entities.Announcement;
 import int221.YuuuHooo.project.services.announcementService;
@@ -7,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,9 +33,9 @@ public class announcementController {
     }
 
     @GetMapping("/announcements/{id}")
-    public AnnouncementDTO getAnnouncementById(@PathVariable Integer id) {
+    public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id) {
         Announcement announcement = announcementService.getAnnouncementById(id);
-        AnnouncementDTO announcementDTO = modelMapper.map(announcement, AnnouncementDTO.class);
+        AnnouncementByIdDTO announcementDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
         return announcementDTO;
 
     }
