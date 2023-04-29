@@ -49,7 +49,7 @@ const convertTZ = (date) => {
           </tr>
           <tr>
             <th class="text-left text-[30px]">Category:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.categoryName }}</td>
+            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementCategory }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Description:</th>

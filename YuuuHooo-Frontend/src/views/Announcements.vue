@@ -60,7 +60,7 @@ const convertTZ = (date) => {
           >
             <td>{{ ++index }}</td>
             <td>{{ announcement.announcementTitle }}</td>
-            <td>{{ announcement.categoryName }}</td>
+            <td>{{ announcement.announcementCategory }}</td>
             <td>{{ convertTZ(announcement.publishDate) }}</td>
             <td>{{ convertTZ(announcement.closeDate) }}</td>
             <td>{{ announcement.announcementDisplay }}</td>
