@@ -45,7 +45,7 @@ const convertTZ = (date) => {
         <table>
           <tr>
             <th class="text-left text-[30px]">Title:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.title }}</td>
+            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementTitle }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Category:</th>
@@ -53,7 +53,7 @@ const convertTZ = (date) => {
           </tr>
           <tr>
             <th class="text-left text-[30px]">Description:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.description }}</td>
+            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementDescription }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Publish Date:</th>
@@ -65,7 +65,7 @@ const convertTZ = (date) => {
           </tr>
           <tr>
             <th class="text-left text-[30px]">Display:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.display }}</td>
+            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
           </tr>
         </table>
         <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]">

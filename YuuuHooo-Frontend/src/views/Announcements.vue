@@ -59,11 +59,11 @@ const convertTZ = (date) => {
             :key="announcement.id"
           >
             <td>{{ ++index }}</td>
-            <td>{{ announcement.title }}</td>
+            <td>{{ announcement.announcementTitle }}</td>
             <td>{{ announcement.categoryName }}</td>
             <td>{{ convertTZ(announcement.publishDate) }}</td>
             <td>{{ convertTZ(announcement.closeDate) }}</td>
-            <td>{{ announcement.display }}</td>
+            <td>{{ announcement.announcementDisplay }}</td>
             <td>
               <button
                 @click="announcementDetailPage(announcement.id)"

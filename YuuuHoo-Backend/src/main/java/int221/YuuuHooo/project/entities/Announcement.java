@@ -18,14 +18,11 @@ public class Announcement {
     @Id
     @Column(name = "idAnnouncement")
     private int id;
-    @Column(name = "announcementTitle")
-    private String title;
-    @Column(name = "announcementDescription")
-    private String description;
+    private String announcementTitle;
+    private String announcementDescription;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
-    @Column(name = "announcementDisplay")
-    private String display;
+    private String announcementDisplay;
 
     @ManyToOne
     @JoinColumn(name = "announcementCategory")

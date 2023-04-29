@@ -14,10 +14,10 @@ import java.util.SimpleTimeZone;
 @Setter
 public class AnnouncementDTO {
     private int id;
-    private String title;
-    private String description;
+    private String announcementTitle;
+    private String announcementDescription;
     private ZonedDateTime publishDate;
     private ZonedDateTime closeDate;
-    private String display;
+    private String announcementDisplay;
     private String categoryName;
 }
