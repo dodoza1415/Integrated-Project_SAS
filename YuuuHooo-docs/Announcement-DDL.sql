@@ -15,9 +15,9 @@ CREATE SCHEMA IF NOT EXISTS `announcement` DEFAULT CHARACTER SET utf8 ;
 USE `announcement` ;
 
 -- -----------------------------------------------------
--- Table `announcement`.`Categories`
+-- Table `announcement`.`categories`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `announcement`.`Categories` (
+CREATE TABLE IF NOT EXISTS `announcement`.`categories` (
   `idCategory` INT NOT NULL,
   `categoryName` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idCategory`))
@@ -25,9 +25,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `announcement`.`Announcements`
+-- Table `announcement`.`announcements`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `announcement`.`Announcements` (
+CREATE TABLE IF NOT EXISTS `announcement`.`announcements` (
   `idAnnouncement` INT NOT NULL,
   `announcementTitle` VARCHAR(200) NOT NULL,
   `announcementDescription` VARCHAR(10000) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `announcement`.`Announcements` (
   INDEX `fk_Announcement_Category_idx` (`announcementCategory` ASC) VISIBLE,
   CONSTRAINT `fk_Announcement_Category`
     FOREIGN KEY (`announcementCategory`)
-    REFERENCES `announcement`.`Categories` (`idCategory`)
+    REFERENCES `announcement`.`categories` (`idCategory`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

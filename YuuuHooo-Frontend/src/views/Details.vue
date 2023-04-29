@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
+
+// const api-server = ip22nw2.sit.kmutt.ac.th:8080
 const { params } = useRoute();
 
 const announcementsDetails = ref([]);

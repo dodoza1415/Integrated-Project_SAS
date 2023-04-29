@@ -12,7 +12,7 @@ onMounted(async () => {
 
 const router = useRouter();
 const announcementDetailPage = (announcementId) => {
-  router.push({ name: "Announcement", params: { id: announcementId } });
+  router.push({ name: "AnnouncementDetails", params: { id: announcementId } });
 };
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
