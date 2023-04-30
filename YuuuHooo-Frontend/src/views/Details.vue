@@ -40,38 +40,38 @@ const convertTZ = (date) => {
 <template>
   <div>
     <div class="font-['Acme'] m-10">
-      <div class="text-[45px]">
+      <div class="ann-item text-[45px] ">
         Announcement Details:
       </div>
       <div>
         <table>
           <tr>
             <th class="text-left text-[30px]">Title:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementTitle }}</td>
+            <td class="ann-title pl-[20px] text-[20px]">{{ announcementsDetails.announcementTitle }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Category:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementCategory }}</td>
+            <td class="ann-category pl-[20px] text-[20px]">{{ announcementsDetails.announcementCategory }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Description:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementDescription }}</td>
+            <td class="ann-description pl-[20px] text-[20px]">{{ announcementsDetails.announcementDescription }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Publish Date:</th>
-            <td class="pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.publishDate) }}</td>
+            <td class="ann-publish-date pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.publishDate) }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Close Date:</th>
-            <td class="pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.closeDate) }}</td>
+            <td class="ann-close-date pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.closeDate) }}</td>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Display:</th>
-            <td class="pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
+            <td class="ann-display pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
           </tr>
         </table>
         <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]">
-          <RouterLink :to="{ name: 'Home' }">Back</RouterLink>
+          <RouterLink :to="{ name: 'Home' }" class="ann-button">Back</RouterLink>
         </div>
       </div>
     </div>

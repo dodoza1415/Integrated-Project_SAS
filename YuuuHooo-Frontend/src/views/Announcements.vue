@@ -42,7 +42,7 @@ const convertTZ = (date) => {
           Date/Time shown in Timezone: {{ timezone }}
         </div>
         <div v-if="announcements.length === 0">
-          <h3 class="text-2xl font-['Acme']">No Announcement</h3>
+          <h3 class="text-2xl font-['Acme']">No Announcements</h3>
         </div>
         <table v-else class="table table-compact w-full mt-7">
           <tr class="font-['Acme'] bg-red-100">
@@ -57,18 +57,18 @@ const convertTZ = (date) => {
           <tr
             v-for="(announcement, index) in announcements"
             :key="announcement.id"
-            class="font-semibold"
+            class="ann-item font-semibold"
           >
             <td>{{ ++index }}</td>
-            <td>{{ announcement.announcementTitle }}</td>
-            <td>{{ announcement.announcementCategory }}</td>
-            <td>{{ convertTZ(announcement.publishDate) }}</td>
-            <td>{{ convertTZ(announcement.closeDate) }}</td>
-            <td>{{ announcement.announcementDisplay }}</td>
+            <td class="ann-title">{{ announcement.announcementTitle }}</td>
+            <td class="ann-category">{{ announcement.announcementCategory }}</td>
+            <td class="ann-publish-date">{{ convertTZ(announcement.publishDate) }}</td>
+            <td class="ann-close-date">{{ convertTZ(announcement.closeDate) }}</td>
+            <td class="ann-display">{{ announcement.announcementDisplay }}</td>
             <td>
               <button
                 @click="announcementDetailPage(announcement.id)"
-                class="btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
               >
                 view
               </button>
