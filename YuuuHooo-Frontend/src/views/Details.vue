@@ -40,11 +40,11 @@ const convertTZ = (date) => {
 <template>
   <div>
     <div class="font-['Acme'] m-10">
-      <div class="ann-item text-[45px] ">
+      <div class="text-[45px] ">
         Announcement Details:
       </div>
       <div>
-        <table>
+        <table class="ann-item">
           <tr>
             <th class="text-left text-[30px]">Title:</th>
             <td class="ann-title pl-[20px] text-[20px]">{{ announcementsDetails.announcementTitle }}</td>
