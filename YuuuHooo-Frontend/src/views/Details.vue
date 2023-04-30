@@ -39,7 +39,7 @@ const convertTZ = (date) => {
 
 <template>
   <div>
-    <div class="font-['Chicle'] m-10">
+    <div class="font-['Acme'] m-10">
       <div class="text-[45px]">
         Announcement Details:
       </div>
@@ -79,5 +79,5 @@ const convertTZ = (date) => {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Chicle');
+@import url('https://fonts.googleapis.com/css2?family=Acme');
 </style>

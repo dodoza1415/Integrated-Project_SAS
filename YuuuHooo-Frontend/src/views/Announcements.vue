@@ -36,17 +36,17 @@ const convertTZ = (date) => {
 <template>
   <div>
     <div>
-      <div class="text-2xl font-['Chicle'] m-10">SIT Announcement System (SAS)</div>
+      <div class="text-2xl font-['Acme'] m-10">SIT Announcement System (SAS)</div>
       <div class="overflow-x-auto m-10">
-        <div class="text-2xl font-['Chicle']">
+        <div class="text-2xl font-['Acme']">
           Date/Time shown in Timezone: {{ timezone }}
         </div>
         <div v-if="announcements.length === 0">
-          <h3 class="text-2xl font-['Chicle']">No Announcement</h3>
+          <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>
-        <table v-else class="table table-compact w-full">
-          <tr>
-            <th class="text-lg">No.</th>
+        <table v-else class="table table-compact w-full mt-7">
+          <tr class="font-['Acme'] bg-red-100">
+            <th class="text-lg ">No.</th>
             <th class="text-lg">Title</th>
             <th class="text-lg">Category</th>
             <th class="text-lg">Publish Date</th>
@@ -57,6 +57,7 @@ const convertTZ = (date) => {
           <tr
             v-for="(announcement, index) in announcements"
             :key="announcement.id"
+            class="font-semibold"
           >
             <td>{{ ++index }}</td>
             <td>{{ announcement.announcementTitle }}</td>
@@ -67,7 +68,7 @@ const convertTZ = (date) => {
             <td>
               <button
                 @click="announcementDetailPage(announcement.id)"
-                class="btn btn-info"
+                class="btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
               >
                 view
               </button>
@@ -80,5 +81,5 @@ const convertTZ = (date) => {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Chicle');
+@import url('https://fonts.googleapis.com/css2?family=Acme');
 </style>

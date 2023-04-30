@@ -5,18 +5,21 @@ import NotFound from "../views/NotFound.vue";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    // {
-    //   path: "/",
-    //   name: "Home",
-    //   component: Announcements,
-    // },
     {
-      path: "/admin/announcement",
+      path: "/",
+      redirect: { path: "/admin/announcements" },
       name: "Home",
       component: Announcements,
+      children: [
+        {
+          path: "/admin/announcements",
+          name: "AnnouncementList",
+          component: Announcements,
+        }
+      ]
     },
     {
-      path: "/:id",
+      path: "/admin/announcements/:id",
       name: "AnnouncementDetails",
       component: Details,
     },

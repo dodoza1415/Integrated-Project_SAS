@@ -19,4 +19,5 @@ public class AnnouncementDTO {
     private ZonedDateTime closeDate;
     private String announcementDisplay;
     private String announcementCategory;
+
 }
