@@ -42,7 +42,7 @@ const convertTZ = (date) => {
           Date/Time shown in Timezone: {{ timezone }}
         </div>
         <div v-if="announcements.length === 0">
-          <h3 class="text-2xl font-['Acme']">No Announcements</h3>
+          <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>
         <table v-else class="table table-compact w-full mt-7">
           <tr class="font-['Acme'] bg-red-100">
