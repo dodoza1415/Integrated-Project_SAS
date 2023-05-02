@@ -16,7 +16,10 @@ onMounted(async () => {
     if (res.status === 200) {
       announcementsDetails.value = await res.json();
       console.log(announcementsDetails.value)
-    } else throw new Error("No Announcement");
+    }else if(res.status !== 200){
+      alert("The requested page is not available!") 
+      router.push('/');
+    }else throw new Error("No Announcement");
   } catch (error) {
     console.log(error);
   }
