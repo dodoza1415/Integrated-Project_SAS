@@ -7,19 +7,19 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: { path: "/admin/announcements" },
+      redirect: { path: "/admin/announcement" },
       name: "Home",
       component: Announcements,
       children: [
         {
-          path: "/admin/announcements",
+          path: "/admin/announcement",
           name: "AnnouncementList",
           component: Announcements,
         }
       ]
     },
     {
-      path: "/admin/announcements/:id",
+      path: "/admin/announcement/:id",
       name: "AnnouncementDetails",
       component: Details,
     },
