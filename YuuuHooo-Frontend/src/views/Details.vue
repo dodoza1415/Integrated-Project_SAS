@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute , useRouter } from "vue-router";
 
-
+const router = useRouter();
 // const api-server = ip22nw2.sit.kmutt.ac.th:8080
 const { params } = useRoute();
 
