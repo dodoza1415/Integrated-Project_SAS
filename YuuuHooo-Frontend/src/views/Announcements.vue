@@ -11,6 +11,7 @@ onMounted(async () => {
 });
 
 const router = useRouter();
+router.push('/admin/announcement')
 const announcementDetailPage = (announcementId) => {
   router.push({ name: "AnnouncementDetails", params: { id: announcementId } });
 };
