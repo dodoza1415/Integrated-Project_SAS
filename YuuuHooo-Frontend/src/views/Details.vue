@@ -2,8 +2,9 @@
 import { onMounted, ref } from "vue";
 import { useRoute , useRouter } from "vue-router";
 
+// const api = import.meta.env.VITE_ROOT_API 
+
 const router = useRouter();
-// const api-server = ip22nw2.sit.kmutt.ac.th:8080
 const { params } = useRoute();
 
 const announcementsDetails = ref([]);

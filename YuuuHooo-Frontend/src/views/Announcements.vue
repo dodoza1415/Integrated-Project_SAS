@@ -3,10 +3,8 @@ import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
-
 const announcements = ref([]);
 onMounted(async () => {
-
   announcements.value = await getAnnouncements();
 });
 
