@@ -8,16 +8,13 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: { path: "/admin/announcement" },
       name: "Home",
       component: Announcements,
-      children: [
-        {
-          path: "/admin/announcement",
-          name: "AnnouncementList",
-          component: Announcements,
-        }
-      ]
+    },
+    {
+      path: "/admin/announcement",
+      name: "AnnouncementList",
+      component: Announcements,
     },
     {
       path: "/admin/announcement/:id",

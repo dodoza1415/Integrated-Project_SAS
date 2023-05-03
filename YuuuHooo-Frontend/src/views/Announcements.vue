@@ -3,13 +3,16 @@ import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import AddAnnouncement from "./AddAnnouncement.vue";
+
+
+
 const announcements = ref([]);
 onMounted(async () => {
-
   announcements.value = await getAnnouncements();
 });
 
 const router = useRouter();
+router.push('/admin/announcement')
 const announcementDetailPage = (announcementId) => {
   router.push({ name: "AnnouncementDetails", params: { id: announcementId } });
 };

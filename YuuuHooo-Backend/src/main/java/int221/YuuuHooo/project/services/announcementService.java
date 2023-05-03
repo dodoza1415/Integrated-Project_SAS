@@ -26,4 +26,14 @@ public class announcementService {
                         "Announcement id " + id + " does not exist"
                         ));
     }
+
+    public List<Announcement> getAllAnnouncement(){
+        return announcementRepository.findAll();
+    }
+
+    public Announcement addAnnouncement(Announcement newAnnouncement){
+        return announcementRepository.saveAndFlush(newAnnouncement);
+    }
+
+
 }

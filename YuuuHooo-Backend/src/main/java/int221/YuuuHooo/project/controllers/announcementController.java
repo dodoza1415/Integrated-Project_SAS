@@ -1,5 +1,6 @@
 package int221.YuuuHooo.project.controllers;
 
+import int221.YuuuHooo.project.dtos.AddAnnouncementDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
 import int221.YuuuHooo.project.entities.Announcement;
@@ -40,5 +41,19 @@ public class announcementController {
 
     }
 
+//    @GetMapping("/announcements/list")
+//    public List<AddAnnouncementDTO> getAllAnnouncement(){
+//        List<Announcement> announcement = announcementService.getAllAnnouncement();
+//        List <AddAnnouncementDTO> addAnnouncementDTO =
+//                announcement.stream()
+//                        .map(a -> modelMapper.map(a, AddAnnouncementDTO.class))
+//                        .collect(Collectors.toList());
+//        return addAnnouncementDTO;
+//    }
 
+    @PostMapping("/announcements")
+    public Announcement addAnnouncement(@RequestBody AddAnnouncementDTO newAnnouncementDTO){
+        Announcement newAnnouncement = modelMapper.map(newAnnouncementDTO, Announcement.class);
+        return announcementService.addAnnouncement(newAnnouncement);
+    }
 }
