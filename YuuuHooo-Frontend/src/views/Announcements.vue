@@ -2,8 +2,7 @@
 import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-
-
+import AddAnnouncement from "./AddAnnouncement.vue";
 const announcements = ref([]);
 onMounted(async () => {
 
@@ -26,10 +25,26 @@ const convertTZ = (date) => {
   }else{
     return "-"
   }
-
 }
 
-
+const addAnnouncement = async (announcement) => {
+  try {
+    const res = await fetch("http://localhost:8080/api/announcements", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(announcement),
+    });
+    if (res.status === 201) {
+      const announcementsAdded = await res.json();
+      announcements.value.push(announcementsAdded)
+      return announcements;
+    } else throw new Error("Can't add the announcement");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 </script>
 
@@ -41,6 +56,8 @@ const convertTZ = (date) => {
         <div class="text-2xl font-['Acme']">
           Date/Time shown in Timezone: {{ timezone }}
         </div>
+        <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button">Add Announcement</RouterLink>
+        <!-- <AddAnnouncement @add="addAnnouncement"/> -->
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>
