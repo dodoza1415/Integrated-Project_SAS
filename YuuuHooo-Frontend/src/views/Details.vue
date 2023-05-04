@@ -7,11 +7,11 @@ import { useRoute , useRouter } from "vue-router";
 const router = useRouter();
 const { params } = useRoute();
 
-const announcementsDetails = ref([]);
+const announcementsDetails = ref({});
 const announcementId = params.id;
-
 const announcementEditPage = (announcementId) => {
-  // router.push({ name: "EditAnnouncement", params: { id: announcementId } }); // ส่งตัว object มาให้เพิ่ม เพื่อมาใช้เป็นค่าตั้งต้นให้อัปเดต
+  router.push({ name: "EditAnnouncement", params: { id : announcementId} }); // ส่งตัว object มาให้เพิ่ม เพื่อมาใช้เป็นค่าตั้งต้นให้อัปเดต
+  console.log(params)
 }
 onMounted(async () => {
   const announcementId = params.id;
@@ -90,30 +90,43 @@ const convertTZ = (date) => {
         <table class="ann-item">
           <tr>
             <th class="text-left text-[30px]">Title:</th>
+            <div class="m-4">
             <td class="ann-title pl-[20px] text-[20px]">{{ announcementsDetails.announcementTitle }}</td>
+          </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Category:</th>
+            <div class="m-4">
             <td class="ann-category pl-[20px] text-[20px]">{{ announcementsDetails.announcementCategory }}</td>
+          </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Description:</th>
+            <div class="m-4">
             <td class="ann-description pl-[20px] text-[20px]">{{ announcementsDetails.announcementDescription }}</td>
+          </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Publish Date:</th>
+            <div class="m-4">
             <td class="ann-publish-date pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.publishDate) }}</td>
+          </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Close Date:</th>
+            <div class="m-4">
             <td class="ann-close-date pl-[20px] text-[20px]">{{ convertTZ(announcementsDetails.closeDate) }}</td>
+          </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Display:</th>
+            <div class="m-4">
             <td class="ann-display pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
+          </div>
           </tr>
         </table>
         <!-- <div class="text-blue-400 hover:text-gray-500 mt-5 text-[20px]"> -->
+          <div class="mt-5">
           <button
                 @click="router.push('/')"
                 class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
@@ -122,13 +135,14 @@ const convertTZ = (date) => {
         </button>
         <!-- </div> -->
         <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
-          <button
+          <span class="ml-2"><button
                 @click="announcementEditPage(announcementId)"
                 class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
               >
               Edit
-              </button>
+              </button></span>
         <!-- </div> -->
+      </div>
       </div>
     </div>
   </div>

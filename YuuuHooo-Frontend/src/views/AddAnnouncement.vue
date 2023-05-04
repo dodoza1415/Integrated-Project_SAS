@@ -29,36 +29,39 @@ const show = (ann) =>{
 
 <template>
 <div>
-  <div class="font-bold text-xl">Announcement Detail: <br/></div>
-    <span class="font-bold">Title: </span>
+    <div class="font-['Acme'] m-10">
+      <div class="text-[45px]">
+      Announcement Detail: <br/>
+    </div>
+    <div class="mt-3">
+    <span class="text-left text-[20px]">Title </span><br/>
     <input
       type="text"
       id="title"
-      placeholder="Your Title"
-      class="ann-title input input-bordered w-max ann-title"
+      class="ann-title input input-bordered w-max ann-title pl-[20px]"
       v-model="newAnnouncement.announcementTitle"    
       required/>
-
-<br />
-    <span class="font-bold">Category: </span
-    ><br/>
-    <select name="category" v-model="newAnnouncement.announcementCategory" class="ann-category" required>
+    </div>
+    <div class="mt-3">
+    <span class="text-left text-[20px]">Category </span><br/>
+    <select name="category" v-model="newAnnouncement.announcementCategory" class="ann-category pl-[20px]" required>
         <option value="ทั่วไป">ทั่วไป</option>
-        <option value="ทนการศึกษา">ทนการศึกษา</option>
+        <option value="ทนการศึกษา">ทุนการศึกษา</option>
         <option value="หางาน">หางาน</option>
         <option value="ฝึกงาน">ฝึกงาน</option>
     </select>
-    <br/>
-    <span class="font-bold">Description: </span
+  </div>
+  <div class="mt-3">
+    <span class="text-left text-[20px]">Description </span
     ><br/>
     <textarea
-      placeholder="write description..."
-      class="textarea textarea-bordered w-full ann-description"
+      class="textarea textarea-bordered w-full ann-description pl-[20px]"
       v-model="newAnnouncement.announcementDescription"
       required
     ></textarea>
-    <span class="font-bold">Publish Date</span>
-    <br/>
+  </div>
+  <div class="mt-3">
+    <span class="text-left text-[20px]">Publish Date</span><br/>
     <input
       type="date"
       class="ann-title input input-bordered w-max ann-publish-date"
@@ -69,9 +72,10 @@ const show = (ann) =>{
       placeholder="Your Title"
       class="ann-title input input-bordered w-max ann-publish-time"
       v-model="newAnnouncement.publishTime"
-    /><br/>
-    <span class="font-bold">Close Date</span>
-    <br/>
+    />
+  </div>
+  <div class="mt-3">
+    <span class="text-left text-[20px]">Close Date</span><br/>
     <input
       type="date"
       class="ann-title input input-bordered w-max ann-close-date"
@@ -82,17 +86,23 @@ const show = (ann) =>{
       placeholder="Your Title"
       class="ann-title input input-bordered w-max ann-close-time"
       v-model="newAnnouncement.closeTime"
-    /><br/>
-    Display
+    />
+  </div>
+  <div class="mt-3">
+    <span class="text-left text-[20px]">Display</span>
     <br/>
     <input type="checkbox" id="display" name="display" value="Y" v-model="newAnnouncement.announcementDisplay" class="ann-display">
-    <label for="display">Check to show this announcement</label><br/>
+    <span class="ml-2"><label for="display">Check to show this announcement</label></span><br/>
+  </div>
     <!-- <input type="submit" @click="$emit('add', newAnnouncement) ; show(newAnnouncement) ; router.push('/')" class="ann-button" value="Submit" id="submit" :disabled="submitDisabled"> -->
+    <div class="mt-7">
     <button @click="$emit('add', newAnnouncement) ; show(newAnnouncement) ; router.push('/')" class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent" :disabled="submitDisabled">Submit</button>
-    <button @click="router.push('/')"
+    <span class="ml-2"><button @click="router.push('/')"
             class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
             >Cancel
-       </button>
+       </button></span>
+      </div>
+</div>
 </div>
 </template>
 

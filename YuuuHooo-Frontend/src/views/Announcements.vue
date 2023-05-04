@@ -96,7 +96,7 @@ const deleteAnnouncement = async (id) => {
             <th class="text-lg">Category</th>
             <th class="text-lg">Publish Date</th>
             <th class="text-lg">Close Date</th>
-            <th class="text-lg">Display</th>
+            <th class="text-lg ">Display</th>
             <th class="text-lg text-center" colspan="2">Action</th>
           </tr>
           <tr
@@ -110,7 +110,10 @@ const deleteAnnouncement = async (id) => {
             <td class="ann-publish-date">{{ convertTZ(announcement.publishDate) }}</td>
             <td class="ann-close-date">{{ convertTZ(announcement.closeDate) }}</td>
             <td class="ann-display">{{ announcement.announcementDisplay }}</td>
+            <div class="flex justify-end">
+              <div>
             <td>
+
               <button
                 @click="announcementDetailPage(announcement.id)"
                 class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
@@ -118,6 +121,8 @@ const deleteAnnouncement = async (id) => {
                 view
               </button>
               </td>
+            </div>
+            <div>
               <td>
               <button
                 @click="deleteAnnouncement(announcement.id)"
@@ -126,6 +131,8 @@ const deleteAnnouncement = async (id) => {
                 delete
               </button>
             </td>
+          </div>
+            </div>
           </tr>
         </table>
       </div>
