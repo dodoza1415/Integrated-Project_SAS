@@ -7,6 +7,7 @@ import AddAnnouncement from "./AddAnnouncement.vue";
 
 
 const announcements = ref([]);
+console.log(announcements)
 onMounted(async () => {
   announcements.value = await getAnnouncements();
 });
@@ -49,6 +50,22 @@ const addAnnouncement = async (announcement) => {
   }
 };
 
+const deleteAnnouncement = async (id) => {
+  if (confirm("Do you sure to delete this announcement?") === true) {
+  try {
+    const res = await fetch(`http://localhost:8080/api/announcements/${id}`, {
+      method: "DELETE",
+    });
+    if (res.status === 200) {
+      console.log("delete sucessfully");
+      announcements.value = announcements.value.filter((r) => r.id !== id);
+    }else if(res.status !== 200){
+      alert(`Can't delete this announcement , announcement id ${id} is not exist!`) 
+    }else throw new Error("Can't delete this announcement");
+  } catch (error) {
+    console.log(error);
+  }
+};}
 </script>
 
 <template>
@@ -56,10 +73,18 @@ const addAnnouncement = async (announcement) => {
     <div>
       <div class="text-2xl font-['Acme'] m-10">SIT Announcement System (SAS)</div>
       <div class="overflow-x-auto m-10">
+        <div class="grid justify-items-start">
         <div class="text-2xl font-['Acme']">
           Date/Time shown in Timezone: {{ timezone }}
         </div>
-        <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button">Add Announcement</RouterLink>
+          <div class="text-2xl font-['Acme'] grid justify-self-end">
+            <button
+                @click="router.push('/admin/announcement/add')"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+              >Add Announcement
+       </button>
+        </div>
+      </div>
         <!-- <AddAnnouncement @add="addAnnouncement"/> -->
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Acme']">No Announcement</h3>
@@ -72,7 +97,7 @@ const addAnnouncement = async (announcement) => {
             <th class="text-lg">Publish Date</th>
             <th class="text-lg">Close Date</th>
             <th class="text-lg">Display</th>
-            <th class="text-lg">Action</th>
+            <th class="text-lg text-center" colspan="2">Action</th>
           </tr>
           <tr
             v-for="(announcement, index) in announcements"
@@ -91,6 +116,14 @@ const addAnnouncement = async (announcement) => {
                 class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
               >
                 view
+              </button>
+              </td>
+              <td>
+              <button
+                @click="deleteAnnouncement(announcement.id)"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-red-300 hover:border-transparent"
+              >
+                delete
               </button>
             </td>
           </tr>

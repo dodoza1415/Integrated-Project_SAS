@@ -8,6 +8,11 @@ const router = useRouter();
 const { params } = useRoute();
 
 const announcementsDetails = ref([]);
+const announcementId = params.id;
+
+const announcementEditPage = (announcementId) => {
+  router.push({ name: "EditAnnouncement", params: { id: announcementId } });
+}
 onMounted(async () => {
   const announcementId = params.id;
   try {
@@ -74,9 +79,22 @@ const convertTZ = (date) => {
             <td class="ann-display pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
           </tr>
         </table>
-        <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]">
-          <RouterLink :to="{ name: 'Home' }" class="ann-button">Back</RouterLink>
-        </div>
+        <!-- <div class="text-blue-400 hover:text-gray-500 mt-5 text-[20px]"> -->
+          <button
+                @click="router.push('/')"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
+              >
+              Back
+        </button>
+        <!-- </div> -->
+        <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
+          <button
+                @click="announcementEditPage(announcementId)"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+              >
+              Edit
+              </button>
+        <!-- </div> -->
       </div>
     </div>
   </div>
