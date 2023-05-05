@@ -10,8 +10,7 @@ const { params } = useRoute();
 const announcementsDetails = ref({});
 const announcementId = params.id;
 const announcementEditPage = (announcementId) => {
-  router.push({ name: "EditAnnouncement", params: { id : announcementId} }); // ส่งตัว object มาให้เพิ่ม เพื่อมาใช้เป็นค่าตั้งต้นให้อัปเดต
-  console.log(params)
+  router.push({ name: "EditAnnouncement", params: { id : announcementId} });
 }
 onMounted(async () => {
   const announcementId = params.id;
