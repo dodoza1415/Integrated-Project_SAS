@@ -28,7 +28,7 @@ ENGINE = InnoDB;
 -- Table `announcement`.`announcements`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `announcement`.`announcements` (
-  `idAnnouncement` INT NOT NULL,
+  `idAnnouncement` INT NOT NULL auto_increment,
   `announcementTitle` VARCHAR(200) NOT NULL,
   `announcementDescription` VARCHAR(10000) NOT NULL,
   `publishDate` DATETIME NULL,
