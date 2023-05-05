@@ -26,7 +26,7 @@ const show = (ann) =>{
 }
 
 const addAnnouncement = async (newAnnouncement) => {
-  // ต้องรวม publishdate-time , closedate-time เข้าด้วยกันก่อน , type ต้องเป็น String
+  // ต้องรวม publishdate-time , closedate-time เข้าด้วยกันก่อน
   try {
     const res = await fetch("http://localhost:8080/api/announcements", {
       method: "POST",

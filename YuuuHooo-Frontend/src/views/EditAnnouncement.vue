@@ -13,8 +13,8 @@ onMounted(async () => {
       `http://localhost:8080/api/announcements/${announcementId}`
     );
     if (res.status === 200) {
-        announcementDetails.value = await res.json();
-      console.log(announcementDetails.value)
+      announcementDetails.value = await res.json();
+      return announcementDetails;
     }else if(res.status !== 200){
       alert("The requested page is not available!") 
       router.push('/');
@@ -25,9 +25,10 @@ onMounted(async () => {
 });
 
 const EditAnnouncement = async (updateAnnouncement) => {
+  // const announcementId = params.id;
   try {
     const res = await fetch(
-      `http://localhost:8080/api/announcements/${announcementId}`,
+      `http://localhost:8080/api/announcements/${params.id}`,
       {
         method: "PUT",
         headers: {
@@ -152,6 +153,7 @@ const EditAnnouncement = async (updateAnnouncement) => {
                 @click="EditAnnouncement(announcementDetails)"
               >
               Submit
+              <!-- ต้องมีการแก้ไขข้อมูลบางอย่าง ให้ต่างจากเดิมก่อนถึงจะกด submit ได้ / ถ้ามีการแก้แล้วเปลี่ยนกลับเป็นแบบเดิม ต้องกดไม่ได้-->
               </button></span>
             </div>
         <!-- </div> -->
