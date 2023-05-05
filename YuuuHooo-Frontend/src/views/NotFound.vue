@@ -11,7 +11,7 @@ const router = useRouter();
   <h5>Please check your path ( URL ).</h5>
 </div>
 <div class="btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent flex justify-center">
-  <RouterLink :to="{name : 'Home'}">Home</RouterLink>
+  <p @click="router.push('/')">Home</p>
 </div>
 </div>
 
