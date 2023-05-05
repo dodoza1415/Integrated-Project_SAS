@@ -7,9 +7,9 @@ import AddAnnouncement from "./AddAnnouncement.vue";
 
 
 const announcements = ref([]);
-console.log(announcements)
 onMounted(async () => {
   announcements.value = await getAnnouncements();
+  // console.log(announcements.value)
 });
 
 const router = useRouter();
@@ -31,25 +31,6 @@ const convertTZ = (date) => {
   }
 }
 
-const addAnnouncement = async (announcement) => {
-  try {
-    const res = await fetch("http://localhost:8080/api/announcements", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(announcement),
-    });
-    if (res.status === 201) {
-      const announcementsAdded = await res.json();
-      announcements.value.push(announcementsAdded)
-      return announcements;
-    } else throw new Error("Can't add the announcement");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const deleteAnnouncement = async (id) => {
   if (confirm("Do you sure to delete this announcement?") === true) {
   try {
@@ -66,6 +47,7 @@ const deleteAnnouncement = async (id) => {
     console.log(error);
   }
 };}
+
 </script>
 
 <template>
@@ -85,7 +67,6 @@ const deleteAnnouncement = async (id) => {
        </button>
         </div>
       </div>
-        <!-- <AddAnnouncement @add="addAnnouncement"/> -->
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>

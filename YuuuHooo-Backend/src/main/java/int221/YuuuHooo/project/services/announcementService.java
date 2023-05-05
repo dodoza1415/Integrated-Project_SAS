@@ -34,6 +34,4 @@ public class announcementService {
     public Announcement addAnnouncement(Announcement newAnnouncement){
         return announcementRepository.saveAndFlush(newAnnouncement);
     }
-
-
 }
