@@ -3,23 +3,82 @@ import { ref , computed , onMounted} from "vue";
 import { RouterLink , useRouter, useRoute} from "vue-router"
 
 
-const newAnnouncement = ref({});
+// const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// console.log(typeof timezone)
+
+// const convertTZ = (date) => {
+//   if(typeof date === "string"){
+//     const convertDate = new Date.UTC(date)
+//     const options = {  day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'};
+//     return convertDate.toLocaleDateString('en-GB', options)
+//   }else{
+//     return "-"
+//   }
+// }
+
+
+const newAnnouncement = ref({
+  announcementTitle: "",
+  announcementDescription: "",
+  categoryId: "",
+  publishDate: null,
+  closeDate:null,
+  announcementDisplay: "N",
+  announcementCategory: "",
+});
+const getCategoryId = (cateName) => {
+  console.log(cateName)
+  switch (cateName) {
+    case "ทั่วไป":
+      newAnnouncement.value.categoryId = 1
+      break;
+    case "ทุนการศึกษา":
+      newAnnouncement.value.categoryId = 2
+      break;
+    case "หางาน":
+      newAnnouncement.value.categoryId = 3
+      break;
+    case "ฝึกงาน":
+      newAnnouncement.value.categoryId = 4
+
+  }
+}
+
+const convertUTC = (date, type) => {
+  const dateICT = new Date(date)
+  const dateUTC = dateICT.toISOString();
+  if(type === 'publish'){
+    newAnnouncement.value.publishDate = dateUTC;
+  }else if(type === 'close'){
+    newAnnouncement.value.closeDate = dateUTC
+  }
+  
+  // console.log(dateUTC)
+}
+
+const getDisplay = (v) => {
+  if(v === true){
+    newAnnouncement.value.announcementDisplay = 'Y'
+  }
+  else if(v === false){
+    newAnnouncement.value.announcementDisplay = 'N'
+  }
+  // switch (v) {
+  //   case false:
+  //     newAnnouncement.value.announcementDisplay = 'N'
+  //     break;
+  //   case true:
+  //     newAnnouncement.value.announcementDisplay = 'Y'
+  //     break;
+  // }
+}
+
+
 const router = useRouter();
 const submitDisabled = ref(false);
 // const disabledButton = computed(() => {
 //     if (announcement.announcementCategory === "") return submitDisabled = true
 // });
-onMounted(() => {
-  newAnnouncement.value={
-  announcementTitle:"",
-  announcementCategory:"",
-  announcementDescription:"",
-  publishDate:"",
-  publishTime:"",
-  closeDate:"",
-  closeTime:"",
-  announcementDisplay:""
-}})
 
 const show = (ann) =>{
   console.log(ann)
@@ -35,10 +94,10 @@ const addAnnouncement = async (newAnnouncement) => {
       },
       body: JSON.stringify(newAnnouncement),
     });
-    if (res.status === 201) {
+    if (res.status === 200) {
       const announcementAdded = await res.json();
       console.log(announcementAdded)
-    } else throw new Error("Can't add the announcement");
+    } else throw new Error(`There is an error! ,Can't add the announcement => Status Code : ${res.status}`);
   } catch (error) {
     console.log(error);
   }
@@ -46,6 +105,7 @@ const addAnnouncement = async (newAnnouncement) => {
 </script>
 
 <template>
+  
 <div>
     <div class="font-['Acme'] m-10">
       <div class="text-[45px]">
@@ -62,11 +122,12 @@ const addAnnouncement = async (newAnnouncement) => {
     </div>
     <div class="mt-3">
     <span class="text-left text-[20px]">Category </span><br/>
-    <select name="category" v-model="newAnnouncement.announcementCategory" class="ann-category pl-[20px]" required>
-        <option value="ทั่วไป">ทั่วไป</option>
-        <option value="ทนการศึกษา">ทุนการศึกษา</option>
-        <option value="หางาน">หางาน</option>
-        <option value="ฝึกงาน">ฝึกงาน</option>
+    <select name="category" v-model="newAnnouncement.categoryId" class="ann-category pl-[20px] " required @change="getCategoryId(newAnnouncement.categoryId)">
+        <option disabled value="">Please select one</option>
+        <option>ทั่วไป</option>
+        <option>ทุนการศึกษา</option>
+        <option>หางาน</option>
+        <option>ฝึกงาน</option>
     </select>
   </div>
   <div class="mt-3">
@@ -81,40 +142,30 @@ const addAnnouncement = async (newAnnouncement) => {
   <div class="mt-3">
     <span class="text-left text-[20px]">Publish Date</span><br/>
     <input
-      type="date"
-      class="ann-title input input-bordered w-max ann-publish-date"
+      type="datetime-local"
+      class="ann-publish-date ann-publish-time input input-bordered w-max"
       v-model="newAnnouncement.publishDate"
-    />
-    <input
-      type="time"
-      placeholder="Your Title"
-      class="ann-title input input-bordered w-max ann-publish-time"
-      v-model="newAnnouncement.publishTime"
+      @change="convertUTC(newAnnouncement.publishDate, 'publish')"
     />
   </div>
   <div class="mt-3">
     <span class="text-left text-[20px]">Close Date</span><br/>
     <input
-      type="date"
-      class="ann-title input input-bordered w-max ann-close-date"
+      type="datetime-local"
+      class="ann-close-date ann-close-time input input-bordered w-max"
       v-model="newAnnouncement.closeDate"
-    />
-    <input
-      type="time"
-      placeholder="Your Title"
-      class="ann-title input input-bordered w-max ann-close-time"
-      v-model="newAnnouncement.closeTime"
+      @change="convertUTC(newAnnouncement.closeDate, 'close')"
     />
   </div>
   <div class="mt-3">
     <span class="text-left text-[20px]">Display</span>
     <br/>
-    <input type="checkbox" id="display" name="display" value="Y" v-model="newAnnouncement.announcementDisplay" class="ann-display">
-    <span class="ml-2"><label for="display">Check to show this announcement</label></span><br/>
+    <input type="checkbox" id="display" name="display" v-model="newAnnouncement.announcementDisplay" class="ann-display" @change="getDisplay(newAnnouncement.announcementDisplay)">
+    <span class="ml-2"><label for="display">Check to show this announcement</label></span><br/> {{ newAnnouncement.announcementDisplay }}
   </div>
     <!-- <input type="submit" @click="$emit('add', newAnnouncement) ; show(newAnnouncement) ; router.push('/')" class="ann-button" value="Submit" id="submit"> -->
     <div class="mt-7">
-    <button @click="router.push('/'); addAnnouncement(newAnnouncement)" class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent">Submit</button>
+    <button @click="router.push('/'); show(newAnnouncement); addAnnouncement(newAnnouncement)" class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent">Submit</button>
     <!-- ปุ่ม Submit => user ต้องมีการ input ค่า title , category , description เข้ามาก่อนถึงจะกดได้ ไม่งั้นต้อง disabled (publishdate , closedate = optional , display default = N) -->
     <span class="ml-2"><button @click="router.push('/')"
             class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"

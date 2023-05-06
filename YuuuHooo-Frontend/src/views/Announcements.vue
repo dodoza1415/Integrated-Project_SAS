@@ -40,8 +40,8 @@ const deleteAnnouncement = async (id) => {
       console.log("delete sucessfully");
       announcements.value = announcements.value.filter((r) => r.id !== id);
     }else if(res.status !== 200){
-      alert(`Can't delete this announcement , announcement id ${id} is not exist!`) 
-    }else throw new Error("Can't delete this announcement");
+      alert(`There is an error! ,Can't delete this announcement => announcement id ${id} is not exist!`) 
+    }else throw new Error(`Can't delete this announcement , Status Code : ${res.status}`);
   } catch (error) {
     console.log(error);
   }

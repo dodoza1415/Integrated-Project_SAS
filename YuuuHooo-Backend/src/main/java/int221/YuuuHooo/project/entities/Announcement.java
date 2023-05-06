@@ -16,6 +16,7 @@ import java.util.SimpleTimeZone;
 @Table(name = "announcements")
 public class Announcement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idAnnouncement")
     private int id;
     private String announcementTitle;
