@@ -2,18 +2,6 @@
 import { ref, computed, onMounted } from "vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 
-// const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-// console.log(typeof timezone)
-
-// const convertTZ = (date) => {
-//   if(typeof date === "string"){
-//     const convertDate = new Date.UTC(date)
-//     const options = {  day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'};
-//     return convertDate.toLocaleDateString('en-GB', options)
-//   }else{
-//     return "-"
-//   }
-// }
 
 const newAnnouncement = ref({
   announcementTitle: "",
@@ -24,30 +12,17 @@ const newAnnouncement = ref({
   announcementDisplay: false,
 });
 
-// const getCategoryId = (cateName) => {
-//   // console.log(cateName);
-//   if (cateName !== "") {
-//     switch (cateName) {
-//       case "ทั่วไป":
-//         newAnnouncement.value.categoryId = 1;
-//         break;
-//       case "ทุนการศึกษา":
-//         newAnnouncement.value.categoryId = 2;
-//         break;
-//       case "หางาน":
-//         newAnnouncement.value.categoryId = 3;
-//         break;
-//       case "ฝึกงาน":
-//         newAnnouncement.value.categoryId = 4;
-//     }
-//   }
-// };
-
-const convertUTC = (date, type) => {
-  if (date === null) {
+const publish_Date = ref(null);
+const publish_Time = ref(null);
+const close_Date = ref(null);
+const close_Time = ref(null);
+const convertUTC = (date, time, type) => {
+  const dateString = date + " , " + time
+  // console.log(dateString)
+  if (dateString.includes(null)) {
     return "-";
   } else {
-    const dateICT = new Date(date);
+    const dateICT = new Date(dateString);
     const dateUTC = dateICT.toISOString();
     if (type === "publish") {
       newAnnouncement.value.publishDate = dateUTC;
@@ -68,10 +43,6 @@ const getDisplay = (v) => {
 };
 
 const router = useRouter();
-const submitDisabled = ref(false);
-// const disabledButton = computed(() => {
-//     if (announcement.announcementCategory === "") return submitDisabled = true
-// });
 
 const show = (ann) => {
   console.log(ann);
@@ -130,7 +101,7 @@ const addAnnouncement = async (announcement) => {
           <option value="3">หางาน</option>
           <option value="4">ฝึกงาน</option>
         </select>
-        {{ newAnnouncement.categoryId }}
+        <!-- {{ newAnnouncement.categoryId }} -->
       </div>
       <div class="mt-3">
         <span class="text-left text-[20px]">Description </span><br />
@@ -143,17 +114,27 @@ const addAnnouncement = async (announcement) => {
       <div class="mt-3">
         <span class="text-left text-[20px]">Publish Date</span><br />
         <input
-          type="datetime-local"
+          type="date"
+          class="ann-publish-date ann-publish-time input input-bordered w-max mr-1"
+          v-model="publish_Date"
+        />
+        <input
+          type="time"
           class="ann-publish-date ann-publish-time input input-bordered w-max"
-          v-model="newAnnouncement.publishDate"
+          v-model="publish_Time"
         />
       </div>
       <div class="mt-3">
         <span class="text-left text-[20px]">Close Date</span><br />
         <input
-          type="datetime-local"
+          type="date"
+          class="ann-close-date ann-close-time input input-bordered w-max mr-1"
+          v-model="close_Date"
+        />
+        <input
+          type="time"
           class="ann-close-date ann-close-time input input-bordered w-max"
-          v-model="newAnnouncement.closeDate"
+          v-model="close_Time"
         />
       </div>
       <div class="mt-3">
@@ -169,7 +150,7 @@ const addAnnouncement = async (announcement) => {
         <span class="ml-2"
           ><label for="display">Check to show this announcement</label></span
         ><br />
-        {{ newAnnouncement.announcementDisplay }}
+        <!-- {{ newAnnouncement.announcementDisplay }} -->
       </div>
       <!-- <input type="submit" @click="$emit('add', newAnnouncement) ; show(newAnnouncement) ; router.push('/')" class="ann-button" value="Submit" id="submit"> -->
       <div class="mt-7">
@@ -181,10 +162,10 @@ const addAnnouncement = async (announcement) => {
           "
           @click="
             show(newAnnouncement);
-            convertUTC(newAnnouncement.publishDate, 'publish');
-            convertUTC(newAnnouncement.closeDate, 'close');
             getDisplay(newAnnouncement.announcementDisplay);
-            addAnnouncement(newAnnouncement);
+            convertUTC(publish_Date, publish_Time, 'publish')
+            convertUTC(close_Date, close_Time, 'close')
+            addAnnouncement(newAnnouncement)
           "
           class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
         >
