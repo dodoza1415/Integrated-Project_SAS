@@ -60,7 +60,7 @@ const addAnnouncement = async (announcement) => {
           Date/Time shown in Timezone: {{ timezone }}
         </div>
         <RouterLink :to="{ name: 'AddAnnouncement' }" class="ann-button">Add Announcement</RouterLink>
-        <!-- <AddAnnouncement @add="addAnnouncement"/> -->
+        <AddAnnouncement @add="addAnnouncement"/>
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>

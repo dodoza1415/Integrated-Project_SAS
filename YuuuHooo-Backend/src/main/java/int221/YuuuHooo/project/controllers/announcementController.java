@@ -41,15 +41,15 @@ public class announcementController {
 
     }
 
-//    @GetMapping("/announcements/list")
-//    public List<AddAnnouncementDTO> getAllAnnouncement(){
-//        List<Announcement> announcement = announcementService.getAllAnnouncement();
-//        List <AddAnnouncementDTO> addAnnouncementDTO =
-//                announcement.stream()
-//                        .map(a -> modelMapper.map(a, AddAnnouncementDTO.class))
-//                        .collect(Collectors.toList());
-//        return addAnnouncementDTO;
-//    }
+    @GetMapping("/announcements/list")
+    public List<AddAnnouncementDTO> getAllAnnouncement(){
+        List<Announcement> announcement = announcementService.getAllAnnouncement();
+        List <AddAnnouncementDTO> addAnnouncementDTO =
+                announcement.stream()
+                        .map(a -> modelMapper.map(a, AddAnnouncementDTO.class))
+                        .collect(Collectors.toList());
+        return addAnnouncementDTO;
+    }
 
     @PostMapping("/announcements")
     public Announcement addAnnouncement(@RequestBody AddAnnouncementDTO newAnnouncementDTO){
