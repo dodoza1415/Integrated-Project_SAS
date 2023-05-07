@@ -59,44 +59,50 @@ const EditAnnouncement = async (updateAnnouncement) => {
     console.log(error);
   }
 };
-const getCategoryId = (cateName) => {
-  console.log(cateName)
-  switch (cateName) {
-    case "ทั่วไป":
-    announcementDetails.value.categoryId = 1
-      break;
-    case "ทุนการศึกษา":
-    announcementDetails.value.categoryId = 2
-      break;
-    case "หางาน":
-    announcementDetails.value.categoryId = 3
-      break;
-    case "ฝึกงาน":
-    announcementDetails.value.categoryId = 4
-  }
-}
+// const getCategoryId = (cateName) => {
+//   console.log(cateName)
+//   switch (cateName) {
+//     case "ทั่วไป":
+//     announcementDetails.value.categoryId = 1
+//       break;
+//     case "ทุนการศึกษา":
+//     announcementDetails.value.categoryId = 2
+//       break;
+//     case "หางาน":
+//     announcementDetails.value.categoryId = 3
+//       break;
+//     case "ฝึกงาน":
+//     announcementDetails.value.categoryId = 4
+//   }
+// }
 
 const getDisplay = (v) => {
-  switch (v) {
-    case false:
-    announcementDetails.value.announcementDisplay = 'N'
-      break;
-    case true:
-    announcementDetails.value.announcementDisplay = 'Y'
+  if (v === true) {
+    announcementDetails.value.announcementDisplay = "Y";
+  } else if (v === false) {
+    announcementDetails.value.announcementDisplay = "N";
   }
-}
+};
 
 
-const convertUTC = (date, type) => {
-  const dateICT = new Date(date)
-  const dateUTC = dateICT.toISOString();
-  if(type === 'publish'){
-    announcementDetails.value.publishDate = dateUTC;
-  }else if(type === 'close'){
-    announcementDetails.value.closeDate = dateUTC
+const publish_Date = ref(null);
+const publish_Time = ref(null);
+const close_Date = ref(null);
+const close_Time = ref(null);
+const convertUTC = (date, time, type) => {
+  const dateString = date + " , " + time
+  // console.log(dateString)
+  if (dateString.includes(null)) {
+    return "-";
+  } else {
+    const dateICT = new Date(dateString);
+    const dateUTC = dateICT.toISOString();
+    if (type === "publish") {
+      announcementDetails.value.publishDate = dateUTC;
+    } else if (type === "close") {
+      announcementDetails.value.closeDate = dateUTC;
+    }
   }
-  
-  // console.log(dateUTC)
 }
 </script>
  
@@ -123,13 +129,13 @@ const convertUTC = (date, type) => {
           <tr>
             <th class="text-left text-[30px]">Category:</th>
             <div class="m-4">
-            <select name="category" v-model="announcementDetails.categoryId" class="ann-category pl-[20px] input input-bordered" required @change="getCategoryId(announcementDetails.categoryId)">
-            <option disabled value="">Please select one</option>
-            <option value="ทั่วไป">ทั่วไป</option>
-            <option value="ทุนการศึกษา">ทุนการศึกษา</option>
-            <option value="หางาน">หางาน</option>
-            <option value="ฝึกงาน">ฝึกงาน</option>
-            </select>
+            <select name="category" v-model="announcementDetails.categoryId" class="ann-category pl-[20px] input input-bordered" required>
+              <option disabled value="">Please select one</option>
+              <option value="1">ทั่วไป</option>
+              <option value="2">ทุนการศึกษา</option>
+              <option value="3">หางาน</option>
+              <option value="4">ฝึกงาน</option>
+        </select>
           </div>
           </tr>
           <tr>
@@ -147,12 +153,16 @@ const convertUTC = (date, type) => {
             
             <th class="text-left text-[30px]">Publish Date:</th>
             <div class="m-4">
-            <input 
-            type="datetime-local"
-            class="ann-publish-date ann-publish-time input input-bordered w-max ann-publish-date pl-[20px]" 
-            v-model="announcementDetails.publishDate"
-            @change="convertUTC(announcementDetails.publishDate, 'publish')"
-            />
+              <input
+          type="date"
+          class="ann-publish-date input input-bordered w-max mr-1"
+          v-model="publish_Date"
+        />
+        <input
+          type="time"
+          class="ann-publish-time input input-bordered w-max"
+          v-model="publish_Time"
+        />
           </div>
             <!-- <input
             type="time"
@@ -163,12 +173,16 @@ const convertUTC = (date, type) => {
           <tr>
             <th class="text-left text-[30px]">Close Date:</th>
             <div class="m-4">
-            <input
-            type="datetime-local"
-            class="ann-close-date ann-close-time input input-bordered w-max ann-publish-date pl-[20px]" 
-            v-model="announcementDetails.closeDate"
-            @change="convertUTC(announcementDetails.closeDate, 'close')"
-            />
+              <input
+          type="date"
+          class="ann-close-date input input-bordered w-max mr-1"
+          v-model="close_Date"
+        />
+        <input
+          type="time"
+          class="ann-close-time input input-bordered w-max"
+          v-model="close_Time"
+        />
           </div>
             <!-- <input
             type="time"
@@ -179,8 +193,8 @@ const convertUTC = (date, type) => {
           <tr>
             <th class="text-left text-[30px]">Display:</th>
           <div class="mt-4 mr-5">
-            <input type="checkbox" id="display" name="display" v-model="announcementDetails.announcementDisplay" class="ann-display" @change="getDisplay(announcementDetails.announcementDisplay)">
-            <label for="display">Check to show this announcement     {{ announcementDetails.announcementDisplay }}</label> 
+            <input type="checkbox" id="display" name="display" v-model="announcementDetails.announcementDisplay" class="ann-display">
+            <label for="display">Check to show this announcement</label> 
           </div>
           </tr>
         </table>
@@ -192,12 +206,16 @@ const convertUTC = (date, type) => {
         <!-- </div> -->
         <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
             <span class="ml-2"><button
-                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
-                @click="EditAnnouncement(announcementDetails) "
-              >
-              Submit
-              <!-- ต้องมีการแก้ไขข้อมูลบางอย่าง ให้ต่างจากเดิมก่อนถึงจะกด submit ได้ / ถ้ามีการแก้แล้วเปลี่ยนกลับเป็นแบบเดิม ต้องกดไม่ได้-->
-              </button></span>
+          @click="
+            getDisplay(announcementDetails.announcementDisplay);
+            convertUTC(publish_Date, publish_Time, 'publish')
+            convertUTC(close_Date, close_Time, 'close')
+            EditAnnouncement(announcementDetails)
+          "
+          class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+        >
+          Submit
+        </button></span>
             </div>
         <!-- </div> -->
       </div>
