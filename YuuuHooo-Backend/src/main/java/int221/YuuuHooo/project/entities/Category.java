@@ -1,5 +1,6 @@
 package int221.YuuuHooo.project.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,7 +13,8 @@ import lombok.Setter;
 @Table(name = "categories")
 public class Category {
     @Id
-    private int idCategory;
+    @Column(name = "idCategory")
+    private int categoryId;
     private String categoryName;
 
 }

@@ -4,7 +4,9 @@ import int221.YuuuHooo.project.dtos.AddAnnouncementDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
 import int221.YuuuHooo.project.entities.Announcement;
+import int221.YuuuHooo.project.entities.Category;
 import int221.YuuuHooo.project.services.announcementService;
+import int221.YuuuHooo.project.services.categoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 public class announcementController {
     @Autowired
     private announcementService announcementService;
+
+    @Autowired
+    private categoryService categoryService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -52,8 +57,30 @@ public class announcementController {
     }
 
     @PostMapping("/announcements")
-    public Announcement addAnnouncement(@RequestBody AddAnnouncementDTO newAnnouncementDTO){
-        Announcement newAnnouncement = modelMapper.map(newAnnouncementDTO, Announcement.class);
-        return announcementService.addAnnouncement(newAnnouncement);
+    public AnnouncementByIdDTO addAnnoucement(@RequestBody AddAnnouncementDTO newAnnoucement){
+        Announcement announcement = modelMapper.map(newAnnoucement, Announcement.class);
+        announcement.setCategory(categoryService.getCategoryById(announcement.getCategory().getCategoryId()));
+        announcementService.addAnnouncement(announcement);
+        AnnouncementByIdDTO announcementByIdDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
+        return announcementByIdDTO;
+    }
+    @DeleteMapping("/announcements/{id}")
+    public void delete(@PathVariable Integer id) {
+        announcementService.deleteAnnouncement(id);
+    }
+
+//    @PutMapping("/announcements/{id}")
+//    public AnnouncementByIdDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,@PathVariable int id){
+//        AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
+//        announcementService.updateAnnouncement(announcement, updateAnnouncement);
+//        AnnouncementByIdDTO announcementByIdDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
+//        announcementByIdDTO.setCategory(categoryService.getCategoryById(announcementByIdDTO.getCategory().getCategoryId()));
+//        return announcementByIdDTO;
+//    }
+
+    @PutMapping("/announcements/{id}")
+    public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,@PathVariable int id){
+        AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
+        return announcementService.updateAnnouncement(announcement, updateAnnouncement);
     }
 }
