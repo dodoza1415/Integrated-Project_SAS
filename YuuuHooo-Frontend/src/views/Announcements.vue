@@ -31,7 +31,7 @@ const convertTZ = (date) => {
 }
 
 const deleteAnnouncement = async (id) => {
-  if (confirm("Do you sure to delete this announcement?") === true) {
+  if (confirm("Do you want to delete this announcement?") === true) {
   try {
     const res = await fetch(`http://localhost:8080/api/announcements/${id}`, {
       method: "DELETE",

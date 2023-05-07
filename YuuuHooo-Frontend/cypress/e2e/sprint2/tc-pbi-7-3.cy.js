@@ -97,7 +97,7 @@ describe('TC-UPDATE-ANNOUNCEMENT-3: normal - update category and display', () =>
 
         cy.wait(200)
         cy.get('.ann-category').select('ทั่วไป')
-        cy.get('.ann-display').check()
+        cy.get('.ann-display').check({force:true})
         cy.get('.ann-button').contains(/submit|save|update|add|edit/g,{matchCase: false}).as('ann-submit')
         cy.get('@ann-submit').should('be.enabled')
     })
@@ -115,7 +115,7 @@ describe('TC-UPDATE-ANNOUNCEMENT-3: normal - update category and display', () =>
 
         cy.wait(200)
         cy.get('.ann-category').select('ทั่วไป')
-        cy.get('.ann-display').check()
+        cy.get('.ann-display').check({force:true})
         cy.get('.ann-button').contains(/submit|save|update|add|edit/g,{matchCase: false}).as('ann-submit')
         cy.get('@ann-submit').should('be.enabled')
         cy.get('@ann-submit').click()
@@ -130,7 +130,8 @@ describe('TC-UPDATE-ANNOUNCEMENT-3: normal - update category and display', () =>
         cy.get('@ann-1').get('.ann-publish-date').contains('3 May 2023',{matchCase: false})
         cy.get('@ann-1').get('.ann-publish-date').contains('06:00')
         cy.get('@ann-1').get('.ann-close-date').contains('-')
-        cy.get('@ann-1').get('.ann-display').contains('N')
+        cy.get('@ann-1').get('.ann-display').contains('Y')
+        cy.wait(200)
         cy.get('@ann-1').get('.ann-button').contains('view',{matchCase: false}).click()
 
         cy.wait(200) ;

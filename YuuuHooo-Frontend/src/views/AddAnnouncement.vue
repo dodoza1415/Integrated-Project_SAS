@@ -44,9 +44,9 @@ const getDisplay = (v) => {
 
 const router = useRouter();
 
-const show = (ann) => {
-  console.log(ann);
-};
+// const show = (ann) => {
+//   console.log(ann);
+// };
 
 const addAnnouncement = async (announcement) => {
   // ต้องรวม publishdate-time , closedate-time เข้าด้วยกันก่อน
@@ -92,7 +92,7 @@ const addAnnouncement = async (announcement) => {
         <select
           name="category"
           v-model="newAnnouncement.categoryId"
-          class="ann-category pl-[20px]"
+          class="ann-category pl-[20px] border border-black rounded-md h-[2.5em]"
           required
         >
           <option disabled value="">Please select one</option>
@@ -106,7 +106,7 @@ const addAnnouncement = async (announcement) => {
       <div class="mt-3">
         <span class="text-left text-[20px]">Description </span><br />
         <textarea
-          class="textarea textarea-bordered ann-description pl-[20px]"
+          class="textarea textarea-bordered ann-description pl-[20px] w-[30em] h-[10em]"
           v-model="newAnnouncement.announcementDescription"
           required
         ></textarea>
@@ -115,12 +115,12 @@ const addAnnouncement = async (announcement) => {
         <span class="text-left text-[20px]">Publish Date</span><br />
         <input
           type="date"
-          class="ann-publish-date ann-publish-time input input-bordered w-max mr-1"
+          class="ann-publish-date input input-bordered w-max mr-1"
           v-model="publish_Date"
         />
         <input
           type="time"
-          class="ann-publish-date ann-publish-time input input-bordered w-max"
+          class="ann-publish-time input input-bordered w-max"
           v-model="publish_Time"
         />
       </div>
@@ -128,12 +128,12 @@ const addAnnouncement = async (announcement) => {
         <span class="text-left text-[20px]">Close Date</span><br />
         <input
           type="date"
-          class="ann-close-date ann-close-time input input-bordered w-max mr-1"
+          class="ann-close-date input input-bordered w-max mr-1"
           v-model="close_Date"
         />
         <input
           type="time"
-          class="ann-close-date ann-close-time input input-bordered w-max"
+          class="ann-close-time input input-bordered w-max"
           v-model="close_Time"
         />
       </div>
@@ -145,9 +145,9 @@ const addAnnouncement = async (announcement) => {
           id="display"
           name="display"
           v-model="newAnnouncement.announcementDisplay"
-          class="ann-display"
+          class="ann-display checkbox checkbox-sm"
         />
-        <span class="ml-2"
+        <span class="ml-2 text-[18px]"
           ><label for="display">Check to show this announcement</label></span
         ><br />
         <!-- {{ newAnnouncement.announcementDisplay }} -->
@@ -161,7 +161,6 @@ const addAnnouncement = async (announcement) => {
           newAnnouncement.categoryId.length === 0
           "
           @click="
-            show(newAnnouncement);
             getDisplay(newAnnouncement.announcementDisplay);
             convertUTC(publish_Date, publish_Time, 'publish')
             convertUTC(close_Date, close_Time, 'close')
