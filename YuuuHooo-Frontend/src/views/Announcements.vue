@@ -1,6 +1,6 @@
 <script setup>
 import { getAnnouncements } from "../composable/getAnnouncements.js";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
 
