@@ -23,7 +23,7 @@ onMounted(async () => {
         "UTC"
       );
       convertTime(announcementDetails.value.closeDate, null, "close", "UTC");
-      console.log(typeof announcementDetails.value.closeDate === "object");
+      // console.log(typeof announcementDetails.value.closeDate === "object");
       // console.log(announcementDetails)
       // return announcementDetails;
     } else if (res.status !== 200) {
