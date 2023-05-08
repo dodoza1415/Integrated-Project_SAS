@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from "vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 
+const API_ROOT=import.meta.env.VITE_ROOT_API;
 
 const newAnnouncement = ref({
   announcementTitle: "",
@@ -51,7 +52,7 @@ const router = useRouter();
 const addAnnouncement = async (announcement) => {
   // ต้องรวม publishdate-time , closedate-time เข้าด้วยกันก่อน
   try {
-    const res = await fetch("http://localhost:8080/api/announcements", {
+    const res = await fetch(`${API_ROOT}/api/announcements`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

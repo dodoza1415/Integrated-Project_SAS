@@ -1,25 +1,35 @@
 <script setup>
-import { onMounted, ref , computed } from "vue";
-import { useRoute , useRouter} from "vue-router";
+import { onMounted, ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const API_ROOT=import.meta.env.VITE_ROOT_API;
 
 const { params } = useRoute();
 const router = useRouter();
-const announcementDetails = ref({})
+const announcementDetails = ref({});
 
 onMounted(async () => {
   const announcementId = params.id;
   try {
     const res = await fetch(
-      `http://localhost:8080/api/announcements/${announcementId}`
+      `${API_ROOT}/api/announcements/${announcementId}`
     );
     if (res.status === 200) {
       announcementDetails.value = await res.json();
-      console.log(announcementDetails)
-      return announcementDetails;
-    }else if(res.status !== 200){
-      alert("The requested page is not available!") 
-      router.push('/');
-    }else throw new Error("No Announcement");
+      convertTime(
+        announcementDetails.value.publishDate,
+        null,
+        "publish",
+        "UTC"
+      );
+      convertTime(announcementDetails.value.closeDate, null, "close", "UTC");
+      console.log(typeof announcementDetails.value.closeDate === "object");
+      // console.log(announcementDetails)
+      // return announcementDetails;
+    } else if (res.status !== 200) {
+      alert("The requested page is not available!");
+      router.push("/");
+    } else throw new Error("No Announcement");
   } catch (error) {
     console.log(error);
   }
@@ -29,7 +39,7 @@ const EditAnnouncement = async (updateAnnouncement) => {
   // const announcementId = params.id;
   try {
     const res = await fetch(
-      `http://localhost:8080/api/announcements/${params.id}`,
+      `${API_ROOT}/api/announcements/${params.id}`,
       {
         method: "PUT",
         headers: {
@@ -40,172 +50,223 @@ const EditAnnouncement = async (updateAnnouncement) => {
     );
     if (res.status === 200) {
       console.log("edit sucessfully");
-      announcementDetails.value = announcementDetails.value.map((r) => {
-        if (r.id === updateAnnouncement.id) {
-          r.announcementTitle = updateAnnouncement.announcementTitle;
-          r.announcementDescription = updateAnnouncement.announcementDescription;
-          r.categoryId = updateAnnouncement.categoryId;
-          r.publishDate = updateAnnouncement.publishDate;
-          r.closeDate = updateAnnouncement.closeDate;
-          r.announcementDisplay = updateAnnouncement.announcementDisplay;
-        }
-        return r;
-      },
-       router.push(`/admin/announcement/${params.id}`));
-    } else if(res.status !== 200){
-      alert(`There is an error! , Can't update this announcement => Status Code : ${res.status}`) 
-    }else throw new Error("cannot edit");
+      // announcementDetails.value = announcementDetails.value.map((r) => {
+      //   if (r.id === updateAnnouncement.id) {
+      //     r.announcementTitle = updateAnnouncement.announcementTitle;
+      //     r.announcementDescription =
+      //       updateAnnouncement.announcementDescription;
+      //     r.categoryId = updateAnnouncement.categoryId;
+      //     r.publishDate = updateAnnouncement.publishDate;
+      //     r.closeDate = updateAnnouncement.closeDate;
+      //     r.announcementDisplay = updateAnnouncement.announcementDisplay;
+      //   }
+      //   return r;
+      // });
+      router.push(`/admin/announcement/${params.id}`);
+    } else if (res.status !== 200) {
+      alert(
+        `There is an error! , Can't update this announcement => Status Code : ${res.status}`
+      );
+    } else throw new Error("cannot edit");
   } catch (error) {
     console.log(error);
   }
 };
-const getCategoryId = (cateName) => {
-  console.log(cateName)
-  switch (cateName) {
-    case "ทั่วไป":
-    announcementDetails.value.categoryId = 1
-      break;
-    case "ทุนการศึกษา":
-    announcementDetails.value.categoryId = 2
-      break;
-    case "หางาน":
-    announcementDetails.value.categoryId = 3
-      break;
-    case "ฝึกงาน":
-    announcementDetails.value.categoryId = 4
-  }
-}
 
-const getDisplay = (v) => {
-  switch (v) {
-    case false:
-    announcementDetails.value.announcementDisplay = 'N'
-      break;
-    case true:
-    announcementDetails.value.announcementDisplay = 'Y'
-  }
-}
+const publish_Date = ref(null);
+const publish_Time = ref(null);
+const close_Date = ref(null);
+const close_Time = ref(null);
+const convertTime = (date = null, time = null, type, tz) => {
+  if (tz === "UTC") {
+    if (typeof date === "object") {
+      if (type === "publish") {
+        publish_Date.value = new String();
+      } else if (type === "close") {
+        close_Date.value = new String();
+      }
+    } else {
+      const optionsDate = { year: "numeric", month: "2-digit", day: "2-digit" };
+      const dateICT = new Date(date).toLocaleDateString("fr-CA", optionsDate);
 
-
-const convertUTC = (date, type) => {
-  const dateICT = new Date(date)
-  const dateUTC = dateICT.toISOString();
-  if(type === 'publish'){
-    announcementDetails.value.publishDate = dateUTC;
-  }else if(type === 'close'){
-    announcementDetails.value.closeDate = dateUTC
+      const optionsTime = { hour: "2-digit", minute: "2-digit" };
+      const timeICT = new Date(date).toLocaleTimeString("en-GB", optionsTime);
+      if (type === "publish") {
+        publish_Date.value = dateICT;
+        publish_Time.value = timeICT;
+      } else if (type === "close") {
+        close_Date.value = dateICT;
+        close_Time.value = timeICT;
+      }
+    }
   }
-  
-  // console.log(dateUTC)
-}
+
+  if (tz === "ICT") {
+    const dateString = date + " , " + time;
+    // console.log(dateString)
+    if (dateString.includes(null) || date.length === 0) {
+      if (type === "publish") {
+        announcementDetails.value.publishDate = null;
+      } else if (type === "close") {
+        announcementDetails.value.closeDate = null;
+      }
+    } else {
+      const dateICT = new Date(dateString);
+      const dateUTC = dateICT.toISOString();
+      if (type === "publish") {
+        announcementDetails.value.publishDate = dateUTC;
+      } else if (type === "close") {
+        announcementDetails.value.closeDate = dateUTC;
+      }
+    }
+  }
+};
+
+const show = (updateAnn) => {
+  console.log(close_Date.value);
+  console.log(updateAnn);
+};
+
+const userModifying = ref(true);
+const change = () => {
+  userModifying.value = !userModifying.value;
+};
 </script>
- 
+
 <template>
   <div>
     <div class="font-['Acme'] m-10">
-      <div class="text-[45px] ">
-        Announcement Details:
-      </div>
+      <div class="text-[45px]">Announcement Details:</div>
       <div>
         <table class="ann-item">
           <tr>
             <th class="text-left text-[30px]">Title:</th>
             <div class="m-4">
-            <input
-            type="text"
-            id="title"
-            placeholder="Your Title"
-            class="ann-title input input-bordered w-max ann-title pl-[20px]"
-            v-model="announcementDetails.announcementTitle"    
-            required/>
-          </div>
+              <input
+                type="text"
+                id="title"
+                placeholder="Your Title"
+                class="ann-title input input-bordered w-max ann-title pl-[20px]"
+                v-model="announcementDetails.announcementTitle"
+                required
+                @input="userModifying = false"
+              />
+            </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Category:</th>
             <div class="m-4">
-            <select name="category" v-model="announcementDetails.categoryId" class="ann-category pl-[20px] input input-bordered" required @change="getCategoryId(announcementDetails.categoryId)">
-            <option disabled value="">Please select one</option>
-            <option value="ทั่วไป">ทั่วไป</option>
-            <option value="ทุนการศึกษา">ทุนการศึกษา</option>
-            <option value="หางาน">หางาน</option>
-            <option value="ฝึกงาน">ฝึกงาน</option>
-            </select>
-          </div>
+              <select
+                name="category"
+                v-model="announcementDetails.categoryId"
+                class="ann-category pl-[20px] input input-bordered"
+                required
+                @input="userModifying = false"
+              >
+                <option disabled value="">Please select one</option>
+                <option value="1">ทั่วไป</option>
+                <option value="2">ทุนการศึกษา</option>
+                <option value="3">หางาน</option>
+                <option value="4">ฝึกงาน</option>
+              </select>
+              <!-- {{ announcementDetails.categoryId }} -->
+            </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Description:</th>
             <div class="m-4">
-            <textarea
-            placeholder="write description..."
-            class=" textarea textarea-bordered w-full ann-description pl-[20px]"
-            v-model="announcementDetails.announcementDescription"
-            required
-            ></textarea>
-          </div>
+              <textarea
+                placeholder="write description..."
+                class="textarea textarea-bordered w-full ann-description pl-[20px]"
+                v-model="announcementDetails.announcementDescription"
+                required
+                @input="userModifying = false"
+              ></textarea>
+            </div>
           </tr>
           <tr>
-            
             <th class="text-left text-[30px]">Publish Date:</th>
             <div class="m-4">
-            <input 
-            type="datetime-local"
-            class="ann-publish-date ann-publish-time input input-bordered w-max ann-publish-date pl-[20px]" 
-            v-model="announcementDetails.publishDate"
-            @change="convertUTC(announcementDetails.publishDate, 'publish')"
-            />
-          </div>
-            <!-- <input
-            type="time"
-            class="ann-publish-time input input-bordered w-max ann-close-time pl-[20px]"
-            v-model="announcementDetails.publishTime"
-            /> -->
+              <input
+                type="date"
+                class="ann-publish-date input input-bordered w-max pl-[20px] mr-2"
+                v-model="publish_Date"
+                @input="userModifying = false"
+              />
+              <input
+                type="time"
+                class="ann-publish-time input input-bordered w-max pl-[20px]"
+                v-model="publish_Time"
+                @input="userModifying = false"
+              />
+            </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Close Date:</th>
             <div class="m-4">
-            <input
-            type="datetime-local"
-            class="ann-close-date ann-close-time input input-bordered w-max ann-publish-date pl-[20px]" 
-            v-model="announcementDetails.closeDate"
-            @change="convertUTC(announcementDetails.closeDate, 'close')"
-            />
-          </div>
-            <!-- <input
-            type="time"
-            class="ann-close-time input input-bordered w-max ann-close-date pl-[20px]"
-            v-model="announcementDetails.closeTime"
-            /> -->
+              <input
+                type="date"
+                class="ann-close-date input input-bordered w-max pl-[20px] mr-2"
+                v-model="close_Date"
+                @input="userModifying = false"
+              />
+              <input
+                type="time"
+                class="ann-close-time input input-bordered w-max pl-[20px]"
+                v-model="close_Time"
+                @input="userModifying = false"
+              />
+            </div>
           </tr>
           <tr>
             <th class="text-left text-[30px]">Display:</th>
-          <div class="mt-4 mr-5">
-            <input type="checkbox" id="display" name="display" v-model="announcementDetails.announcementDisplay" class="ann-display" @change="getDisplay(announcementDetails.announcementDisplay)">
-            <label for="display">Check to show this announcement     {{ announcementDetails.announcementDisplay }}</label> 
-          </div>
+            <div class="mt-4 mr-5">
+              <input
+                type="checkbox"
+                id="display"
+                name="display"
+                true-value="Y"
+                false-value="N"
+                v-model="announcementDetails.announcementDisplay"
+                class="ann-display checkbox checkbox-sm"
+                @input="userModifying = false"
+              />
+              <label for="display" class="ml-2 text-[18px]"
+                >Check to show this announcement
+                <!-- {{ announcementDetails.announcementDisplay }} -->
+              </label>
+            </div>
           </tr>
         </table>
         <div class="mt-5">
-        <!-- <div class="text-blue-400 hover:text-gray-500 mt-5 text-[20px]"> -->
-          <RouterLink :to="{name : 'AnnouncementDetails'}"  class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent">
-               Back
-        </RouterLink>
-        <!-- </div> -->
-        <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
-            <span class="ml-2"><button
-                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
-                @click="EditAnnouncement(announcementDetails) "
-              >
+          <!-- <div class="text-blue-400 hover:text-gray-500 mt-5 text-[20px]"> -->
+          <RouterLink
+            :to="{ name: 'AnnouncementDetails' }"
+            class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
+          >
+            Back
+          </RouterLink>
+          <!-- </div> -->
+          <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
+          <span class="ml-2"
+            ><button
+              class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+              @click="
+                convertTime(publish_Date, publish_Time, 'publish', 'ICT');
+                convertTime(close_Date, close_Time, 'close', 'ICT');
+                EditAnnouncement(announcementDetails);
+              "
+              :disabled="userModifying"
+            >
               Submit
               <!-- ต้องมีการแก้ไขข้อมูลบางอย่าง ให้ต่างจากเดิมก่อนถึงจะกด submit ได้ / ถ้ามีการแก้แล้วเปลี่ยนกลับเป็นแบบเดิม ต้องกดไม่ได้-->
-              </button></span>
-            </div>
+            </button></span
+          >
+        </div>
         <!-- </div> -->
       </div>
     </div>
   </div>
-
 </template>
- 
-<style scoped>
 
-</style>
+<style scoped></style>

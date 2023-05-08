@@ -3,7 +3,7 @@ import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
-
+const API_ROOT=import.meta.env.VITE_ROOT_API;
 
 const announcements = ref([]);
 
@@ -33,7 +33,7 @@ const convertTZ = (date) => {
 const deleteAnnouncement = async (id) => {
   if (confirm("Do you want to delete this announcement?") === true) {
   try {
-    const res = await fetch(`http://localhost:8080/api/announcements/${id}`, {
+    const res = await fetch(`${API_ROOT}/api/announcements/${id}`, {
       method: "DELETE",
     });
     if (res.status === 200) {

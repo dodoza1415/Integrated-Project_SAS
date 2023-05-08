@@ -5,7 +5,7 @@ import NotFound from "../views/NotFound.vue";
 import AddAnnouncement from "../views/AddAnnouncement.vue";
 import EditAnnouncement from "../views/EditAnnouncement.vue"
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",

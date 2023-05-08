@@ -2,10 +2,11 @@
 import { onMounted, ref } from "vue";
 import { useRoute , useRouter } from "vue-router";
 
-// const api = import.meta.env.VITE_ROOT_API 
+const API_ROOT = import.meta.env.VITE_ROOT_API 
 
 const router = useRouter();
 const { params } = useRoute();
+
 
 const announcementsDetails = ref({});
 const announcementId = params.id;
@@ -16,7 +17,7 @@ onMounted(async () => {
   const announcementId = params.id;
   try {
     const res = await fetch(
-      `http://localhost:8080/api/announcements/${announcementId}`
+      `${API_ROOT}/api/announcements/${announcementId}`
     );
     if (res.status === 200) {
       announcementsDetails.value = await res.json();
@@ -44,39 +45,6 @@ const convertTZ = (date) => {
 
 }
 
-// const EditAnnouncement = async (updateAnnouncement) => {
-
-//   try {
-//     const res = await fetch(
-//       `http://localhost:8080/api/announcements/${announcementId}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           "content-type": "application/json",
-//         },
-//         body: JSON.stringify(updateAnnouncement),
-//       }
-//     );
-//     if (res.status === 200) {
-//       console.log("edit sucessfully");
-//       announcementBeforeUpdate.value = announcementBeforeUpdate.value.map((r) => {
-//         if (r.id === updateAnnouncement.id) {
-//           r.announcementTitle = updateAnnouncement.announcementTitle;
-//           r.announcementCategory = updateAnnouncement.announcementCategory;
-//           r.announcementDescription = updateAnnouncement.announcementDescription;
-//           r.publishDate = updateAnnouncement.publishDate;
-//           r.closeDate = updateAnnouncement.closeDate;
-//           r.announcementDisplay = updateAnnouncement.announcementDisplay;
-//         }
-//         return r;
-//       });
-//     } else if(res.status !== 200){
-//       alert(`Can't update this announcement , ...`) 
-//     }else throw new Error("cannot edit");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 </script>
 
 <template>
