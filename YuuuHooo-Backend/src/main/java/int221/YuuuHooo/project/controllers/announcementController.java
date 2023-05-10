@@ -29,14 +29,31 @@ public class announcementController {
     private ModelMapper modelMapper;
 
     @GetMapping("/announcements")
-    public List<AnnouncementDTO> getAnnouncement(){
-        List<Announcement> announcementList = announcementService.getAnnouncement();
-        List<AnnouncementDTO> announcementDTOList =
-                announcementList.stream()
-                        .map(a -> modelMapper.map(a, AnnouncementDTO.class))
-                        .collect(Collectors.toList());
-        return announcementDTOList;
+    public List<AnnouncementDTO> getAnnouncement(@RequestParam String mode) {
+        if (mode.equals("active")) {
+            List<Announcement> announcementList = announcementService.getAnnouncementActive("Y");
+            List<AnnouncementDTO> announcementDTOList =
+                    announcementList.stream()
+                            .map(a -> modelMapper.map(a, AnnouncementDTO.class))
+                            .collect(Collectors.toList());
+            return announcementDTOList;
+        } else if(mode.equals("close")){
+            List<Announcement> announcementList = announcementService.getAnnouncementActive("N");
+            List<AnnouncementDTO> announcementDTOList =
+                    announcementList.stream()
+                            .map(a -> modelMapper.map(a, AnnouncementDTO.class))
+                            .collect(Collectors.toList());
+            return announcementDTOList;
+        }else{
+            List<Announcement> announcementList = announcementService.getAnnouncement();
+            List<AnnouncementDTO> announcementDTOList =
+                    announcementList.stream()
+                            .map(a -> modelMapper.map(a, AnnouncementDTO.class))
+                            .collect(Collectors.toList());
+            return announcementDTOList;
+        }
     }
+
 
     @GetMapping("/announcements/{id}")
     public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id) {
@@ -46,40 +63,32 @@ public class announcementController {
 
     }
 
-    @GetMapping("/announcements/list")
-    public List<AddAnnouncementDTO> getAllAnnouncement(){
-        List<Announcement> announcement = announcementService.getAllAnnouncement();
-        List <AddAnnouncementDTO> addAnnouncementDTO =
-                announcement.stream()
-                        .map(a -> modelMapper.map(a, AddAnnouncementDTO.class))
-                        .collect(Collectors.toList());
-        return addAnnouncementDTO;
-    }
+//    @GetMapping("/announcements/list")
+//    public List<AddAnnouncementDTO> getAllAnnouncement() {
+//        List<Announcement> announcement = announcementService.getAllAnnouncement();
+//        List<AddAnnouncementDTO> addAnnouncementDTO =
+//                announcement.stream()
+//                        .map(a -> modelMapper.map(a, AddAnnouncementDTO.class))
+//                        .collect(Collectors.toList());
+//        return addAnnouncementDTO;
+//    }
 
     @PostMapping("/announcements")
-    public AnnouncementByIdDTO addAnnoucement(@RequestBody AddAnnouncementDTO newAnnoucement){
+    public AnnouncementByIdDTO addAnnoucement(@RequestBody AddAnnouncementDTO newAnnoucement) {
         Announcement announcement = modelMapper.map(newAnnoucement, Announcement.class);
         announcement.setCategory(categoryService.getCategoryById(announcement.getCategory().getCategoryId()));
         announcementService.addAnnouncement(announcement);
         AnnouncementByIdDTO announcementByIdDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
         return announcementByIdDTO;
     }
+
     @DeleteMapping("/announcements/{id}")
     public void delete(@PathVariable Integer id) {
         announcementService.deleteAnnouncement(id);
     }
 
-//    @PutMapping("/announcements/{id}")
-//    public AnnouncementByIdDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,@PathVariable int id){
-//        AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
-//        announcementService.updateAnnouncement(announcement, updateAnnouncement);
-//        AnnouncementByIdDTO announcementByIdDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
-//        announcementByIdDTO.setCategory(categoryService.getCategoryById(announcementByIdDTO.getCategory().getCategoryId()));
-//        return announcementByIdDTO;
-//    }
-
     @PutMapping("/announcements/{id}")
-    public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,@PathVariable int id){
+    public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement, @PathVariable int id) {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
         return announcementService.updateAnnouncement(announcement, updateAnnouncement);
     }

@@ -1,9 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
+import { getCategories } from "../composable/getCategories";
 
-const API_ROOT=import.meta.env.VITE_ROOT_API;
+const API_ROOT = import.meta.env.VITE_ROOT_API;
 
+const categories = ref([]);
+
+onMounted(async () => {
+  categories.value = await getCategories();
+  console.log(categories.value);
+});
 const newAnnouncement = ref({
   announcementTitle: "",
   announcementDescription: "",
@@ -18,7 +25,7 @@ const publish_Time = ref(null);
 const close_Date = ref(null);
 const close_Time = ref(null);
 const convertUTC = (date, time, type) => {
-  const dateString = date + " , " + time
+  const dateString = date + " , " + time;
   // console.log(dateString)
   if (dateString.includes(null)) {
     return "-";
@@ -61,7 +68,7 @@ const addAnnouncement = async (announcement) => {
     });
     if (res.status === 200) {
       const announcementAdded = await res.json();
-      await router.push('/')
+      await router.push("/");
       // console.log(announcementAdded);
     } else {
       throw new Error(
@@ -97,10 +104,12 @@ const addAnnouncement = async (announcement) => {
           required
         >
           <option disabled value="">Please select one</option>
-          <option value="1">ทั่วไป</option>
-          <option value="2">ทุนการศึกษา</option>
-          <option value="3">หางาน</option>
-          <option value="4">ฝึกงาน</option>
+          <option
+            :value="category.categoryId"
+            v-for="(category, index) in categories"
+          >
+            {{ category.categoryName }}
+          </option>
         </select>
         <!-- {{ newAnnouncement.categoryId }} -->
       </div>
@@ -156,16 +165,16 @@ const addAnnouncement = async (announcement) => {
       <!-- <input type="submit" @click="$emit('add', newAnnouncement) ; show(newAnnouncement) ; router.push('/')" class="ann-button" value="Submit" id="submit"> -->
       <div class="mt-7">
         <button
-        :disabled="
-          newAnnouncement.announcementTitle.length === 0 ||
-          newAnnouncement.announcementDescription.length === 0 || 
-          newAnnouncement.categoryId.length === 0
+          :disabled="
+            newAnnouncement.announcementTitle.length === 0 ||
+            newAnnouncement.announcementDescription.length === 0 ||
+            newAnnouncement.categoryId.length === 0
           "
           @click="
             getDisplay(newAnnouncement.announcementDisplay);
-            convertUTC(publish_Date, publish_Time, 'publish')
-            convertUTC(close_Date, close_Time, 'close')
-            addAnnouncement(newAnnouncement)
+            convertUTC(publish_Date, publish_Time, 'publish');
+            convertUTC(close_Date, close_Time, 'close');
+            addAnnouncement(newAnnouncement);
           "
           class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
         >

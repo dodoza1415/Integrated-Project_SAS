@@ -27,12 +27,9 @@ public class categoryService {
                 ));
     }
 
-    public String getCategoryName(int id){
-        Category category = categoryRepository.findById(id).orElseThrow(
-                ()-> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Category id " + id + " does not exist"
-                ));
-        return category.getCategoryName();
+    public int addCategory(Category newCategory){
+        categoryRepository.saveAndFlush(newCategory);
+        return newCategory.getCategoryId();
     }
+
 }

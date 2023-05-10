@@ -36,13 +36,18 @@ public class announcementService {
                         ));
     }
 
-    public List<Announcement> getAllAnnouncement(){
-        return announcementRepository.findAll();
+    public List<Announcement> getAnnouncementActive(String display){
+        return announcementRepository.findAnnouncementsByAnnouncementDisplayContainingOrderByIdDesc(display);
     }
+
+//    public List<Announcement> getAllAnnouncement(){
+//        return announcementRepository.findAll();
+//    }
 
     public Announcement addAnnouncement(Announcement newAnnouncement){
         return announcementRepository.saveAndFlush(newAnnouncement);
     }
+
 
     public void deleteAnnouncement(int id){
         announcementRepository.findById(id).orElseThrow(()->
