@@ -2,18 +2,18 @@
 import { onMounted, ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const API_ROOT=import.meta.env.VITE_ROOT_API;
+const API_ROOT = import.meta.env.VITE_ROOT_API;
 
 const { params } = useRoute();
 const router = useRouter();
 const announcementDetails = ref({});
-
+const categories = ref([]);
 onMounted(async () => {
+  categories.value = await getCategories();
+  console.log(categories.value);
   const announcementId = params.id;
   try {
-    const res = await fetch(
-      `${API_ROOT}/api/announcements/${announcementId}`
-    );
+    const res = await fetch(`${API_ROOT}/api/announcements/${announcementId}`);
     if (res.status === 200) {
       announcementDetails.value = await res.json();
       convertTime(
@@ -38,16 +38,13 @@ onMounted(async () => {
 const EditAnnouncement = async (updateAnnouncement) => {
   // const announcementId = params.id;
   try {
-    const res = await fetch(
-      `${API_ROOT}/api/announcements/${params.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(updateAnnouncement),
-      }
-    );
+    const res = await fetch(`${API_ROOT}/api/announcements/${params.id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateAnnouncement),
+    });
     if (res.status === 200) {
       console.log("edit sucessfully");
       // announcementDetails.value = announcementDetails.value.map((r) => {
@@ -164,10 +161,12 @@ const change = () => {
                 @input="userModifying = false"
               >
                 <option disabled value="">Please select one</option>
-                <option value="1">ทั่วไป</option>
-                <option value="2">ทุนการศึกษา</option>
-                <option value="3">หางาน</option>
-                <option value="4">ฝึกงาน</option>
+                <option
+                  :value="category.categoryId"
+                  v-for="(category, index) in categories"
+                >
+                  {{ category.categoryName }}
+                </option>
               </select>
               <!-- {{ announcementDetails.categoryId }} -->
             </div>
