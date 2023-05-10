@@ -53,7 +53,7 @@ const deleteAnnouncement = async (id) => {
   <div>
     <div>
       <div class="text-2xl font-['Acme'] m-10">SIT Announcement System (SAS)</div>
-      <div class="overflow-x-auto m-10">
+      <div class=" overflow-auto m-10">
         <div class="grid justify-items-start">
         <div class="text-2xl font-['Acme']">
           Date/Time shown in Timezone: {{ timezone }}
@@ -69,9 +69,9 @@ const deleteAnnouncement = async (id) => {
         <div v-if="announcements.length === 0">
           <h3 class="text-2xl font-['Acme']">No Announcement</h3>
         </div>
-        <table v-else class="table table-compact w-full mt-7">
+        <table v-else class="table table-compact auto w-full mt-7">
           <tr class="font-['Acme'] bg-red-100">
-            <th class="text-lg ">No.</th>
+            <th class="text-lg">No.</th>
             <th class="text-lg">Title</th>
             <th class="text-lg">Category</th>
             <th class="text-lg">Publish Date</th>
@@ -96,7 +96,7 @@ const deleteAnnouncement = async (id) => {
 
               <button
                 @click="announcementDetailPage(announcement.id)"
-                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-sky-400 hover:border-transparent"
               >
                 view
               </button>

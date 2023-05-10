@@ -104,7 +104,7 @@ const convertTZ = (date) => {
         <!-- <div class="text-blue-400 hover:text-red-500 mt-5 text-[20px]"> -->
           <span class="ml-2"><button
                 @click="announcementEditPage(announcementId)"
-                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
+                class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-sky-400 hover:border-transparent"
               >
               Edit
               </button></span>
