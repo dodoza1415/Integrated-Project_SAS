@@ -1,15 +1,16 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useAnnouncerStore } from "../stores/userview";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 
 const router = useRouter();
 const { params } = useRoute();
 
+const announcer = useAnnouncerStore();
+
 const announcementsDetails = ref({});
-
-
 onMounted(async () => {
   const announcementId = params.id;
   try {
@@ -25,40 +26,65 @@ onMounted(async () => {
     console.log(error);
   }
 });
+
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// console.log(typeof timezone)
+
+const convertTZ = (date) => {
+  if (typeof date === "string") {
+    const convertDate = new Date(date);
+    const options = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: timezone,
+    };
+    return convertDate.toLocaleDateString("en-GB", options);
+  } else {
+    return "-";
+  }
+};
 </script>
 
 <template>
   <div class="flex">
     <div class="font-['Acme'] m-10 w-full border rounded-md">
-      <table class="ann-item border-2 border-gray-400 shadow-lg w-full rounded-md">
-        <tr class="border-2  border-gray-400 border-b-gray-200">
+      <table
+        class="ann-item border-2 border-gray-400 shadow-lg w-full rounded-md"
+      >
+        <tr class="border-2 border-gray-400 border-b-gray-200">
           <td class="text-left p-5">
-        <span class="text-2xl ann-title font-bold">
-            {{ announcementsDetails.announcementTitle }}
-        </span>
-          <br/>
-          <span class="text-sm ann-category text-gray-400 border-b-gray-200">
-            {{ announcementsDetails.announcementCategory }}
-          </span>
-        </td>
+            <span class="text-2xl ann-title font-bold">
+              {{ announcementsDetails.announcementTitle }}
+            </span>
+            <br />
+            <span class="text-sm ann-category text-gray-400 border-b-gray-200">
+              {{ announcementsDetails.announcementCategory }}
+            </span>
+            <span class="ml-[45em] ann-close-date" v-if="announcer.mode === 'close'"
+              ><span class="text-red-500">Closed date:</span>
+              {{ convertTZ(announcementsDetails.closeDate) }}</span
+            >
+          </td>
         </tr>
         <tr class="p-50">
           <th class="text-left text-base ann-description font-normal p-5">
             {{ announcementsDetails.announcementDescription }}
           </th>
-        </tr >
+        </tr>
         <tr class="border-2 border-gray-400 border-t-gray-200 p-5">
-        <div class="p-2">
-          <button
-            @click="router.push('/announcement')"
-            class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
-          >
-            Back
-          </button>
-        </div>
-      </tr >
+          <div class="p-2">
+            <button
+              @click="router.push('/announcement')"
+              class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
+            >
+              Back
+            </button>
+          </div>
+        </tr>
       </table>
-      
     </div>
   </div>
 </template>
