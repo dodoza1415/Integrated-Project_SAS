@@ -36,9 +36,6 @@ public class announcementService {
                         ));
     }
 
-    public List<Announcement> getAnnouncementActive(String display){
-        return announcementRepository.findAnnouncementsByAnnouncementDisplayContainingOrderByIdDesc(display);
-    }
 
 //    public List<Announcement> getAllAnnouncement(){
 //        return announcementRepository.findAll();

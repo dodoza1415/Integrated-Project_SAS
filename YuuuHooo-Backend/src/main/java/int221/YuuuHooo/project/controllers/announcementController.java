@@ -5,6 +5,7 @@ import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
 import int221.YuuuHooo.project.entities.Announcement;
 import int221.YuuuHooo.project.entities.Category;
+import int221.YuuuHooo.project.repositories.announcementRepository;
 import int221.YuuuHooo.project.services.announcementService;
 import int221.YuuuHooo.project.services.categoryService;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +29,9 @@ public class announcementController {
     private announcementService announcementService;
 
     @Autowired
+    private announcementRepository announcementRepository;
+
+    @Autowired
     private categoryService categoryService;
 
     @Autowired
@@ -30,28 +39,60 @@ public class announcementController {
 
     @GetMapping("/announcements")
     public List<AnnouncementDTO> getAnnouncement(@RequestParam String mode) {
+        List<Announcement> announcementBase = announcementService.getAnnouncement();
+        ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
+
         if (mode.equals("active")) {
-            List<Announcement> announcementList = announcementService.getAnnouncementActive("Y");
+            List<Announcement> announcementsFilter = new ArrayList<>();
+            announcementBase.stream()
+                    .forEach(a -> {
+                        if (a.getPublishDate() == null && a.getCloseDate() == null) {
+                            announcementsFilter.add(a);
+                        } else if (a.getPublishDate() == null && a.getCloseDate() != null) {
+                            if (today.toEpochSecond() < a.getCloseDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        } else if (a.getCloseDate() == null && a.getPublishDate() != null) {
+                            if (today.toEpochSecond() >= a.getPublishDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        } else if (a.getPublishDate() != null && a.getCloseDate() != null) {
+                            if (today.toEpochSecond() >= a.getPublishDate().toEpochSecond() && today.toEpochSecond() < a.getCloseDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        }
+                    });
             List<AnnouncementDTO> announcementDTOList =
-                    announcementList.stream()
+                    announcementsFilter.stream()
+                            .filter(a -> a.getAnnouncementDisplay().contains("Y"))
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
                             .collect(Collectors.toList());
             return announcementDTOList;
-        } else if(mode.equals("close")){
-            List<Announcement> announcementList = announcementService.getAnnouncementActive("N");
+
+        } else if (mode.equals("close")){
+            List<Announcement> announcementsFilter = new ArrayList<>();
+            announcementBase.stream()
+                    .forEach(a -> {
+                        if(a.getCloseDate() != null){
+                            if (today.toEpochSecond() >= a.getCloseDate().toEpochSecond()){
+                                announcementsFilter.add(a);
+                            }
+                        }
+                    });
             List<AnnouncementDTO> announcementDTOList =
-                    announcementList.stream()
+                    announcementsFilter.stream()
+                            .filter(a -> a.getAnnouncementDisplay().contains("Y"))
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
                             .collect(Collectors.toList());
             return announcementDTOList;
         }else{
-            List<Announcement> announcementList = announcementService.getAnnouncement();
             List<AnnouncementDTO> announcementDTOList =
-                    announcementList.stream()
+                    announcementBase.stream()
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
                             .collect(Collectors.toList());
             return announcementDTOList;
         }
+
     }
 
 
@@ -88,7 +129,8 @@ public class announcementController {
     }
 
     @PutMapping("/announcements/{id}")
-    public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement, @PathVariable int id) {
+    public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,
+                                                 @PathVariable int id) {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
         return announcementService.updateAnnouncement(announcement, updateAnnouncement);
     }
