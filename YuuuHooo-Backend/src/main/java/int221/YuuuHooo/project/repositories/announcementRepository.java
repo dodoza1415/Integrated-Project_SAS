@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface announcementRepository extends JpaRepository<Announcement, Integer> {
-    List<Announcement> findAnnouncementsByAnnouncementDisplayContainingOrderByIdDesc(String display);
+
 }
