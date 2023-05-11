@@ -28,17 +28,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <div class="font-['Acme'] m-10 ">
-        <div class="mb-5">
-      <table class="ann-item border-2 border-gray-500  ">
-        <tr class="border-2  border-gray-500">
+  <div class="flex">
+    <div class="font-['Acme'] m-10 w-full border rounded-md">
+      <table class="ann-item border-2 border-gray-400 shadow-lg w-full rounded-md">
+        <tr class="border-2  border-gray-400 border-b-gray-200">
           <td class="text-left p-5">
         <span class="text-2xl ann-title font-bold">
             {{ announcementsDetails.announcementTitle }}
         </span>
           <br/>
-          <span class="text-sm ann-category text-gray-400">
+          <span class="text-sm ann-category text-gray-400 border-b-gray-200">
             {{ announcementsDetails.announcementCategory }}
           </span>
         </td>
@@ -48,9 +47,8 @@ onMounted(async () => {
             {{ announcementsDetails.announcementDescription }}
           </th>
         </tr >
-      </table>
-    </div>
-      <div>
+        <tr class="border-2 border-gray-400 border-t-gray-200 p-5">
+        <div class="p-2">
           <button
             @click="router.push('/announcement')"
             class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
@@ -58,6 +56,9 @@ onMounted(async () => {
             Back
           </button>
         </div>
+      </tr >
+      </table>
+      
     </div>
   </div>
 </template>

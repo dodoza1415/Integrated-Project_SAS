@@ -6,9 +6,12 @@ import { useRouter } from "vue-router";
 const announcements = ref([]);
 const router = useRouter();
 const closedAnnouncements = ref("Closed Announcements")
-
 const announcementMode = () => {
+  if(closedAnnouncements.value === "Closed Announcements" )
   closedAnnouncements.value = "Active Announcements"
+  else if(closedAnnouncements.value === "Active Announcements")
+  closedAnnouncements.value = "Closed Announcements"
+  console.log(closedAnnouncements)
 }
 onMounted(async () => {
   announcements.value = await getAnnouncements();
