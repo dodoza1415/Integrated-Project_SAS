@@ -69,12 +69,12 @@ public class announcementController {
                             .collect(Collectors.toList());
             return announcementDTOList;
 
-        } else if (mode.equals("close")){
+        } else if (mode.equals("close")) {
             List<Announcement> announcementsFilter = new ArrayList<>();
             announcementBase.stream()
                     .forEach(a -> {
-                        if(a.getCloseDate() != null){
-                            if (today.toEpochSecond() >= a.getCloseDate().toEpochSecond()){
+                        if (a.getCloseDate() != null) {
+                            if (today.toEpochSecond() >= a.getCloseDate().toEpochSecond()) {
                                 announcementsFilter.add(a);
                             }
                         }
@@ -85,7 +85,7 @@ public class announcementController {
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
                             .collect(Collectors.toList());
             return announcementDTOList;
-        }else{
+        } else {
             List<AnnouncementDTO> announcementDTOList =
                     announcementBase.stream()
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
