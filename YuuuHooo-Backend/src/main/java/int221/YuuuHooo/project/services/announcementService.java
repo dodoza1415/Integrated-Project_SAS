@@ -6,6 +6,9 @@ import int221.YuuuHooo.project.entities.Announcement;
 import int221.YuuuHooo.project.repositories.announcementRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -75,5 +78,11 @@ public class announcementService {
         beforeAnnouncement.setAnnouncementDisplay(afterAnnouncement.getAnnouncementDisplay());
         Announcement announcement = modelMapper.map(beforeAnnouncement,Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement),AddAnnouncementDTO.class);
+    }
+
+    public Page<Announcement> getAnnouncementWithPaging(int page, int pageSize, String sortBy) {
+        Sort sort = Sort.by(sortBy);
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return announcementRepository.findAll(pageable);
     }
 }
