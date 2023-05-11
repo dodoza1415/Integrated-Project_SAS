@@ -3,13 +3,17 @@ package int221.YuuuHooo.project.controllers;
 import int221.YuuuHooo.project.dtos.AddAnnouncementDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
+import int221.YuuuHooo.project.dtos.PageDTO;
 import int221.YuuuHooo.project.entities.Announcement;
 import int221.YuuuHooo.project.entities.Category;
 import int221.YuuuHooo.project.repositories.announcementRepository;
 import int221.YuuuHooo.project.services.announcementService;
 import int221.YuuuHooo.project.services.categoryService;
+import int221.YuuuHooo.project.utils.ListMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
@@ -28,14 +32,16 @@ public class announcementController {
     @Autowired
     private announcementService announcementService;
 
-    @Autowired
-    private announcementRepository announcementRepository;
 
     @Autowired
     private categoryService categoryService;
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ListMapper listMapper;
+
 
     @GetMapping("/announcements")
     public List<AnnouncementDTO> getAnnouncement(@RequestParam String mode) {
@@ -93,6 +99,64 @@ public class announcementController {
             return announcementDTOList;
         }
 
+    }
+
+    @GetMapping("announcements/pages")
+    public PageDTO<AnnouncementDTO> getAnnouncementPage(
+            @RequestParam(defaultValue = "0")int page,
+            @RequestParam(defaultValue = "5")int size,
+            @RequestParam String mode){
+        Page<Announcement> AnnouncementPageBase = announcementService.getAnnouncementWithPaging(page, size);
+        ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
+        if (mode.equals("active")) {
+            List<Announcement> announcementsFilter = new ArrayList<>();
+            AnnouncementPageBase.stream()
+                    .forEach(a -> {
+                        if (a.getPublishDate() == null && a.getCloseDate() == null) {
+                            announcementsFilter.add(a);
+                        } else if (a.getPublishDate() == null && a.getCloseDate() != null) {
+                            if (today.toEpochSecond() < a.getCloseDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        } else if (a.getCloseDate() == null && a.getPublishDate() != null) {
+                            if (today.toEpochSecond() >= a.getPublishDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        } else if (a.getPublishDate() != null && a.getCloseDate() != null) {
+                            if (today.toEpochSecond() >= a.getPublishDate().toEpochSecond() && today.toEpochSecond() < a.getCloseDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        }
+                    });
+            List<Announcement> announcements =
+                    announcementsFilter.stream()
+                            .filter(a -> a.getAnnouncementDisplay().contains("Y"))
+                            .collect(Collectors.toList());
+
+            Page<Announcement> announcementPage = new PageImpl<>(announcements);
+            return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+
+        }else if (mode.equals("close")) {
+            List<Announcement> announcementsFilter = new ArrayList<>();
+            AnnouncementPageBase.stream()
+                    .forEach(a -> {
+                        if (a.getCloseDate() != null) {
+                            if (today.toEpochSecond() >= a.getCloseDate().toEpochSecond()) {
+                                announcementsFilter.add(a);
+                            }
+                        }
+                    });
+            List<Announcement> announcements =
+                    announcementsFilter.stream()
+                            .filter(a -> a.getAnnouncementDisplay().contains("Y"))
+                            .collect(Collectors.toList());
+
+            Page<Announcement> announcementPage = new PageImpl<>(announcements);
+            return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+        } else {
+            Page<Announcement> AnnouncementPage = announcementService.getAnnouncementWithPaging(page, size);
+            return listMapper.toPageDTO(AnnouncementPage,AnnouncementDTO.class,modelMapper);
+        }
     }
 
 
