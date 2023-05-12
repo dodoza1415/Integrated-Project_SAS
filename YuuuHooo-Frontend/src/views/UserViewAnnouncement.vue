@@ -10,21 +10,29 @@ const router = useRouter();
 const announcer = useAnnouncerStore();
 const announcements = ref([]);
 
-const closedAnnouncements = ref("Closed Announcements");
-const announcementMode = () => {
+const announcementsModeBtn = ref("Closed Announcements");
+const changeAnnouncementMode = () => {
   if (announcer.mode === "active") {
-    closedAnnouncements.value = "Active Announcements";
+    announcementsModeBtn.value = "Active Announcements";
     announcer.setMode("close");
     fetchAnnouncement();
   } else if (announcer.mode === "close") {
-    closedAnnouncements.value = "Closed Announcements";
+    announcementsModeBtn.value = "Closed Announcements";
     announcer.setMode("active");
     fetchAnnouncement();
+
     // console.log(closedAnnouncements)
   }
 };
 onMounted(async () => {
   announcements.value = await getAnnouncements();
+
+  if (announcer.mode === "active") {
+    announcementsModeBtn.value = "Closed Announcements";
+  } else if (announcer.mode === "close") {
+    announcementsModeBtn.value = "Active Announcements";
+  }
+
   // console.log(announcements.value)
   // console.log(announcer.mode)
 });
@@ -86,10 +94,10 @@ const userDetailPage = (announcementId) => {
           </div>
           <div class="text-2xl font-['Acme'] grid justify-self-end">
             <button
-              @click="announcementMode()"
+              @click="changeAnnouncementMode()"
               class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
             >
-              {{ closedAnnouncements }}
+              {{ announcementsModeBtn }}
             </button>
           </div>
         </div>
@@ -110,7 +118,7 @@ const userDetailPage = (announcementId) => {
           >
             <td>{{ ++index }}</td>
             <td
-              class="ann-title cursor-pointer"
+              class="ann-title cursor-pointer hover:text-purple-500"
               @click="userDetailPage(announcement.id)"
             >
               {{ announcement.announcementTitle }}

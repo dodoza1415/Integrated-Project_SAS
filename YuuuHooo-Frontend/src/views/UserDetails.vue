@@ -63,7 +63,7 @@ const convertTZ = (date) => {
             <span class="text-sm ann-category text-gray-400 border-b-gray-200">
               {{ announcementsDetails.announcementCategory }}
             </span>
-            <span class="ml-[45em] ann-close-date" v-if="announcer.mode === 'close'"
+            <span class="ml-[75em] ann-close-date" v-if="announcer.mode === 'close'"
               ><span class="text-red-500">Closed date:</span>
               {{ convertTZ(announcementsDetails.closeDate) }}</span
             >
