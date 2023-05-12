@@ -29,4 +29,8 @@ public class categoryController {
         return categoryService.addCategory(newCategory);
     }
 
+    @GetMapping("/por/{id}")
+    public String getCategoryName(@PathVariable int id){
+        return  categoryService.getCategoryName(id);
+    }
 }

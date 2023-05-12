@@ -105,7 +105,8 @@ public class announcementController {
     public PageDTO<AnnouncementDTO> getAnnouncementPage(
             @RequestParam(defaultValue = "0")int page,
             @RequestParam(defaultValue = "5")int size,
-            @RequestParam String mode){
+            @RequestParam String mode,
+            @RequestParam(defaultValue = "0") int category){
         Page<Announcement> AnnouncementPageBase = announcementService.getAnnouncementWithPaging(page, size);
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
         if (mode.equals("active")) {
@@ -128,13 +129,25 @@ public class announcementController {
                             }
                         }
                     });
-            List<Announcement> announcements =
-                    announcementsFilter.stream()
-                            .filter(a -> a.getAnnouncementDisplay().contains("Y"))
-                            .collect(Collectors.toList());
+            if(category != 0) {
+                String categoryFilter = categoryService.getCategoryName(category);
+                List<Announcement> announcements =
+                        announcementsFilter.stream()
+                                .filter(a -> a.getAnnouncementDisplay().contains("Y"))
+                                .filter(a -> a.getCategory().getCategoryName().contains(categoryFilter))
+                                .collect(Collectors.toList());
 
-            Page<Announcement> announcementPage = new PageImpl<>(announcements);
-            return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+                Page<Announcement> announcementPage = new PageImpl<>(announcements);
+                return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+            }else {
+                List<Announcement> announcements =
+                announcementsFilter.stream()
+                        .filter(a -> a.getAnnouncementDisplay().contains("Y"))
+                        .collect(Collectors.toList());
+
+                Page<Announcement> announcementPage = new PageImpl<>(announcements);
+                return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+            }
 
         }else if (mode.equals("close")) {
             List<Announcement> announcementsFilter = new ArrayList<>();
@@ -198,4 +211,7 @@ public class announcementController {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
         return announcementService.updateAnnouncement(announcement, updateAnnouncement);
     }
+
+
+
 }
