@@ -1,9 +1,12 @@
+import { useAnnouncerStore } from "../stores/userview";
 const API_ROOT=import.meta.env.VITE_ROOT_API;
-const mode = "active"
+
+
 export const getAnnouncements = async () => {
   try {
+    const announcer = useAnnouncerStore()
     const res = await fetch(`${API_ROOT}/api/announcements` + '?' + new URLSearchParams({
-      mode : 'active'
+      mode : announcer.mode
   }));
     if (res.status === 200) {
       const announcements = await res.json();

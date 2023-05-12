@@ -80,9 +80,7 @@ public class announcementService {
         return modelMapper.map(announcementRepository.saveAndFlush(announcement),AddAnnouncementDTO.class);
     }
 
-    public Page<Announcement> getAnnouncementWithPaging(int page, int pageSize, String sortBy) {
-        Sort sort = Sort.by(sortBy);
-        Pageable pageable = PageRequest.of(page, pageSize, sort);
-        return announcementRepository.findAll(pageable);
+    public Page<Announcement> getAnnouncementWithPaging(int page, int size){
+        return announcementRepository.findAll(PageRequest.of(page, size));
     }
 }

@@ -1,12 +1,19 @@
 package int221.YuuuHooo.project.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
-public class PageDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class PageDTO<T> {
+    private List<T> content;
     private Boolean last;
     private Boolean first;
     private Integer totalPages;
@@ -18,3 +25,4 @@ public class PageDTO {
         return number;
     }
 }
+
