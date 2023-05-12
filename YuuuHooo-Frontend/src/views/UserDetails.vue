@@ -55,7 +55,6 @@ const convertTZ = (date) => {
         class="ann-item border-2 border-gray-400 shadow-lg w-full rounded-md"
       >
         <tr class="border-2 border-gray-400 border-b-gray-200">
-<<<<<<< HEAD
           <td class="text-left p-5 flex justify-between">
             <span class="text-2xl ann-title font-bold">
               {{ announcementsDetails.announcementTitle }}<br />
@@ -64,17 +63,6 @@ const convertTZ = (date) => {
             </span>
             </span>
             <span class="ml-[45em] ann-close-date" v-if="announcer.mode === 'close'"
-=======
-          <td class="text-left p-5">
-            <span class="text-2xl ann-title font-bold">
-              {{ announcementsDetails.announcementTitle }}
-            </span>
-            <br />
-            <span class="text-sm ann-category text-gray-400 border-b-gray-200">
-              {{ announcementsDetails.announcementCategory }}
-            </span>
-            <span class="ml-[75em] ann-close-date" v-if="announcer.mode === 'close'"
->>>>>>> 426e833d011d2cceae368fb8e0919df1ddebe445
               ><span class="text-red-500">Closed date:</span>
               {{ convertTZ(announcementsDetails.closeDate) }}</span
             >
@@ -88,13 +76,8 @@ const convertTZ = (date) => {
         <tr class="border-2 border-gray-400 border-t-gray-200 p-5">
           <div class="p-2">
             <button
-<<<<<<< HEAD
               @click="router.push({ name: 'Home'})"
               class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:text-gray-400 hover:border-transparent w-[80px] "
-=======
-              @click="router.push('/announcement')"
-              class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
->>>>>>> 426e833d011d2cceae368fb8e0919df1ddebe445
             >
               Back
             </button>

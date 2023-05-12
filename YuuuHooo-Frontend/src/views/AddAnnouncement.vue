@@ -106,7 +106,7 @@ const addAnnouncement = async (announcement) => {
           <option disabled value="">Please select one</option>
           <option
             :value="category.categoryId"
-            v-for="(category, index) in categories"
+            v-for="(category, index) in categories" :key="category.categoryId"
           >
             {{ category.categoryName }}
           </option>
