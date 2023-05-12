@@ -101,13 +101,12 @@ public class announcementController {
 
     }
 
-    @GetMapping("announcements/pages")
+    @GetMapping("/announcements/pages")
     public PageDTO<AnnouncementDTO> getAnnouncementPage(
-            @RequestParam(defaultValue = "0")int page,
-            @RequestParam(defaultValue = "5")int size,
-
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
             @RequestParam String mode,
-            @RequestParam(defaultValue = "0") int category){
+            @RequestParam(defaultValue = "0") int category) {
 
         Page<Announcement> AnnouncementPageBase = announcementService.getAnnouncementWithPaging(page, size);
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
@@ -131,27 +130,27 @@ public class announcementController {
                             }
                         }
                     });
-            if(category != 0) {
+            if (category != 0) {
                 String categoryFilter = categoryService.getCategoryName(category);
                 List<Announcement> announcements =
                         announcementsFilter.stream()
-                                .filter(a -> a.getAnnouncementDisplay().contains("Y"))
-                                .filter(a -> a.getCategory().getCategoryName().contains(categoryFilter))
+                                .filter(ann -> ann.getCategory().getCategoryName().contains(categoryFilter))
+                                .filter(ann -> ann.getAnnouncementDisplay().contains("Y"))
                                 .collect(Collectors.toList());
 
                 Page<Announcement> announcementPage = new PageImpl<>(announcements);
-                return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
-            }else {
+                return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
+            } else {
                 List<Announcement> announcements =
-                announcementsFilter.stream()
-                        .filter(a -> a.getAnnouncementDisplay().contains("Y"))
-                        .collect(Collectors.toList());
+                        announcementsFilter.stream()
+                                .filter(a -> a.getAnnouncementDisplay().contains("Y"))
+                                .collect(Collectors.toList());
 
                 Page<Announcement> announcementPage = new PageImpl<>(announcements);
-                return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+                return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
             }
 
-        }else if (mode.equals("close")) {
+        } else if (mode.equals("close")) {
             List<Announcement> announcementsFilter = new ArrayList<>();
             AnnouncementPageBase.stream()
                     .forEach(a -> {
@@ -167,10 +166,10 @@ public class announcementController {
                             .collect(Collectors.toList());
 
             Page<Announcement> announcementPage = new PageImpl<>(announcements);
-            return listMapper.toPageDTO(announcementPage,AnnouncementDTO.class, modelMapper);
+            return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
         } else {
             Page<Announcement> AnnouncementPage = announcementService.getAnnouncementWithPaging(page, size);
-            return listMapper.toPageDTO(AnnouncementPage,AnnouncementDTO.class,modelMapper);
+            return listMapper.toPageDTO(AnnouncementPage, AnnouncementDTO.class, modelMapper);
         }
     }
 
@@ -213,7 +212,6 @@ public class announcementController {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);
         return announcementService.updateAnnouncement(announcement, updateAnnouncement);
     }
-
 
 
 }
