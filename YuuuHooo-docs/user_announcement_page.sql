@@ -1,6 +1,6 @@
 TRUNCATE TABLE announcements ;
 
-insert into announcements (announcementTitle, announcementDescription, announcementCategory ,publishDate,closeDate, announcementDisplay) values 
+insert into announcements (announcementTitle,announcementDescription, announcementCategory, publishDate, closeDate, announcementDisplay) values 
 ('(PBI10) Title 0','(PBI10) Description 0',1,'2023-05-01 06:00:00+07:00','2023-12-31 18:00:00+07:00','Y'),
 ('(PBI10) Title 1','(PBI10) Description 1',1,'2023-05-01 06:00:00+07:00','2023-12-31 18:00:00+07:00','Y'),
 ('(PBI10) Title 2','(PBI10) Description 2',1,'2023-05-01 06:00:00+07:00','2023-12-31 18:00:00+07:00','Y'),
