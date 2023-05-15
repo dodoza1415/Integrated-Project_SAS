@@ -108,39 +108,12 @@ const show = () => {
     </div>
     <div class="overflow-auto m-10">
       <div class="text-lg font-['Acme'] flex justify-between">
-        <span class="font-bold"
-          >Date/Time shown in Timezone &nbsp:
-          <span class="font-thin">&nbsp{{ timezone }}</span>
+        <span class="font-bold">Date/Time shown in Timezone &nbsp: <span class="font-thin">&nbsp{{ timezone }}</span> </span>
+        <span class="mb-[-20px] text-lg font-['Acme']">
+          <button @click="announcementMode(), announcementModeTitle()" :class="changeModeButton">{{ closedAnnouncements }}
+          </button>
         </span>
       </div>
-
-      <!-- <div class="mb-[-10px] flex justify-between">
-        <span class="text-lg font-['Acme'] font-bold"
-          >Choose Category &nbsp:
-          <select
-            class="ann-category-filter ml-3 mt-3 border border-gray rounded-md h-[2.0em] w-[7.5em] font-thin text-sm"
-            v-model="announcements.categoryId"
-          >
-            <option value="0">ทั้งหมด</option>
-            <option
-              :value="category.categoryId"
-              v-for="(category, index) in categories"
-              :key="category.categoryId"
-            >
-              {{ category.categoryName }}
-            </option>
-          </select>
-        </span>
-      </div> -->
-
-      <span class="mb-[-20px] text-lg font-['Acme'] ml-[70em]">
-        <button
-          @click="announcementMode(), announcementModeTitle()"
-          :class="changeModeButton"
-        >
-          {{ closedAnnouncements }}
-        </button>
-      </span>
       <div v-if="announcements.length === 0">
         <h3 class="text-2xl font-['Acme']">No Announcement</h3>
       </div>
@@ -174,11 +147,6 @@ const show = () => {
           </td>
         </tr>
       </table>
-      <!-- <div class="text-2xl font-['Acme'] mt-5">
-        <button class="ann-page-prev btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:text-slate-400 hover:border-transparent w-[80px]" :disabled="prevStatus">Prev</button>
-        <button class="ann-page-0 btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:text-slate-400 hover:border-transparent active:bg-green-500 active:text-white w-[50px]">1</button>
-        <button class="ann-page-next btn btn-info bg-gray-200 border-transparent hover:bg-green-500 hover:border-transparent hover:text-white w-[80px]" :disabled="nextStatus">Next</button>
-      </div> -->
     </div>
   </div>
 </template>
