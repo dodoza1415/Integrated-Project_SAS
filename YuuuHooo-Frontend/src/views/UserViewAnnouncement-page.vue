@@ -269,8 +269,9 @@ const changePage = (type, event) => {
           v-for="(page, index) in pageList"
           :key="index"
           @click="changePage('click', $event);"
-          :class=" index === announcer.page ? 'bg-green-400 text-black' : ''"
+          :class=" index=== announcer.page ? 'bg-green-400 text-black' : ''"
           >
+
           {{ page }}
         </button>
         <button
