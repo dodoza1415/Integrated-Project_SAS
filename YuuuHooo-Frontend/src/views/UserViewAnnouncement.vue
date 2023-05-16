@@ -1,7 +1,7 @@
 <script setup>
 import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { getCategories } from "../composable/getCategories.js";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAnnouncerStore } from "../stores/userview";
 
@@ -40,8 +40,28 @@ const announcementMode = () => {
   }
 };
 onMounted(async () => {
-  announcements.value = await getAnnouncements();
   categories.value = await getCategories();
+  announcer.setCateogry(0);
+
+  try {
+    const announcer = useAnnouncerStore();
+    const res = await fetch(
+      `${API_ROOT}/api/announcements/pages` +
+        "?" +
+        new URLSearchParams({
+          mode: announcer.mode,
+          category: announcer.category,
+        })
+    );
+    if (res.status === 200) {
+      // console.log(await res.json())
+      announcements.value = await res.json();
+      console.log(announcements.value);
+      // return announcements;
+    } else throw new Error("No Announcement");
+  } catch (error) {
+    console.log(error);
+  }
 
   announcementModeTitle();
   // console.log(announcements.value)
@@ -52,15 +72,19 @@ const fetchAnnouncement = async () => {
   try {
     const announcer = useAnnouncerStore();
     const res = await fetch(
-      `${API_ROOT}/api/announcements` +
+      `${API_ROOT}/api/announcements/pages` +
         "?" +
         new URLSearchParams({
           mode: announcer.mode,
+          category: announcer.category,
+          page: announcer.page,
         })
     );
     if (res.status === 200) {
+      // console.log(await res.json())
       announcements.value = await res.json();
-      return announcements;
+      // console.log(announcements.value.last)
+      // return announcements;
     } else throw new Error("No Announcement");
   } catch (error) {
     console.log(error);
@@ -91,14 +115,68 @@ const userDetailPage = (announcementId) => {
   router.push({ name: "UserDetails", params: { id: announcementId } });
 };
 
-const prevStatus = ref(false);
-const nextStatus = ref(false);
-// const ButtonDisabled = () => {
+const prevStatus = computed(() => {
+  if (announcements.value.first === true) {
+    return true;
+  }
+});
+const nextStatus = computed(() => {
+  if (announcements.value.last === true) {
+    return true;
+  }
+});
 
-// }
-const show = () => {
-  console.log(announcements.value);
+const pageList = computed(() => {
+  const range = 10;
+  const page = announcer.page + 1;
+  const pageList = [];
+
+  if (announcements.value.totalPages > 10) {
+    if (page < range) {
+      for (let i = 1; i <= 10; i++) {
+        pageList.push(i);
+      }
+    } else if (page >= range) {
+      for (let i = 1; i <= 10; i++) {
+        pageList.push(i + (page - range));
+      }
+    }
+  } else {
+    for (let i = 1; i <= announcements.value.totalPages; i++) {
+      pageList.push(i);
+    }
+  }
+
+  return pageList;
+});
+
+const changePage = (type, event) => {
+  if (type === "click") {
+    announcer.setPage(event.target.textContent - 1);
+    fetchAnnouncement();
+  } else if (type === "next") {
+    if (announcer.page < announcements.value.totalPages - 1) {
+      announcer.setPage(announcer.page + 1);
+      // console.log(announcer.page)
+      // console.log(pageList.value)
+      // console.log(announcements.value.totalPages - 1)
+      fetchAnnouncement();
+    }
+  } else if (type === "prev") {
+    // console.log(announcer.page)
+    if (announcer.page >= 1) {
+      announcer.setPage(announcer.page - 1);
+      fetchAnnouncement();
+    }
+  }
 };
+
+const show = (i) => {
+  // console.log(pageList.value[i])
+  // console.log(i)
+  
+}
+
 </script>
 
 <template>
@@ -108,14 +186,43 @@ const show = () => {
     </div>
     <div class="overflow-auto m-10">
       <div class="text-lg font-['Acme'] flex justify-between">
-        <span class="font-bold">Date/Time shown in Timezone &nbsp: <span class="font-thin">&nbsp{{ timezone }}</span> </span>
+        <span class="font-bold"
+          >Date/Time shown in Timezone &nbsp:
+          <span class="font-thin">&nbsp{{ timezone }}</span>
+        </span>
+      </div>
+      <div class="mb-[-10px] flex justify-between">
+        <span class="text-lg font-['Acme'] font-bold"
+          >Choose Category &nbsp:
+          <select
+            class="ann-category-filter ml-3 mt-3 border border-gray rounded-md h-[2.0em] w-[7.5em] font-thin text-sm"
+            v-model="announcer.category"
+            @change="
+              announcer.setCateogry(announcer.category);
+              fetchAnnouncement();
+            "
+          >
+            <option value="0" selected>ทั้งหมด</option>
+            <option
+              v-for="(category, index) in categories"
+              :value="category.categoryId"
+              :key="category.categoryId"
+            >
+              {{ category.categoryName }}
+            </option>
+          </select>
+        </span>
         <span class="mb-[-20px] text-lg font-['Acme']">
-          <button @click="announcementMode(), announcementModeTitle()" :class="changeModeButton">{{ closedAnnouncements }}
+          <button
+            @click="announcementMode(), announcementModeTitle()"
+            :class="changeModeButton"
+          >
+            {{ closedAnnouncements }}
           </button>
         </span>
       </div>
-      <div v-if="announcements.length === 0">
-        <h3 class="text-2xl font-['Acme']">No Announcement</h3>
+      <div v-if="announcements.totalElements === 0">
+        <h3 class="text-2xl font-['Acme'] mt-5">No Announcement</h3>
       </div>
       <table
         v-else
@@ -128,8 +235,8 @@ const show = () => {
           <th class="text-lg">Category</th>
         </tr>
         <tr
-          v-for="(announcement, index) in announcements"
-          :key="announcement.id"
+          v-for="(announcement, index) in announcements.content"
+          :key="index"
           class="ann-item font-semibold border border-gray-300"
         >
           <td class="text-center">{{ ++index }}</td>
@@ -147,6 +254,35 @@ const show = () => {
           </td>
         </tr>
       </table>
+      <div
+        class="text-2xl font-['Acme'] mt-5"
+        v-if="announcements.totalElements > 5"
+      >
+        <!-- v-if="announcements.length >= 5" -->
+        <button
+          class="ann-page-prev btn btn-info bg-gray-200 border-transparent hover:bg-green-600 hover:text-white hover:border-transparent w-[80px]"
+          :disabled="prevStatus"
+          @click="changePage('prev', $event)"
+        >
+          Prev
+        </button>
+        <button
+          class="ann-page-0 btn bg-gray-200 border-transparent text-black hover:border-transparent hover:bg-green-400 m-1"
+          v-for="(page, index) in pageList"
+          :key="index"
+          @click="changePage('click', $event);"
+          :class="pageList[index] - 1 === announcer.page ? 'bg-green-400 text-black' : ''"
+        >
+          {{ page }}
+        </button>
+        <button
+          class="ann-page-next btn btn-info bg-gray-200 border-transparent hover:bg-green-500 hover:border-transparent hover:text-white w-[80px]"
+          :disabled="nextStatus"
+          @click="changePage('next', $event);"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </template>
