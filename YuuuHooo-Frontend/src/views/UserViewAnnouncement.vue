@@ -220,6 +220,7 @@ const show = (i) => {
         <span class="mb-[-20px] text-lg font-['Acme']">
           <button
             @click="announcementMode(), announcementModeTitle()"
+            class="ann-button"
             :class="changeModeButton"
           >
             {{ closedAnnouncements }}
@@ -272,11 +273,11 @@ const show = (i) => {
           Prev
         </button>
         <button
-          class="ann-page-0 btn bg-gray-200 border-transparent text-black hover:border-transparent hover:bg-green-400 m-1"
+          class="btn bg-gray-200 border-transparent text-black hover:border-transparent hover:bg-green-400 m-1"
           v-for="(page, index) in pageList"
           :key="index"
           @click="changePage('click', $event);"
-          :class="pageList[index] - 1 === announcer.page ? 'bg-green-400 text-black' : ''"
+          :class="pageList[index] - 1 === announcer.page ? `ann-page-${pageList[index] - 1} bg-green-400 text-black` : `ann-page-${pageList[index] - 1}`"
         >
           {{ page }}
         </button>
