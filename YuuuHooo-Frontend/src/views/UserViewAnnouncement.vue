@@ -32,11 +32,14 @@ const changeModeButton = ref(
 const announcementMode = () => {
   if (announcer.mode === "active") {
     announcer.setMode("close");
+    announcer.setPage(0)
     fetchAnnouncement();
+    console.log(announcements.value)
   } else if (announcer.mode === "close") {
     announcer.setMode("active");
+    announcer.setPage(0)
     fetchAnnouncement();
-    // console.log(closedAnnouncements)
+    console.log(announcements.value)
   }
 };
 onMounted(async () => {
@@ -150,6 +153,8 @@ const pageList = computed(() => {
   return pageList;
 });
 
+
+
 const changePage = (type, event) => {
   if (type === "click") {
     announcer.setPage(event.target.textContent - 1);
@@ -239,7 +244,7 @@ const show = (i) => {
           :key="index"
           class="ann-item font-semibold border border-gray-300"
         >
-          <td class="text-center">{{ ++index }}</td>
+          <td class="text-center">{{ ++index + (5 * announcer.page) }}</td>
           <td
             class="ann-title cursor-pointer hover:text-gray-500"
             @click="userDetailPage(announcement.id)"
