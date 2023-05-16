@@ -277,7 +277,7 @@ const show = (i) => {
           v-for="(page, index) in pageList"
           :key="index"
           @click="changePage('click', $event);"
-          :class="pageList[index] - 1 === announcer.page ? `ann-page-${pageList[index] - 1} bg-green-400 text-black` : `ann-page-${pageList[index] - 1}`"
+          :class="pageList[index] - 1 === announcer.page ? `ann-page-${index} bg-green-400 text-black` : `ann-page-${index}`"
         >
           {{ page }}
         </button>
