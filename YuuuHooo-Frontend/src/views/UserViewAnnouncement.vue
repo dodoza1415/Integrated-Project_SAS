@@ -158,7 +158,7 @@ const changePage = (type, event) => {
     announcer.setPage(event.target.textContent - 1);
     fetchAnnouncement();
   } else if (type === "next") {
-    if (announcer.page === announcements.value.totalPages - 1) {
+    if (announcer.page < announcements.value.totalPages - 1) {
       announcer.setPage(announcer.page + 1);
       // console.log(announcer.page)
       // console.log(pageList.value)
