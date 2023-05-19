@@ -17,7 +17,7 @@ onMounted(async () => {
   const announcementId = params.id;
   try {
     const res = await fetch(
-      `${API_ROOT}/api/announcements/${announcementId}`
+      `${API_ROOT}/api/announcements/${announcementId}?count=false`
     );
     if (res.status === 200) {
       announcementsDetails.value = await res.json();
@@ -70,7 +70,7 @@ const convertTZ = (date) => {
           <tr>
             <th class="text-left text-[30px]">Description:</th>
             <div class="m-4">
-            <td class="ann-description pl-[20px] text-[20px]">{{ announcementsDetails.announcementDescription }}</td>
+            <td class="ann-description pl-[20px] text-[20px]" v-html="announcementsDetails.announcementDescription"></td>
           </div>
           </tr>
           <tr>
@@ -91,11 +91,17 @@ const convertTZ = (date) => {
             <td class="ann-display pl-[20px] text-[20px]">{{ announcementsDetails.announcementDisplay }}</td>
           </div>
           </tr>
+          <tr>
+            <th class="text-left text-[30px]">View counts:</th>
+            <div class="m-4">
+            <td class="ann-counter pl-[20px] text-[20px]">{{ announcementsDetails.viewCount }}</td>
+          </div>
+          </tr>
         </table>
         <!-- <div class="text-blue-400 hover:text-gray-500 mt-5 text-[20px]"> -->
           <div class="mt-5">
           <button
-                @click="router.push('/')"
+                @click="router.push({name: 'AnnouncementList'})"
                 class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
               >
               Back

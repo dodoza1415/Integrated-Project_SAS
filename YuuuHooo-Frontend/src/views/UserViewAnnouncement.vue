@@ -32,14 +32,14 @@ const changeModeButton = ref(
 const announcementMode = () => {
   if (announcer.mode === "active") {
     announcer.setMode("close");
-    announcer.setPage(0)
+    announcer.setPage(0);
     fetchAnnouncement();
-    console.log(announcements.value)
+    console.log(announcements.value);
   } else if (announcer.mode === "close") {
     announcer.setMode("active");
-    announcer.setPage(0)
+    announcer.setPage(0);
     fetchAnnouncement();
-    console.log(announcements.value)
+    console.log(announcements.value);
   }
 };
 onMounted(async () => {
@@ -153,14 +153,12 @@ const pageList = computed(() => {
   return pageList;
 });
 
-
-
 const changePage = (type, event) => {
   if (type === "click") {
     announcer.setPage(event.target.textContent - 1);
     fetchAnnouncement();
   } else if (type === "next") {
-    if (announcer.page < announcements.value.totalPages - 1) {
+    if (announcer.page === announcements.value.totalPages - 1) {
       announcer.setPage(announcer.page + 1);
       // console.log(announcer.page)
       // console.log(pageList.value)
@@ -176,16 +174,29 @@ const changePage = (type, event) => {
   }
 };
 
-const show = (i) => {
-  // console.log(pageList.value[i])
-  // console.log(i)
-  
-}
-
+const setView = () => {
+  if (announcer.view === true) {
+    router.push({ name: "AnnouncementList" });
+  } else {
+    router.push({ name: "UserViewAnnouncement" });
+  }
+};
 </script>
 
 <template>
   <div>
+    <div class="flex m-3">
+      <input
+        type="checkbox"
+        class="toggle toggle-info"
+        v-model="announcer.view"
+        :checked="announcer.view"
+        @change="setView()"
+      />
+      <span class="pl-3">{{
+        announcer.view === true ? "Admin view" : "Client view"
+      }}</span>
+    </div>
     <div class="text-2xl font-['Acme'] m-10 text-center font-bold">
       SIT Announcement System (SAS)
     </div>
@@ -204,6 +215,7 @@ const show = (i) => {
             v-model="announcer.category"
             @change="
               announcer.setCateogry(announcer.category);
+              announcer.setPage(0);
               fetchAnnouncement();
             "
           >
@@ -245,7 +257,7 @@ const show = (i) => {
           :key="index"
           class="ann-item font-semibold border border-gray-300"
         >
-          <td class="text-center">{{ ++index + (5 * announcer.page) }}</td>
+          <td class="text-center">{{ ++index + 5 * announcer.page }}</td>
           <td
             class="ann-title cursor-pointer hover:text-gray-500"
             @click="userDetailPage(announcement.id)"
@@ -276,15 +288,19 @@ const show = (i) => {
           class="btn bg-gray-200 border-transparent text-black hover:border-transparent hover:bg-green-400 m-1"
           v-for="(page, index) in pageList"
           :key="index"
-          @click="changePage('click', $event);"
-          :class="pageList[index] - 1 === announcer.page ? `ann-page-${index} bg-green-400 text-black` : `ann-page-${index}`"
+          @click="changePage('click', $event)"
+          :class="
+            pageList[index] - 1 === announcer.page
+              ? `ann-page-${index} bg-green-400 text-black`
+              : `ann-page-${index}`
+          "
         >
           {{ page }}
         </button>
         <button
           class="ann-page-next btn btn-info bg-gray-200 border-transparent hover:bg-green-500 hover:border-transparent hover:text-white w-[80px]"
           :disabled="nextStatus"
-          @click="changePage('next', $event);"
+          @click="changePage('next', $event)"
         >
           Next
         </button>

@@ -19,4 +19,5 @@ public class AnnouncementByIdDTO {
     private String announcementDisplay;
     private String announcementCategory;
     private int categoryId;
+    private int viewCount;
 }

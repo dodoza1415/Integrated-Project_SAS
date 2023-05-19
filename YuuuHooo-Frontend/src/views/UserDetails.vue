@@ -14,7 +14,7 @@ const announcementsDetails = ref({});
 onMounted(async () => {
   const announcementId = params.id;
   try {
-    const res = await fetch(`${API_ROOT}/api/announcements/${announcementId}`);
+    const res = await fetch(`${API_ROOT}/api/announcements/${announcementId}?count=true`);
     if (res.status === 200) {
       announcementsDetails.value = await res.json();
       // console.log(announcementsDetails.value)
@@ -69,8 +69,7 @@ const convertTZ = (date) => {
           </td>
         </tr>
         <tr class="p-50">
-          <th class="text-left text-base ann-description font-normal p-5">
-            {{ announcementsDetails.announcementDescription }}
+          <th class="text-left text-base ann-description font-normal p-5" v-html="announcementsDetails.announcementDescription">
           </th>
         </tr>
         <tr class="border-2 border-gray-400 border-t-gray-200 p-5">

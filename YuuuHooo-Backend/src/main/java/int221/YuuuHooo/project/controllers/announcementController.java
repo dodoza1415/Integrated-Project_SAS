@@ -32,6 +32,8 @@ public class announcementController {
     @Autowired
     private announcementService announcementService;
 
+    @Autowired
+    private announcementRepository announcementRepository;
 
     @Autowired
     private categoryService categoryService;
@@ -188,10 +190,20 @@ public class announcementController {
 
 
     @GetMapping("/announcements/{id}")
-    public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id) {
-        Announcement announcement = announcementService.getAnnouncementById(id);
-        AnnouncementByIdDTO announcementDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
-        return announcementDTO;
+    public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id, @RequestParam(defaultValue = "false") boolean count ) {
+        if(count == true){
+            Announcement announcement = announcementService.getAnnouncementById(id);
+            announcement.setViewCount(announcement.getViewCount() + 1);
+            announcementRepository.saveAndFlush(announcement);
+            AnnouncementByIdDTO announcementDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
+            return announcementDTO;
+        }else {
+            Announcement announcement = announcementService.getAnnouncementById(id);
+            AnnouncementByIdDTO announcementDTO = modelMapper.map(announcement, AnnouncementByIdDTO.class);
+            return announcementDTO;
+
+        }
+
 
     }
 

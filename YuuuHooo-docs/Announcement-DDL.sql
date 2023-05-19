@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `announcement`.`announcements` (
   `closeDate` DATETIME NULL,
   `announcementDisplay` ENUM('Y', 'N') NOT NULL DEFAULT 'N',
   `announcementCategory` INT NOT NULL DEFAULT 1,
+  `viewCount` SMALLINT unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`idAnnouncement`),
   INDEX `fk_Announcement_Category_idx` (`announcementCategory` ASC) VISIBLE,
   CONSTRAINT `fk_Announcement_Category`

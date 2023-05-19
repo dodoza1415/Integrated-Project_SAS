@@ -2,6 +2,9 @@
 import { ref, computed, onMounted } from "vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import { getCategories } from "../composable/getCategories";
+import { QuillEditor } from "@vueup/vue-quill";
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 
@@ -68,7 +71,7 @@ const addAnnouncement = async (announcement) => {
     });
     if (res.status === 200) {
       const announcementAdded = await res.json();
-      await router.push("/");
+      await router.push({name: 'AnnouncementList'});
       // console.log(announcementAdded);
     } else {
       throw new Error(
@@ -106,7 +109,8 @@ const addAnnouncement = async (announcement) => {
           <option disabled value="">Please select one</option>
           <option
             :value="category.categoryId"
-            v-for="(category, index) in categories" :key="category.categoryId"
+            v-for="(category, index) in categories"
+            :key="category.categoryId"
           >
             {{ category.categoryName }}
           </option>
@@ -114,12 +118,15 @@ const addAnnouncement = async (announcement) => {
         <!-- {{ newAnnouncement.categoryId }} -->
       </div>
       <div class="mt-3">
-        <span class="text-left text-[20px]">Description </span><br />
-        <textarea
-          class="textarea textarea-bordered ann-description pl-[20px] w-[30em] h-[10em]"
-          v-model="newAnnouncement.announcementDescription"
+        <span class="text-left text-[20px]">Description </span><br/>
+        <QuillEditor
+          theme="snow"
+          toolbar="essential"
+          contentType="html"
+          class="ann-description h-[15em]"
+          v-model:content="newAnnouncement.announcementDescription"
           required
-        ></textarea>
+        ></QuillEditor>
       </div>
       <div class="mt-3">
         <span class="text-left text-[20px]">Publish Date</span><br />
@@ -183,7 +190,7 @@ const addAnnouncement = async (announcement) => {
         <!-- ปุ่ม Submit => user ต้องมีการ input ค่า title , category , description เข้ามาก่อนถึงจะกดได้ ไม่งั้นต้อง disabled (publishdate , closedate = optional , display default = N) -->
         <span class="ml-2"
           ><button
-            @click="router.push('/')"
+            @click="router.push({name: 'AnnouncementList'})"
             class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:border-transparent"
           >
             Cancel

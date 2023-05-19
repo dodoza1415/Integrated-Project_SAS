@@ -6,6 +6,7 @@ import AddAnnouncement from "../views/AddAnnouncement.vue";
 import EditAnnouncement from "../views/EditAnnouncement.vue";
 import UserViewAnnouncement from "../views/UserViewAnnouncement.vue";
 import UserDetails from "../views/UserDetails.vue"
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

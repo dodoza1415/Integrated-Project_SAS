@@ -28,4 +28,6 @@ public class Announcement {
     @ManyToOne
     @JoinColumn(name = "announcementCategory")
     private Category category;
+
+    private int viewCount;
 }

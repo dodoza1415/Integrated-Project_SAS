@@ -1,6 +1,11 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { getCategories } from "../composable/getCategories";
+import { QuillEditor } from "@vueup/vue-quill";
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
+
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 
@@ -174,13 +179,16 @@ const change = () => {
           <tr>
             <th class="text-left text-[30px]">Description:</th>
             <div class="m-4">
-              <textarea
+              <QuillEditor
                 placeholder="write description..."
-                class="textarea textarea-bordered w-full ann-description pl-[20px]"
-                v-model="announcementDetails.announcementDescription"
-                required
+                theme="snow"
+                toolbar="essential"
+                contentType="html"
+                class="ann-description h-[15em]"
+                v-model:content="announcementDetails.announcementDescription"
                 @input="userModifying = false"
-              ></textarea>
+                required
+              ></QuillEditor>
             </div>
           </tr>
           <tr>
