@@ -24,7 +24,7 @@ onMounted(async () => {
       // console.log(announcementsDetails.value)
     }else if(res.status !== 200){
       alert("The requested page is not available!") 
-      router.push('/');
+      router.push('/admin/announcement');
     }else throw new Error("No Announcement");
   } catch (error) {
     console.log(error);
