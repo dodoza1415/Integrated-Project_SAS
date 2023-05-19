@@ -14,6 +14,8 @@ onMounted(async () => {
   categories.value = await getCategories();
   console.log(categories.value);
 });
+
+
 const newAnnouncement = ref({
   announcementTitle: "",
   announcementDescription: "",
@@ -55,9 +57,9 @@ const getDisplay = (v) => {
 
 const router = useRouter();
 
-// const show = (ann) => {
-//   console.log(ann);
-// };
+const show = (ann) => {
+  console.log(ann);
+};
 
 const addAnnouncement = async (announcement) => {
   // ต้องรวม publishdate-time , closedate-time เข้าด้วยกันก่อน
@@ -181,7 +183,8 @@ const addAnnouncement = async (announcement) => {
             getDisplay(newAnnouncement.announcementDisplay);
             convertUTC(publish_Date, publish_Time, 'publish');
             convertUTC(close_Date, close_Time, 'close');
-            addAnnouncement(newAnnouncement);
+            show(newAnnouncement);
+            addAnnouncement(newAnnouncement)
           "
           class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-green-300 hover:border-transparent"
         >

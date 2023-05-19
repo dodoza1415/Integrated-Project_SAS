@@ -9,6 +9,7 @@ const announcer = useAnnouncerStore();
 const announcements = ref([]);
 
 onMounted(async () => {
+  announcer.setMode('admin')
   announcements.value = await getAnnouncements();
   // console.log(announcements.value)
 });
@@ -61,28 +62,11 @@ const deleteAnnouncement = async (id) => {
   }
 };
 
-const setView = () => {
-    if (announcer.view === true) {
-      router.push({ name: "AnnouncementList" });
-    } else {
-      router.push({ name: "UserViewAnnouncement" });
-    }
-  };
 </script>
 
 <template>
   <div>
     <div>
-      <div class="flex m-3">
-        <input
-          type="checkbox"
-          class="toggle toggle-info"
-          v-model="announcer.view"
-          :checked="announcer.view"
-          @change="setView()"
-        />
-        <span class="pl-3">{{ announcer.view === true ? "Admin view" : "Client view" }}</span>
-      </div>
       <div class="text-2xl font-['Acme'] m-10">
         SIT Announcement System (SAS)
       </div>

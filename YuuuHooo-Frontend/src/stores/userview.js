@@ -7,7 +7,6 @@ export const useAnnouncerStore = defineStore("announcer", () => {
   const mode = ref("active");
   const category = ref(0);
   const page = ref(0);
-  const view = ref(true);
 
   const setMode = (newMode) => {
     mode.value = newMode;
@@ -22,7 +21,7 @@ export const useAnnouncerStore = defineStore("announcer", () => {
     page.value = newPage;
   };
 
-  return { mode, category, page, setMode, setCateogry, setPage, view };
+  return { mode, category, page, setMode, setCateogry, setPage };
 });
 
 if (import.meta.hot) {
