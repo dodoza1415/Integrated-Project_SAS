@@ -14,7 +14,7 @@ export const useAnnouncerStore = defineStore("announcer", () => {
 
   const setCateogry = (newCategory) => {
     category.value = newCategory;
-    console.log(category.value);
+    // console.log(category.value);
   };
 
   const setPage = (newPage) => {

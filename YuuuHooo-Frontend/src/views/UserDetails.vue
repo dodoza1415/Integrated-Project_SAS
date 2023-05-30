@@ -46,6 +46,7 @@ const convertTZ = (date) => {
     return "-";
   }
 };
+
 </script>
 
 <template>
@@ -75,7 +76,7 @@ const convertTZ = (date) => {
         <tr class="border-2 border-gray-400 border-t-gray-200 p-5">
           <div class="p-2">
             <button
-              @click="router.push({ name: 'Home'})"
+              @click="router.push({ name: 'Home'});"
               class="ann-button btn btn-info bg-gray-200 border-transparent hover:bg-gray-300 hover:text-gray-400 hover:border-transparent w-[80px] "
             >
               Back

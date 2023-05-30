@@ -34,12 +34,12 @@ const announcementMode = () => {
     announcer.setMode("close");
     announcer.setPage(0);
     fetchAnnouncement();
-    console.log(announcements.value);
+    // console.log(announcements.value);
   } else if (announcer.mode === "close") {
     announcer.setMode("active");
     announcer.setPage(0);
     fetchAnnouncement();
-    console.log(announcements.value);
+    // console.log(announcements.value);
   }
 };
 onMounted(async () => {
@@ -54,12 +54,13 @@ onMounted(async () => {
         new URLSearchParams({
           mode: announcer.mode,
           category: announcer.category,
+          page: announcer.page
         })
     );
     if (res.status === 200) {
       // console.log(await res.json())
       announcements.value = await res.json();
-      console.log(announcements.value);
+      // console.log(announcements.value);
       // return announcements;
     } else throw new Error("No Announcement");
   } catch (error) {

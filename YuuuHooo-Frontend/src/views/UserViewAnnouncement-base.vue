@@ -42,7 +42,6 @@ const announcementMode = () => {
 onMounted(async () => {
   announcements.value = await getAnnouncements();
   categories.value = await getCategories();
-
   announcementModeTitle();
   // console.log(announcements.value)
   // console.log(announcer.mode)
@@ -96,9 +95,7 @@ const nextStatus = ref(false);
 // const ButtonDisabled = () => {
 
 // }
-const show = () => {
-  console.log(announcements.value);
-};
+
 </script>
 
 <template>

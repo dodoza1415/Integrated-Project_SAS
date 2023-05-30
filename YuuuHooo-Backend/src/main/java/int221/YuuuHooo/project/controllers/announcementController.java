@@ -141,8 +141,7 @@ public class announcementController {
                                 .filter(ann -> ann.getAnnouncementDisplay().contains("Y"))
                                 .collect(Collectors.toList());
 
-                Page<Announcement> announcementPage = announcementService.getAnnouncementWithPaging(page, size);
-                return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
+                return announcementService.listToPage(announcements, page, size);
 
             } else {
                 List<Announcement> announcements =
@@ -150,6 +149,7 @@ public class announcementController {
                                 .filter(a -> a.getAnnouncementDisplay().contains("Y"))
                                 .collect(Collectors.toList());
 
+                //แก้ ใช้ listmapper
                 return announcementService.listToPage(announcements, page, size);
             }
 
