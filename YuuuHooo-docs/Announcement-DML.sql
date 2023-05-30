@@ -3,6 +3,7 @@
 insert into categories values
 (1, "ทั่วไป"),(2, "ทุนการศึกษา"),(3, "หางาน"),(4, "ฝึกงาน");
 
+
 -- INSERT Test Data announcement-base 
 insert into announcements(idAnnouncement,announcementTitle,announcementDescription,announcementCategory,publishDate,closeDate,announcementDisplay)
 VALUES ('1', 'บริษัท เน็ตเซอร์พลัส จำกัด รับสมัครงาน 2 ตำแหน่ง', 'บริษัท เน็ตเซอร์พลัส จำกัด เปิดรับสมัครงาน 2 ตำแหน่ง Application Support และ Customer Support',3,null,null,'N'),

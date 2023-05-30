@@ -141,7 +141,8 @@ public class announcementController {
                                 .filter(ann -> ann.getAnnouncementDisplay().contains("Y"))
                                 .collect(Collectors.toList());
 
-                return announcementService.listToPage(announcements, page, size);
+                Page<Announcement> announcementPage = announcementService.getAnnouncementWithPaging(page, size);
+                return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
 
             } else {
                 List<Announcement> announcements =
