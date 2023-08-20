@@ -21,6 +21,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,9 +50,8 @@ public class announcementController {
     public List<AnnouncementDTO> getAnnouncement(@RequestParam(defaultValue = "admin") String mode) {
         List<Announcement> announcementBase = announcementService.getAnnouncement();
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
-
         if (mode.equals("active")) {
-            List<Announcement> announcementsFilter = new ArrayList<>();
+            List<Announcement> announcementsFilter = new ArrayList<>(); // []
             announcementBase.stream()
                     .forEach(a -> {
                         if (a.getPublishDate() == null && a.getCloseDate() == null) {
@@ -75,6 +75,7 @@ public class announcementController {
                             .filter(a -> a.getAnnouncementDisplay().contains("Y"))
                             .map(a -> modelMapper.map(a, AnnouncementDTO.class))
                             .collect(Collectors.toList());
+            System.out.println(announcementsFilter.size());
             return announcementDTOList;
 
         } else if (mode.equals("close")) {
@@ -111,7 +112,6 @@ public class announcementController {
             @RequestParam(defaultValue = "0") int category) {
 
         List<Announcement> announcementBase = announcementService.getAnnouncement();
-//        Page<Announcement> AnnouncementPageBase = announcementService.getAnnouncementWithPaging(page, size);
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
         if (mode.equals("active")) {
             List<Announcement> announcementsFilter = new ArrayList<>();
@@ -149,7 +149,6 @@ public class announcementController {
                                 .filter(a -> a.getAnnouncementDisplay().contains("Y"))
                                 .collect(Collectors.toList());
 
-                //แก้ ใช้ listmapper
                 return announcementService.listToPage(announcements, page, size);
             }
 

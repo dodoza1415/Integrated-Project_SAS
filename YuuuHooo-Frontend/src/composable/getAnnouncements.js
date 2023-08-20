@@ -1,5 +1,3 @@
-import { useAnnouncerStore } from "../stores/userview";
-
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 
 export const getAnnouncements = async () => {

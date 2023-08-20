@@ -89,7 +89,7 @@ public class announcementService {
         beforeAnnouncement.setPublishDate(afterAnnouncement.getPublishDate());
         beforeAnnouncement.setCloseDate(afterAnnouncement.getCloseDate());
         beforeAnnouncement.setAnnouncementDisplay(afterAnnouncement.getAnnouncementDisplay());
-        Announcement announcement = modelMapper.map(beforeAnnouncement,Announcement.class);
+        Announcement announcement = modelMapper.map(beforeAnnouncement, Announcement.class);
         return modelMapper.map(announcementRepository.saveAndFlush(announcement),AddAnnouncementDTO.class);
     }
 
@@ -106,6 +106,7 @@ public class announcementService {
 
         Page<Announcement> announcementPage = new PageImpl<>(announcements.subList(start, end), pageable, announcements.size());
         return listMapper.toPageDTO(announcementPage, AnnouncementDTO.class, modelMapper);
+
     }
 
 

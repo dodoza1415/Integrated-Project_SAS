@@ -33,7 +33,7 @@ const convertTZ = (date) => {
       minute: "numeric",
       timeZone: timezone,
     };
-    return convertDate.toLocaleDateString("en-GB", options);
+    return convertDate.toLocaleDateString("en-GB", options); //format + convert
   } else {
     return "-";
   }
@@ -65,13 +65,28 @@ const deleteAnnouncement = async (id) => {
 </script>
 
 <template>
-  <div>
-    <div>
+  <div class="flex flex-row">
+    <div class="w-[20em] flex flex-col mt-5 ml-5 pr-5 gap-1 border-r-4 border-r-black ">
+      <div class="ann-app-title h-[2em] text-[3em] font-['Acme'] text-center">
+        SAS
+      </div>
+      <div 
+      @click="router.push('/admin/announcement')"
+      class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-rose-500 hover:border-transparent hover:text-white cursor-pointer">
+        Announcement
+      </div>
+      <div 
+      @click="router.push('/admin/user')"
+      class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-emerald-500 hover:border-transparent hover:text-white cursor-pointer">
+        User
+      </div>
+    </div>
+    <div class="w-full">
       <div class="text-2xl font-['Acme'] m-10">
         SIT Announcement System (SAS)
       </div>
       <div class="overflow-auto m-10">
-        <div class="grid justify-items-start">
+        <div class="grid grid-cols-2 justify-items-start">
           <div class="text-2xl font-['Acme']">
             Date/Time shown in Timezone: {{ timezone }}
           </div>
@@ -116,7 +131,7 @@ const deleteAnnouncement = async (id) => {
             </td>
             <td class="ann-display">{{ announcement.announcementDisplay }}</td>
             <td class="ann-counter">{{ announcement.viewCount }}</td>
-            <div class="flex mr-[-5em]">
+            <div class="flex mr-[-4em]">
               <div>
                 <td>
                   <button

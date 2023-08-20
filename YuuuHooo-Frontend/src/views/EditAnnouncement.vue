@@ -21,12 +21,7 @@ onMounted(async () => {
     const res = await fetch(`${API_ROOT}/api/announcements/${announcementId}`);
     if (res.status === 200) {
       announcementDetails.value = await res.json();
-      convertTime(
-        announcementDetails.value.publishDate,
-        null,
-        "publish",
-        "UTC"
-      );
+      convertTime(announcementDetails.value.publishDate,null,"publish","UTC");
       convertTime(announcementDetails.value.closeDate, null, "close", "UTC");
       // console.log(typeof announcementDetails.value.closeDate === "object");
       // console.log(announcementDetails)
@@ -52,18 +47,6 @@ const EditAnnouncement = async (updateAnnouncement) => {
     });
     if (res.status === 200) {
       console.log("edit sucessfully");
-      // announcementDetails.value = announcementDetails.value.map((r) => {
-      //   if (r.id === updateAnnouncement.id) {
-      //     r.announcementTitle = updateAnnouncement.announcementTitle;
-      //     r.announcementDescription =
-      //       updateAnnouncement.announcementDescription;
-      //     r.categoryId = updateAnnouncement.categoryId;
-      //     r.publishDate = updateAnnouncement.publishDate;
-      //     r.closeDate = updateAnnouncement.closeDate;
-      //     r.announcementDisplay = updateAnnouncement.announcementDisplay;
-      //   }
-      //   return r;
-      // });
       router.push(`/admin/announcement/${params.id}`);
     } else if (res.status !== 200) {
       alert(
@@ -74,6 +57,7 @@ const EditAnnouncement = async (updateAnnouncement) => {
     console.log(error);
   }
 };
+
 
 const publish_Date = ref(null);
 const publish_Time = ref(null);
@@ -124,15 +108,7 @@ const convertTime = (date = null, time = null, type, tz) => {
   }
 };
 
-const show = (updateAnn) => {
-  console.log(close_Date.value);
-  console.log(updateAnn);
-};
-
 const userModifying = ref(true);
-const change = () => {
-  userModifying.value = !userModifying.value;
-};
 </script>
 
 <template>

@@ -5,7 +5,9 @@ import NotFound from "../views/NotFound.vue";
 import AddAnnouncement from "../views/AddAnnouncement.vue";
 import EditAnnouncement from "../views/EditAnnouncement.vue";
 import UserViewAnnouncement from "../views/UserViewAnnouncement.vue";
-import UserDetails from "../views/UserDetails.vue"
+import UserViewDetails from "../views/UserViewDetails.vue"
+import User from "../views/User.vue"
+import AddUser from "../views/AddUser.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,8 +49,18 @@ const router = createRouter({
     },
     {
       path: "/announcement/:id",
-      name: "UserDetails",
-      component: UserDetails,
+      name: "UserViewDetails",
+      component: UserViewDetails,
+    },
+    {
+      path: "/admin/user",
+      name: "UserList",
+      component: User,
+    },
+    {
+      path: "/admin/user/add",
+      name: "AddUser",
+      component: AddUser,
     },
   ],
 });
