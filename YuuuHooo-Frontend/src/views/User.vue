@@ -58,7 +58,7 @@ const deleteUser = () => {
                     <th class="text-lg">Action</th>
                 </tr>
                 <tr 
-                class="ann-item border border-black hover:bg-slate-100">
+                class="ann-item border border-black">
                     <th>1.</th>
                     <th class="ann-username text-[15px]">Hello123</th>
                     <th class="ann-name text-[15px]">Hello Eiei</th>
@@ -67,7 +67,11 @@ const deleteUser = () => {
                     <th class="ann-created-on text-[15px]">Today</th>
                     <th class="ann-updated-on text-[15px]">Today</th>
                     <th class="grid grid-cols-2 gap-2">
-                        <button class="ann-button border border-black rounded-lg text-[15px] p-2 hover:bg-amber-200">edit</button>
+                        <button 
+                        class="ann-button border border-black rounded-lg text-[15px] p-2 hover:bg-amber-200"
+                        @click="router.push('/admin/user/id/edit')">
+                          edit
+                        </button>
                         <button 
                         class="ann-button border border-black rounded-lg text-[15px] p-2 hover:bg-red-300"
                         @click="deleteUser()">
