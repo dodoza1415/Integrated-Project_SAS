@@ -3,6 +3,7 @@ import { getAnnouncements } from "../composable/getAnnouncements.js";
 import { onMounted, ref, onBeforeMount } from "vue";
 import { useRouter, RouterLink } from "vue-router";
 import { useAnnouncerStore } from "../stores/userview";
+import sasNav from "../components/sasNav.vue";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 const announcer = useAnnouncerStore();
@@ -62,25 +63,15 @@ const deleteAnnouncement = async (id) => {
   }
 };
 
+const changeView = (view) => {
+  router.push(`/admin/${view}`)
+}
+
 </script>
 
 <template>
   <div class="flex flex-row">
-    <div class="w-[20em] flex flex-col mt-5 ml-5 pr-5 gap-1 border-r-4 border-r-black ">
-      <div class="ann-app-title h-[2em] text-[3em] font-['Acme'] text-center">
-        SAS
-      </div>
-      <div 
-      @click="router.push('/admin/announcement')"
-      class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-rose-500 hover:border-transparent hover:text-white cursor-pointer">
-        Announcement
-      </div>
-      <div 
-      @click="router.push('/admin/user')"
-      class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-emerald-500 hover:border-transparent hover:text-white cursor-pointer">
-        User
-      </div>
-    </div>
+    <sasNav @toAnn="changeView" @toUser="changeView"/>
     <div class="w-full">
       <div class="text-2xl font-['Acme'] m-10">
         SIT Announcement System (SAS)

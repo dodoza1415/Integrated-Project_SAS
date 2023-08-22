@@ -11,20 +11,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema User
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `User` DEFAULT CHARACTER SET utf8 ;
-USE `User` ;
+CREATE SCHEMA IF NOT EXISTS `Announcement` DEFAULT CHARACTER SET utf8 ;
+USE `Announcement` ;
 
 -- -----------------------------------------------------
 -- Table `User`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `User`.`user` (
+CREATE TABLE IF NOT EXISTS `Announcement`.`users` (
   `id` INT NOT NULL auto_increment,
   `username` VARCHAR(45) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `role` ENUM('admin', 'announcer') NOT NULL DEFAULT 'announcer',
-  `createOn` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateOn` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdOn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedOn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,

@@ -7,8 +7,8 @@ import EditAnnouncement from "../views/EditAnnouncement.vue";
 import UserViewAnnouncement from "../views/UserViewAnnouncement.vue";
 import UserViewDetails from "../views/UserViewDetails.vue"
 import User from "../views/User.vue"
-import AddUser from "../views/AddUser.vue"
-import EditUser from "../views/EditUser.vue"
+import AddEditUser from "../views/AddEditUser.vue"
+// import EditUser from "../views/EditUser.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,14 +60,14 @@ const router = createRouter({
     },
     {
       path: "/admin/user/add",
-      name: "AddUser",
-      component: AddUser,
+      name: "AddEditUser",
+      component: AddEditUser,
     },
-    {
-      path: "/admin/user/id/edit",
-      name: "EditUser",
-      component: EditUser,
-    },
+    // {
+    //   path: "/admin/user/id/edit",
+    //   name: "EditUser",
+    //   component: EditUser,
+    // },
   ],
 });
 

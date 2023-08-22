@@ -1,10 +1,17 @@
 <script setup>
 import { useRouter, RouterLink } from "vue-router";
+import { onMounted, ref } from "vue";
+import { getUsers } from "../composable/getUser.js";
+import sasNav from "../components/sasNav.vue";
 
+const users = ref([]);
 
+onMounted(async () => {
+  users.value = await getUsers();
+  console.log(users.value)
+})
 
 const router = useRouter();
-
 const deleteUser = () => {
   const decision = confirm(`Do you want to delete "...'s" user data?`)
   
@@ -12,27 +19,15 @@ const deleteUser = () => {
     alert("Yes")
   }
 }
+
+const changeView = (view) => {
+  router.push(`/admin/${view}`)
+}
 </script>
 
 <template>
   <div class="flex flex-row">
-    <div class="w-[20em] flex flex-col m-5 pr-5 gap-1 border-r-4 border-r-black">
-      <div class="ann-app-title h-[2em] text-[3em] font-['Acme'] text-center">
-        SAS
-      </div>
-      <div
-        @click="router.push('/admin/announcement')"
-        class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-rose-500 hover:border-transparent hover:text-white cursor-pointer"
-      >
-        Announcement
-      </div>
-      <div
-        @click="router.push('/admin/user')"
-        class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-emerald-500 hover:border-transparent hover:text-white cursor-pointer"
-      >
-        User
-      </div>
-    </div>
+    <sasNav @toAnn="changeView" @toUser="changeView"/>
     <div class="w-full h-screen flex flex-col m-5">
         <div class="ann-title font-['Acme'] text-[2em] text-center">User Management</div>
         <div class="grid grid-cols-2 justify-items-start">
@@ -40,13 +35,16 @@ const deleteUser = () => {
             <div class="grid justify-self-end">
                     <button 
                     class="ann-button border-2 btn btn-active bg-slate-200 text-black justify-self-end font-['Acme'] text-[25px] p-2 hover:bg-green-200"
-                    @click="router.push('/admin/user/add')">
+                    @click="router.push({name: 'AddEditUser', params: {details: undefined }})">
                     Add User
                   </button>
             </div>
         </div>
         <div>
-            <table class="table-compact auto w-full mt-7">
+            <div v-if="users.length === 0">
+              <h3 class="text-2xl font-['Acme']">No Users</h3>
+            </div>
+            <table v-else class="table-compact auto w-full mt-7">
                 <tr class="bg-green-200 font-['Acme'] text-[15px] border border-black">
                     <th class="text-lg">No.</th>
                     <th class="text-lg">Username</th>
@@ -58,18 +56,19 @@ const deleteUser = () => {
                     <th class="text-lg">Action</th>
                 </tr>
                 <tr 
-                class="ann-item border border-black">
-                    <th>1.</th>
-                    <th class="ann-username text-[15px]">Hello123</th>
-                    <th class="ann-name text-[15px]">Hello Eiei</th>
-                    <th class="ann-email text-[15px]">helloyuuuhooo123@gmail.com</th>
-                    <th class="ann-role text-[15px]">admin</th>
-                    <th class="ann-created-on text-[15px]">Today</th>
-                    <th class="ann-updated-on text-[15px]">Today</th>
+                class="ann-item border border-black"
+                v-for="(user, index) in users" :key="user.id">
+                    <th>{{ ++index }}</th>
+                    <th class="ann-username text-[15px]">{{user.username}}</th>
+                    <th class="ann-name text-[15px]">{{ user.name }}</th>
+                    <th class="ann-email text-[15px]">{{ user.email }}</th>
+                    <th class="ann-role text-[15px]">{{user.role}}</th>
+                    <th class="ann-created-on text-[15px]">{{user.createdOn}}</th>
+                    <th class="ann-updated-on text-[15px]">{{user.updatedOn}}</th>
                     <th class="grid grid-cols-2 gap-2">
                         <button 
                         class="ann-button border border-black rounded-lg text-[15px] p-2 hover:bg-amber-200"
-                        @click="router.push('/admin/user/id/edit')">
+                        @click="router.push({path: '/admin/user/add'})">
                           edit
                         </button>
                         <button 
