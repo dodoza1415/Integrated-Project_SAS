@@ -21,9 +21,8 @@ public class User{
     private String email ;
     private String role ;
     @Column(name = "createdOn", insertable = false, updatable = false )
-    @CreationTimestamp
     private ZonedDateTime createdOn ;
-    @UpdateTimestamp
+    @Column(name = "updatedOn", insertable = false, updatable = false )
     private ZonedDateTime updatedOn ;
 
 }

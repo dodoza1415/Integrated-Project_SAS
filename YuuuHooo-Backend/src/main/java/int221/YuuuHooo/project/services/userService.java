@@ -3,6 +3,7 @@ package int221.YuuuHooo.project.services;
 import int221.YuuuHooo.project.dtos.UserDTO;
 import int221.YuuuHooo.project.entities.User;
 import int221.YuuuHooo.project.repositories.userRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,7 +17,7 @@ import java.util.List;
 public class userService {
 
     @Autowired
-    private int221.YuuuHooo.project.repositories.userRepository userRepository;
+    private userRepository userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -43,23 +44,32 @@ public class userService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(int userId, UserDTO update) {
-        User userUpdate = userRepository.findById(userId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatusCode.valueOf(404), "User id " + userId + " does not exist"));
-        userUpdate.setUsername(update.getUsername().trim());
-        userUpdate.setName(update.getName().trim());
-        userUpdate.setEmail(update.getEmail());
-        userUpdate.setRole(update.getRole().trim());
-        return userRepository.saveAndFlush(userUpdate);
+    @Transactional
+    public User updateUser(Integer userId,UserDTO userInfo) {
+        User userUpdate = userRepository.findById(userId).orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatusCode.valueOf(404),
+                                "User id " + userId + " does not exist"
+                        ));
+        userUpdate.setUsername(userInfo.getUsername().trim());
+        userUpdate.setName(userInfo.getName().trim());
+        userUpdate.setEmail(userInfo.getEmail());
+        userUpdate.setRole(userInfo.getRole().trim());
+        User update = userRepository.saveAndFlush(userUpdate);
+        userRepository.refresh(update);
+        return update;
     }
 
-    public UserDTO addUser(UserDTO user) {
-        User newUser = new User() ;
+    @Transactional
+    public User addUser(UserDTO user) {
+        User newUser = new User();
         newUser.setUsername(user.getUsername().trim());
         newUser.setName(user.getName().trim());
-        newUser.setEmail(user.getEmail());
+        newUser.setEmail(user.getEmail().trim());
         newUser.setRole(user.getRole().trim());
-        return modelMapper.map(userRepository.saveAndFlush(newUser),UserDTO.class);
+        User createUser = userRepository.saveAndFlush(newUser);
+        userRepository.refresh(createUser);
+        return createUser;
     }
 
 
