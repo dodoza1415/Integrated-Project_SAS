@@ -11,13 +11,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema User
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Announcement` DEFAULT CHARACTER SET utf8 ;
-USE `Announcement` ;
+CREATE SCHEMA IF NOT EXISTS `announcement` DEFAULT CHARACTER SET utf8 ;
+USE `announcement` ;
 
 -- -----------------------------------------------------
 -- Table `User`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Announcement`.`users` (
+CREATE TABLE IF NOT EXISTS `announcement`.`users` (
   `id` INT NOT NULL auto_increment,
   `username` VARCHAR(45) NOT NULL,
   `name` VARCHAR(100) NOT NULL,

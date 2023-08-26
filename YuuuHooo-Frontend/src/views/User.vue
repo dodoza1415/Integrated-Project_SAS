@@ -10,7 +10,7 @@ const users = ref([]);
 
 onMounted(async () => {
   users.value = await getUsers();
-  console.log(users.value)
+  // console.log(users.value)
 })
 
 const router = useRouter();

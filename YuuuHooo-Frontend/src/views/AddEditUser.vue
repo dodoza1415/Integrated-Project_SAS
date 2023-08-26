@@ -9,6 +9,7 @@ const {params} = useRoute();
 
 // console.log(params.id)
 const userInfo = ref({})
+const compareInfo = ref({})
 const type = ref(params.type)
 onMounted(async () => {
     if(params.id !== undefined){
@@ -18,7 +19,8 @@ onMounted(async () => {
             const res = await fetch(`${API_ROOT}/api/users/${params.id}`);
         if (res.status === 200) {
             userInfo.value = await res.json();
-            console.log(userInfo.value)
+            compareInfo.value = userInfo.value
+            // console.log(userInfo.value)
         } else if (res.status !== 200) {
             alert("The requested page is not available!");
             router.push("/admin/users");
@@ -53,6 +55,7 @@ const cancelAdding = (type) => {
 }
 
 const saveAdding = async (information) => {
+    // console.log(userInfo.value)
     if(confirm("Are you sure the user's information is correct?")){
         if(type.value === "add"){
 
@@ -79,7 +82,9 @@ const saveAdding = async (information) => {
 
     }else if(type.value === "edit"){
 
-        try {
+        if(userInfo.value !== compareInfo.value){
+
+            try {
             const res = await fetch(`${API_ROOT}/api/users/${params.id}`, {
             method: "PUT",
             headers: {
@@ -90,7 +95,8 @@ const saveAdding = async (information) => {
 
             if(res.status === 200){
                 const users = await res.json();
-                console.log(users)
+                // console.log(users)
+                console.log('backend updated')
                 await router.push({name: 'UserList'});
             }else{
                 throw new Error(`There is an error! ,Can't add the user => Status Code : ${res.status}`);
@@ -99,6 +105,12 @@ const saveAdding = async (information) => {
         }catch (error){
             console.log(error)
         }
+
+        }else{
+            router.push({name: 'UserList'});
+        }
+    
+
 
     }
         
@@ -152,21 +164,21 @@ const convertTZ = (date) => {
                 <input 
                 required
                 placeholder="username"
-                v-model="userInfo.username"
+                v-model.trim="userInfo.username"
                 class="ann-username border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"/>
             </div>
             <div class="flex flex-col mb-[2em]">
                 <div class="text-[1.5em] font-['Acme']">Name</div>
                 <input 
                 placeholder="name"
-                v-model="userInfo.name"
+                v-model.trim="userInfo.name"
                 class="ann-name border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"/>
             </div>
             <div class="flex flex-col mb-[2em]">
                 <div class="text-[1.5em] font-['Acme']">Email</div>
                 <input 
                 placeholder="email"
-                v-model="userInfo.email"
+                v-model.trim="userInfo.email"
                 class="ann-email border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"/>
             </div>
             <div class="flex flex-col mb-[2em]">

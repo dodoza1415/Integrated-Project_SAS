@@ -9,3 +9,5 @@ values (1,"sanit","Sanit Sirisawatvatana","sanit.sir@kmutt.ac.th",'admin','2023-
 select * from users;
 
 delete from users;
+
+show grants;

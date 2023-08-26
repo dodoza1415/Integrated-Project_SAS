@@ -67,12 +67,7 @@ const router = createRouter({
       path: "/admin/user/:id/edit",
       name: "EditUser",
       component: AddEditUser,
-    },
-    // {
-    //   path: "/admin/user/id/edit",
-    //   name: "EditUser",
-    //   component: EditUser,
-    // },
+    }
   ],
 });
 
