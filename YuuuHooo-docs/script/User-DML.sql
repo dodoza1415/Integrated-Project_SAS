@@ -1,4 +1,4 @@
-use Announcement;
+use announcement;
 
 insert into users(id,username,name,email,role,createdOn,updatedOn)
 values (1,"sanit","Sanit Sirisawatvatana","sanit.sir@kmutt.ac.th",'admin','2023-08-15 08:00:00+07:00','2023-08-15 08:00:00+07:00') ,

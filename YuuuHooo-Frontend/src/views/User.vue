@@ -15,7 +15,7 @@ onMounted(async () => {
 
 const router = useRouter();
 const deleteUser = async (id, name) => {
-  const decision = confirm(`Do you want to delete "${name}'s" user data?`)
+  const decision = confirm(`Do you want to delete ${name}'s user data?`)
   
   if(decision === true){
     try {
