@@ -9,6 +9,8 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "@vueup/vue-quill": "^1.2.0",
     "daisyui": "^2.51.6",
     "moment": "^2.29.4",

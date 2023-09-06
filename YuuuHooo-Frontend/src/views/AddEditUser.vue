@@ -2,12 +2,13 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import sasNav from "../components/sasNav.vue";
+import useVuelidate from "@vuelidate/core";
+import { required, email, maxLength } from "@vuelidate/validators";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 const router = useRouter();
 const { params } = useRoute();
 
-// console.log(params.id)
 const userInfo = ref({});
 
 const type = ref(params.type);
@@ -38,7 +39,7 @@ onMounted(async () => {
       role: "",
     };
 
-    console.log(userInfo.value);
+    // console.log(userInfo.value);
   }
 });
 
@@ -50,6 +51,17 @@ const createCompareIfo = (duplicateInfo) => {
 
   // console.log(compareInfo)
 };
+
+const rules = computed(() => {
+  return {
+    username: { required, maxLength: maxLength(45) },
+    name: { required, maxLength: maxLength(100) },
+    email: { required, email, maxLength: maxLength(150) },
+    role: { required },
+  };
+});
+
+const v$ = useVuelidate(rules, userInfo);
 
 function shallowEquality(object1, object2) {
   const keys1 = Object.keys(object1);
@@ -67,7 +79,7 @@ function shallowEquality(object1, object2) {
 
 const cancelAdding = (type) => {
   //  confirm("Do you want to cancel adding a user?") === true ? type === 'user' ? router.push('/admin/user')  : alert("No")
-  if (confirm("Do you want to cancel adding a user?") === true) {
+  if (confirm("Do you want to cancel adding a user?")){
     if (type === "user") {
       router.push("/admin/user");
     } else if (type === "announcement") {
@@ -77,47 +89,22 @@ const cancelAdding = (type) => {
 };
 
 const saveAdding = async (information) => {
-  if (type.value === "add") {
-    if (confirm("Are you sure the information is correct?") === true) {
-      try {
-        const res = await fetch(`${API_ROOT}/api/users`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(information),
-        });
+  const isValid = await v$.value.$validate();
+  if (isValid) {
 
-        if (res.status === 200) {
-          const users = await res.json();
-          console.log(users);
-          await router.push({ name: "UserList" });
-        } else {
-          throw new Error(
-            `There is an error! ,Can't add the user => Status Code : ${res.status}`
-          );
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  } else if (type.value === "edit") {
-
-    if (shallowEquality(information, compareInfo) !== true) {
+    if (type.value === "add") {
       if (confirm("Are you sure the information is correct?") === true) {
         try {
-          const res = await fetch(`${API_ROOT}/api/users/${params.id}`, {
-            method: "PUT",
+          const res = await fetch(`${API_ROOT}/api/users`, {
+            method: "POST",
             headers: {
               "content-type": "application/json",
             },
             body: JSON.stringify(information),
           });
-
           if (res.status === 200) {
             const users = await res.json();
-            // console.log(users)
-            console.log("backend updated");
+            console.log(users);
             await router.push({ name: "UserList" });
           } else {
             throw new Error(
@@ -128,9 +115,36 @@ const saveAdding = async (information) => {
           console.log(error);
         }
       }
-    } else {
-      router.push({ name: "UserList" });
+    } else if (type.value === "edit") {
+      if (shallowEquality(information, compareInfo) !== true) {
+        if (confirm("Are you sure the information is correct?") === true) {
+          try {
+            const res = await fetch(`${API_ROOT}/api/users/${params.id}`, {
+              method: "PUT",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(information),
+            });
+            if (res.status === 200) {
+              const users = await res.json();
+              // console.log(users)
+              console.log("backend updated");
+              await router.push({ name: "UserList" });
+            } else {
+              throw new Error(
+                `There is an error! ,Can't add the user => Status Code : ${res.status}`
+              );
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } else {
+        router.push({ name: "UserList" });
+      }
     }
+
   }
 
   //router push + fetch
@@ -174,73 +188,81 @@ const convertTZ = (date) => {
       <div
         :class="
           userInfo.createdOn && userInfo.updatedOn
-            ? 'border-2 border-black p-5 m-5 h-[40em]'
-            : 'border-2 border-black p-5 m-5 h-[36em]'
+            ? 'border-2 border-black p-5 m-5 h-[45em]'
+            : 'border-2 border-black p-5 m-5 h-[42em]'
         "
       >
         <div class="text-[2em] font-['Acme']">User Detail:</div>
-        <div class="flex flex-col mb-[2em] mt-[2em]">
-          <div class="text-[1.5em] font-['Acme']">Username</div>
-          <input
-            required
-            placeholder="username"
-            v-model.trim="userInfo.username"
-            class="ann-username border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
-          />
-        </div>
-        <div class="flex flex-col mb-[2em]">
-          <div class="text-[1.5em] font-['Acme']">Name</div>
-          <input
-            placeholder="name"
-            v-model.trim="userInfo.name"
-            class="ann-name border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
-          />
-        </div>
-        <div class="flex flex-col mb-[2em]">
-          <div class="text-[1.5em] font-['Acme']">Email</div>
-          <input
-            placeholder="email"
-            v-model.trim="userInfo.email"
-            class="ann-email border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
-          />
-        </div>
-        <div class="flex flex-col mb-[2em]">
-          <div class="text-[1.5em] font-['Acme']">Role</div>
-          <select
-            v-model="userInfo.role"
-            class="ann-role border-2 border-black rounded-md w-[10em] p-[5px]"
-          >
-            <option disabled value="">choose your role</option>
-            <option value="admin">admin</option>
-            <option value="announcer">announcer</option>
-          </select>
-        </div>
-        <div
-          class="flex flex-row gap-40 mb-[2em]"
-          v-if="userInfo.createdOn && userInfo.updatedOn"
-        >
-          <div class="ann-created-on text-[1em] font-['Acme']">
-            Created On: {{ convertTZ(userInfo.createdOn) }}
+        <form @submit.prevent="saveAdding(userInfo)">
+          <div class="flex flex-col mb-[2em] mt-[2em]">
+            <div class="text-[1.5em] font-['Acme']">Username</div>
+            <input
+              type="text"
+              placeholder="username"
+              v-model.trim="userInfo.username"
+              class="ann-username border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+            />
+            <span v-for="error in v$.username.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
-          <div class="ann-updated-on text-[1em] font-['Acme']">
-            Updated On: {{ convertTZ(userInfo.updatedOn) }}
+          <div class="flex flex-col mb-[2em]">
+            <div class="text-[1.5em] font-['Acme']">Name</div>
+            <input
+              type="text"
+              placeholder="name"
+              v-model.trim="userInfo.name"
+              class="ann-name border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+            />
+            <span v-for="error in v$.name.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
-        </div>
-        <div class="flex flex-row gap-2">
-          <button
-            class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300"
-            :disabled="saveBtn"
-            @click="saveAdding(userInfo)"
+          <div class="flex flex-col mb-[2em]">
+            <div class="text-[1.5em] font-['Acme']">Email</div>
+            <input
+              placeholder="email"
+              v-model.trim="userInfo.email"
+              class="ann-email border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+            />
+            <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
+          </div>
+          <div class="flex flex-col mb-[2em]">
+            <div class="text-[1.5em] font-['Acme']">Role</div>
+            <select
+              v-model="userInfo.role"
+              class="ann-role border-2 border-black rounded-md w-[10em] p-[5px]"
+            >
+              <option disabled value="">choose your role</option>
+              <option value="admin">admin</option>
+              <option value="announcer">announcer</option>
+            </select>
+            <span v-for="error in v$.role.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
+          </div>
+          <div
+            class="flex flex-row gap-40 mb-[2em]"
+            v-if="userInfo.createdOn && userInfo.updatedOn"
           >
-            Save
-          </button>
-          <button
-            class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-red-400"
-            @click="cancelAdding('user')"
-          >
-            Cancel
-          </button>
-        </div>
+            <div class="ann-created-on text-[1em] font-['Acme']">
+              Created On: {{ convertTZ(userInfo.createdOn) }}
+            </div>
+            <div class="ann-updated-on text-[1em] font-['Acme']">
+              Updated On: {{ convertTZ(userInfo.updatedOn) }}
+            </div>
+          </div>
+          <div class="flex flex-row gap-2">
+            <button
+              type="submit"
+              class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300"
+              :disabled="saveBtn"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-red-400"
+              @click="cancelAdding('user')"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
