@@ -3,7 +3,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import sasNav from "../components/sasNav.vue";
 import useVuelidate from "@vuelidate/core";
-import { required, email, maxLength } from "@vuelidate/validators";
+import { required, email, maxLength, helpers } from "@vuelidate/validators";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 const router = useRouter();
@@ -198,9 +198,11 @@ const convertTZ = (date) => {
             <div class="text-[1.5em] font-['Acme']">Username</div>
             <input
               type="text"
+              required
+              maxlength="45"
               placeholder="username"
               v-model.trim="userInfo.username"
-              class="ann-username border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+              class="ann-username border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
             <span v-for="error in v$.username.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
@@ -208,24 +210,30 @@ const convertTZ = (date) => {
             <div class="text-[1.5em] font-['Acme']">Name</div>
             <input
               type="text"
+              required
+              maxlength="100"
               placeholder="name"
               v-model.trim="userInfo.name"
-              class="ann-name border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+              class="ann-name border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
             <span v-for="error in v$.name.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Email</div>
             <input
+              type="email"
+              required
+              maxlength="150"
               placeholder="email"
               v-model.trim="userInfo.email"
-              class="ann-email border-2 border-black rounded-md w-[40em] h-[2em] pl-[6px]"
+              class="ann-email border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Role</div>
             <select
+              required
               v-model="userInfo.role"
               class="ann-role border-2 border-black rounded-md w-[10em] p-[5px]"
             >
@@ -250,7 +258,7 @@ const convertTZ = (date) => {
             <button
               type="submit"
               class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300"
-              :disabled="saveBtn"
+              :disabled="false"
             >
               Save
             </button>

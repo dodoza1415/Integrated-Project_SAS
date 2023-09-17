@@ -2,11 +2,17 @@ package int221.YuuuHooo.project.controllers;
 
 import int221.YuuuHooo.project.dtos.UserDTO;
 import int221.YuuuHooo.project.entities.User;
+import int221.YuuuHooo.project.exceptions.ErrorResponse;
 import int221.YuuuHooo.project.repositories.userRepository;
 import int221.YuuuHooo.project.services.userService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -35,12 +41,12 @@ public class userController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody UserDTO user) {
+    public User addUser(@Valid @RequestBody UserDTO user) {
         return userService.addUser(user);
     }
 
     @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody UserDTO updateUser) {
+    public User updateUser(@PathVariable int id,@Valid @RequestBody UserDTO updateUser) {
         return userService.updateUser(id, updateUser);
     }
 
@@ -48,5 +54,6 @@ public class userController {
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
+
 
 }
