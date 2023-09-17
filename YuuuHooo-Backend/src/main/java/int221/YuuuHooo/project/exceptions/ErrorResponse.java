@@ -18,20 +18,15 @@ public class ErrorResponse {
     private final String field;
     private final String errorMessage;
 
-//    private List<ValidationError> errors;
-//
-//    @Getter
-//    @Setter
-//    @RequiredArgsConstructor
-//    private class ValidationError{
-//        private final String field;
-//        private final String errorMessage;
-//    }
-//
-//    public void addValidationError(String field, String message){
-//        if(Objects.isNull(errors)){
-//            errors = new ArrayList<>();
-//        }
-//        errors.add(new ValidationError(field, message));
-//    }
+    private List<ValidationError> detail;
+
+    @Getter
+    @Setter
+    @RequiredArgsConstructor
+    private class ValidationError{
+        private final String field;
+        private final String errorMessage;
+    }
+
+
 }
