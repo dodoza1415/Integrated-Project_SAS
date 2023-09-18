@@ -3,7 +3,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import sasNav from "../components/sasNav.vue";
 import useVuelidate from "@vuelidate/core";
-import { required, email, maxLength, helpers } from "@vuelidate/validators";
+import { required, email, maxLength } from "@vuelidate/validators";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 const router = useRouter();
@@ -79,7 +79,7 @@ function shallowEquality(object1, object2) {
 
 const cancelAdding = (type) => {
   //  confirm("Do you want to cancel adding a user?") === true ? type === 'user' ? router.push('/admin/user')  : alert("No")
-  if (confirm("Do you want to cancel adding a user?")){
+  if (confirm("Do you want to cancel adding a user?")) {
     if (type === "user") {
       router.push("/admin/user");
     } else if (type === "announcement") {
@@ -88,10 +88,10 @@ const cancelAdding = (type) => {
   }
 };
 
+const error = ref([]);
 const saveAdding = async (information) => {
   const isValid = await v$.value.$validate();
   if (isValid) {
-
     if (type.value === "add") {
       if (confirm("Are you sure the information is correct?") === true) {
         try {
@@ -107,9 +107,9 @@ const saveAdding = async (information) => {
             console.log(users);
             await router.push({ name: "UserList" });
           } else {
-            throw new Error(
-              `There is an error! ,Can't add the user => Status Code : ${res.status}`
-            );
+            const errorResponse = await res.json();
+            error.value = errorResponse.detail;
+            // console.log(error.value);
           }
         } catch (error) {
           console.log(error);
@@ -132,9 +132,9 @@ const saveAdding = async (information) => {
               console.log("backend updated");
               await router.push({ name: "UserList" });
             } else {
-              throw new Error(
-                `There is an error! ,Can't add the user => Status Code : ${res.status}`
-              );
+              const errorResponse = await res.json();
+              error.value = errorResponse.detail;
+              // console.log(error.value);
             }
           } catch (error) {
             console.log(error);
@@ -144,7 +144,6 @@ const saveAdding = async (information) => {
         router.push({ name: "UserList" });
       }
     }
-
   }
 
   //router push + fetch
@@ -179,17 +178,26 @@ const convertTZ = (date) => {
     return "-";
   }
 };
+
+const indicateError = (field) => {
+  for (const e of error.value) {
+    if (e.field === field) {
+      // console.log(e.errorMessage);
+      return e.errorMessage;
+    }
+  }
+};
 </script>
 
 <template>
   <div class="flex flex-row">
     <sasNav @cancelAnn="cancelAdding" @cancelUser="cancelAdding" />
-    <div class="m-5 w-full h-[40em]">
+    <div class="m-5 w-full h-[45em]">
       <div
         :class="
-          userInfo.createdOn && userInfo.updatedOn
-            ? 'border-2 border-black p-5 m-5 h-[45em]'
-            : 'border-2 border-black p-5 m-5 h-[42em]'
+          type === 'edit'
+            ? 'border-2 border-black p-5 m-5 h-[42em]'
+            : 'border-2 border-black p-5 m-5 h-[57em]'
         "
       >
         <div class="text-[2em] font-['Acme']">User Detail:</div>
@@ -204,7 +212,31 @@ const convertTZ = (date) => {
               v-model.trim="userInfo.username"
               class="ann-username border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span v-for="error in v$.username.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
+            <span class="text-red-500 ml-1 font-bold">{{
+              indicateError("username")
+            }}</span>
+          </div>
+          <div class="flex flex-col mb-[2em]" v-if="type !== 'edit'">
+            <div class="text-[1.5em] font-['Acme']">Password</div>
+            <input
+              type="password"
+              required
+              minlength="8"
+              maxlength="14"
+              class="ann-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+            />
+            <!-- <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span> -->
+          </div>
+          <div class="flex flex-col mb-[2em]" v-if="type !== 'edit'">
+            <div class="text-[1.5em] font-['Acme']">Confirm Password</div>
+            <input
+              type="password"
+              required
+              minlength="8"
+              maxlength="14"
+              class="ann-confirm-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+            />
+            <!-- <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span> -->
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Name</div>
@@ -216,7 +248,9 @@ const convertTZ = (date) => {
               v-model.trim="userInfo.name"
               class="ann-name border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span v-for="error in v$.name.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
+            <span class="text-red-500 ml-1 font-bold">
+              {{ indicateError("name") }}</span
+            >
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Email</div>
@@ -228,7 +262,9 @@ const convertTZ = (date) => {
               v-model.trim="userInfo.email"
               class="ann-email border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
+            <span class="text-red-500 ml-1 font-bold">
+              {{ indicateError("email") }}</span
+            >
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Role</div>
@@ -241,12 +277,8 @@ const convertTZ = (date) => {
               <option value="admin">admin</option>
               <option value="announcer">announcer</option>
             </select>
-            <span v-for="error in v$.role.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span>
           </div>
-          <div
-            class="flex flex-row gap-40 mb-[2em]"
-            v-if="userInfo.createdOn && userInfo.updatedOn"
-          >
+          <div class="flex flex-row gap-40 mb-[2em]" v-if="type === 'edit'">
             <div class="ann-created-on text-[1em] font-['Acme']">
               Created On: {{ convertTZ(userInfo.createdOn) }}
             </div>
@@ -258,7 +290,7 @@ const convertTZ = (date) => {
             <button
               type="submit"
               class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300"
-              :disabled="false"
+              :disabled="saveBtn"
             >
               Save
             </button>

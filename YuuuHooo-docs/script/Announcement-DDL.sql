@@ -54,6 +54,7 @@ USE `announcement` ;
 CREATE TABLE IF NOT EXISTS `announcement`.`users` (
   `id` INT NOT NULL auto_increment,
   `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(100) NOT NULL DEFAULT 'Sasadmin22',
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `role` ENUM('admin', 'announcer') NOT NULL DEFAULT 'announcer',

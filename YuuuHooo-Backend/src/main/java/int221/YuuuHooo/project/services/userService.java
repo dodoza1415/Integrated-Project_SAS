@@ -63,6 +63,7 @@ public class userService {
     @Transactional
     public User addUser(UserDTO user) {
         User newUser = new User();
+
         newUser.setUsername(user.getUsername().trim());
         newUser.setName(user.getName().trim());
         newUser.setEmail(user.getEmail().trim());

@@ -2,20 +2,17 @@ package int221.YuuuHooo.project.controllers;
 
 import int221.YuuuHooo.project.dtos.UserDTO;
 import int221.YuuuHooo.project.entities.User;
-import int221.YuuuHooo.project.exceptions.ErrorResponse;
 import int221.YuuuHooo.project.repositories.userRepository;
 import int221.YuuuHooo.project.services.userService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
