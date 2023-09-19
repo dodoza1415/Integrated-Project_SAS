@@ -212,7 +212,7 @@ const indicateError = (field) => {
               v-model.trim="userInfo.username"
               class="ann-username border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold">{{
+            <span class="text-red-500 ml-1 font-bold ann-error-username">{{
               indicateError("username")
             }}</span>
           </div>
@@ -248,7 +248,7 @@ const indicateError = (field) => {
               v-model.trim="userInfo.name"
               class="ann-name border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold">
+            <span class="text-red-500 ml-1 font-bold ann-error-name">
               {{ indicateError("name") }}</span
             >
           </div>
@@ -262,7 +262,7 @@ const indicateError = (field) => {
               v-model.trim="userInfo.email"
               class="ann-email border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold">
+            <span class="text-red-500 ml-1 font-bold ann-error-email">
               {{ indicateError("email") }}</span
             >
           </div>
@@ -290,7 +290,7 @@ const indicateError = (field) => {
             <button
               type="submit"
               class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300"
-              :disabled="saveBtn"
+              :disabled="false"
             >
               Save
             </button>

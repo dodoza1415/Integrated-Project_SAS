@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = UniqueValidator.class )
 @Documented
 public @interface Unique {
-    public String message() default "This field is duplicated" ;
+    public String message() default "does not unique" ;
 
     public String field() default "";
 

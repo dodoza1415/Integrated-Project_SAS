@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
@@ -18,6 +19,7 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     private String username ;
+    private String password;
     private String name ;
     private String email ;
     private String role ;
