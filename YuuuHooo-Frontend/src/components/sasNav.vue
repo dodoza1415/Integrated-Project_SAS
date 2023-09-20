@@ -16,7 +16,7 @@ const router = useRouter();
 //     }
 // }
 
-defineEmits(['cancelAnn', 'cancelUser', 'toAnn', 'toUser'])
+defineEmits(['cancelAnn', 'cancelUser', 'toAnn', 'toUser','toMatch'])
 </script>
  
 <template>
@@ -33,6 +33,11 @@ defineEmits(['cancelAnn', 'cancelUser', 'toAnn', 'toUser'])
       @click="$emit('cancelUser', 'user'); $emit('toUser', 'user')"
       class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-emerald-500 hover:border-transparent hover:text-white cursor-pointer">
         User
+      </div>
+      <div 
+      @click="$emit('cancelMatch', 'match'); $emit('toMatch', 'match')"
+      class="ann-menu h-[3em] text-[1em] font-['Acme'] border-2 border-slate-300 rounded-md border-solid text-center p-2 hover:bg-blue-500 hover:border-transparent hover:text-white cursor-pointer">
+        Match Password
       </div>
     </div>
 </template>
