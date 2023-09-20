@@ -16,7 +16,7 @@ const router = useRouter();
 //     }
 // }
 
-defineEmits(['cancelAnn', 'cancelUser', 'toAnn', 'toUser','toMatch'])
+defineEmits(['cancelAnn', 'cancelUser','cancelMatch', 'toAnn', 'toUser','toMatch'])
 </script>
  
 <template>
