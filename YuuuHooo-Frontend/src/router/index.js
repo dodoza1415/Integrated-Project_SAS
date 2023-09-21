@@ -8,6 +8,7 @@ import UserViewAnnouncement from "../views/UserViewAnnouncement.vue";
 import UserViewDetails from "../views/UserViewDetails.vue"
 import User from "../views/User.vue"
 import AddEditUser from "../views/AddEditUser.vue"
+import MatchPassword from "../views/MatchPassword.vue"
 // import EditUser from "../views/EditUser.vue"
 
 const router = createRouter({
@@ -67,6 +68,11 @@ const router = createRouter({
       path: "/admin/user/:id/edit",
       name: "EditUser",
       component: AddEditUser,
+    },
+    {
+      path: "/admin/user/match",
+      name: "MatchPassword",
+      component: MatchPassword,
     }
   ],
 });

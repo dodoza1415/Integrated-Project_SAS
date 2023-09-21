@@ -64,14 +64,17 @@ const deleteAnnouncement = async (id) => {
 };
 
 const changeView = (view) => {
+  if(view === "match"){
+  router.push(`/admin/user/${view}`)
+  }else{
   router.push(`/admin/${view}`)
-}
+}}
 
 </script>
 
 <template>
   <div class="flex flex-row">
-    <sasNav @toAnn="changeView" @toUser="changeView"/>
+    <sasNav @toAnn="changeView" @toUser="changeView" @toMatch="changeView"/>
     <div class="w-full">
       <div class="text-2xl font-['Acme'] m-10">
         SIT Announcement System (SAS)

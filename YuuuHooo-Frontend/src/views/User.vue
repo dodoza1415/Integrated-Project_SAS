@@ -40,7 +40,11 @@ const deleteUser = async (id, name) => {
 }
 
 const changeView = (view) => {
+  if(view === "match"){
+  router.push(`/admin/user/${view}`)
+  }else{
   router.push(`/admin/${view}`)
+}
 }
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -66,7 +70,7 @@ const convertTZ = (date) => {
 
 <template>
   <div class="flex flex-row">
-    <sasNav @toAnn="changeView" @toUser="changeView"/>
+    <sasNav @toAnn="changeView" @toUser="changeView" @toMatch="changeView"/>
     <div class="w-full h-screen flex flex-col m-5">
         <div class="ann-title font-['Acme'] text-[2em] text-center">User Management</div>
         <div class="grid grid-cols-2 justify-items-start">

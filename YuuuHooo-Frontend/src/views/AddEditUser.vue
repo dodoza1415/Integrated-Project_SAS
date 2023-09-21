@@ -86,8 +86,11 @@ const cancelAdding = (type) => {
     } else if (type === "announcement") {
       router.push("/admin/announcement");
     }
-  }
-};
+    else if (type === "match") {
+      router.push("/admin/user/match");
+    }
+  } 
+  };
 
 const error = ref([]);
 const saveAdding = async (information) => {
@@ -207,7 +210,7 @@ const checkPatternPassw = (password) => {
 
 <template>
   <div class="flex flex-row">
-    <sasNav @cancelAnn="cancelAdding" @cancelUser="cancelAdding" />
+    <sasNav @cancelAnn="cancelAdding" @cancelUser="cancelAdding" @cancelMatch="cancelAdding"/>
     <div class="m-5 w-full h-[45em]">
       <div
         :class="
