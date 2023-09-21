@@ -34,6 +34,7 @@ onMounted(async () => {
     // console.log(type.value)
     userInfo.value = {
       username: "",
+      password: "",
       name: "",
       email: "",
       role: "",
@@ -187,6 +188,21 @@ const indicateError = (field) => {
     }
   }
 };
+
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#&*_])(?!.*\s).{8,14}$/;
+
+const checkPatternPasswResponse = ref("")
+const checkPatternPassw = (password) => {
+  console.log(regexPassword.test(password))
+
+  if (!regexPassword.test(password)) {
+    checkPatternPasswResponse.value =
+      "The password must be between 8 and 14  characters, at least 1 of uppercase, lowercase, number, special characters and no whitespace";
+  }else if(regexPassword.test(password) || password.length === 0){
+    checkPatternPasswResponse.value = ""
+ }
+};
+
 </script>
 
 <template>
@@ -196,7 +212,7 @@ const indicateError = (field) => {
       <div
         :class="
           type === 'edit'
-            ? 'border-2 border-black p-5 m-5 h-[42em]'
+            ? 'border-2 border-black p-5 m-5 h-[57em]'
             : 'border-2 border-black p-5 m-5 h-[57em]'
         "
       >
@@ -212,31 +228,36 @@ const indicateError = (field) => {
               v-model.trim="userInfo.username"
               class="ann-username border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold ann-error-username">{{
-              indicateError("username")
-            }}</span>
+            <span class="text-red-500 ml-1 ann-error-username">{{indicateError("username")}}</span>
           </div>
           <div class="flex flex-col mb-[2em]" v-if="type !== 'edit'">
             <div class="text-[1.5em] font-['Acme']">Password</div>
             <input
               type="password"
+              placeholder="********"
               required
               minlength="8"
               maxlength="14"
-              class="ann-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+              v-model="userInfo.password"
+              @input="checkPatternPassw(userInfo.password)"
+              class="border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <!-- <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span> -->
+            <span class="text-red-500 ml-1 ann-password">
+              {{ checkPatternPasswResponse }}</span
+            >
           </div>
           <div class="flex flex-col mb-[2em]" v-if="type !== 'edit'">
             <div class="text-[1.5em] font-['Acme']">Confirm Password</div>
             <input
               type="password"
+              placeholder="********"
               required
               minlength="8"
               maxlength="14"
-              class="ann-confirm-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+              v-model="confirmPassword"
+              class="border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <!-- <span v-for="error in v$.email.$errors" :key="error.$uid" class="text-red-500 ml-1 font-bold"> {{ error.$message }}</span> -->
+            <span class="text-red-500 ml-1 ann-confirm-password"> {{}}</span>
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Name</div>
@@ -248,7 +269,7 @@ const indicateError = (field) => {
               v-model.trim="userInfo.name"
               class="ann-name border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold ann-error-name">
+            <span class="text-red-500 ml-1 ann-error-name">
               {{ indicateError("name") }}</span
             >
           </div>
@@ -262,7 +283,7 @@ const indicateError = (field) => {
               v-model.trim="userInfo.email"
               class="ann-email border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 font-bold ann-error-email">
+            <span class="text-red-500 ml-1ann-error-email">
               {{ indicateError("email") }}</span
             >
           </div>

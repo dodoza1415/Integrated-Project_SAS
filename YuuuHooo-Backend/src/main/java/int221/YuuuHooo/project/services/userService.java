@@ -3,19 +3,29 @@ package int221.YuuuHooo.project.services;
 import int221.YuuuHooo.project.dtos.UserDTO;
 import int221.YuuuHooo.project.dtos.UserHidePasswordDTO;
 import int221.YuuuHooo.project.dtos.UserMatchPasswordDTO;
+import int221.YuuuHooo.project.dtos.UserUpdateDTO;
 import int221.YuuuHooo.project.entities.User;
+import int221.YuuuHooo.project.exceptions.ErrorResponse;
+import int221.YuuuHooo.project.exceptions.UserUpdateException;
 import int221.YuuuHooo.project.repositories.userRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,16 +67,35 @@ public class userService {
     }
 
     @Transactional
-    public UserHidePasswordDTO updateUser(Integer userId,UserDTO userInfo) {
+    public UserHidePasswordDTO updateUser(Integer userId, UserUpdateDTO userInfo, WebRequest request) {
         User userUpdate = userRepository.findById(userId).orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatusCode.valueOf(404),
-                                "User id " + userId + " does not exist"
-                        ));
-            userUpdate.setUsername(userInfo.getUsername().trim());
-            userUpdate.setName(userInfo.getName().trim());
-            userUpdate.setEmail(userInfo.getEmail());
-            userUpdate.setRole(userInfo.getRole().trim());
+                new ResponseStatusException(
+                        HttpStatusCode.valueOf(404),
+                        "User id " + userId + " does not exist"
+                ));
+
+        ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), request.getDescription(false).substring(4));
+        if(!userUpdate.getUsername().equals(userInfo.getUsername()) && userRepository.findByUsername(userInfo.getUsername()) != null){
+            er.addValidationError("username", "does not unique");
+        }
+
+        if (!userUpdate.getName().equals(userInfo.getName()) && userRepository.findByName(userInfo.getName()) != null) {
+            er.addValidationError("name", "does not unique");
+        }
+
+        if (!userUpdate.getEmail().equals(userInfo.getEmail()) && userRepository.findByEmail(userInfo.getEmail()) != null) {
+            er.addValidationError("email", "does not unique");
+        }
+
+        if(er.hasErrors()){
+            throw new UserUpdateException(er);
+        }
+
+        userUpdate.setUsername(userInfo.getUsername().trim());
+        userUpdate.setName(userInfo.getName().trim());
+        userUpdate.setEmail(userInfo.getEmail());
+        userUpdate.setRole(userInfo.getRole().trim());
+
 
         User update = userRepository.saveAndFlush(userUpdate);
         userRepository.refresh(update);
@@ -104,9 +133,10 @@ public class userService {
                 throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Password NOT Matched");
             }
         }else{
-            throw new ResponseStatusException(HttpStatusCode.valueOf(404), "username DOES NOT exists");
+            throw new ResponseStatusException(HttpStatusCode.valueOf(404), "The specified username DOES NOT exist");
         }
     }
+
 
 
 

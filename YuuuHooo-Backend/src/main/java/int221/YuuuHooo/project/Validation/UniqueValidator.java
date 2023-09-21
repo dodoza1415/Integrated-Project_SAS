@@ -39,7 +39,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if(request.getMethod().equals("POST")){
-            System.out.println(request.getMethod());
+//            System.out.println(request.getMethod());
             if(findByField(value) != null){
                 return false;
             }
@@ -48,9 +48,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         if(request.getMethod().equals("PUT")){
 //            System.out.println(request.getMethod());
             //ค่าเก่า เทียบ ค่าใหม่
-            if(findByField(value) != null){
-                return false;
-            }
+            return true;
         }
 
 

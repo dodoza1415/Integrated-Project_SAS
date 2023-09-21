@@ -4,15 +4,18 @@ import int221.YuuuHooo.project.Validation.UniqueValidator;
 import int221.YuuuHooo.project.dtos.UserDTO;
 import int221.YuuuHooo.project.dtos.UserHidePasswordDTO;
 import int221.YuuuHooo.project.dtos.UserMatchPasswordDTO;
+import int221.YuuuHooo.project.dtos.UserUpdateDTO;
 import int221.YuuuHooo.project.entities.User;
 import int221.YuuuHooo.project.repositories.userRepository;
 import int221.YuuuHooo.project.services.userService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -24,12 +27,6 @@ public class userController {
 
     @Autowired
     private userService userService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private userRepository userRepository;
 
     @GetMapping("/users")
     public List<UserHidePasswordDTO> getUser() {
@@ -47,8 +44,8 @@ public class userController {
     }
 
     @PutMapping("/users/{id}")
-    public UserHidePasswordDTO updateUser(@PathVariable int id,@Valid @RequestBody UserDTO updateUser) {
-        return userService.updateUser(id, updateUser);
+    public UserHidePasswordDTO updateUser(@PathVariable int id, @Valid @RequestBody UserUpdateDTO updateUser, WebRequest request) {
+        return userService.updateUser(id, updateUser, request);
     }
 
     @PostMapping("/users/match")
