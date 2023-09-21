@@ -1,7 +1,7 @@
 <script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import sasNav from "../components/sasNav.vue";
-import { useRouter} from "vue-router";
-import { ref, onMounted, computed } from "vue";
 
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 const router = useRouter();
@@ -22,8 +22,6 @@ const changeView = (view) => {
 }
 }
 
-// const resMessage = (res) => {
-
 let messageStyle = ref("")
 let showMessage = ref(true)
 let messageResponse = ref("")
@@ -41,18 +39,19 @@ const checkMatch = async (userInfo) => {
       },
       body: JSON.stringify(userInfo),
     });
-    if(res.status === 200){
-        const response = await res.json();
+    if(res.ok){
+        const response = await res.text();
         messageStyle = "ann-message font-medium border-solid border-2 border-lime-700 rounded-lg p-4 mb-3 bg-lime-100 text-lime-700"
         showMessage = !showMessage
-        messageResponse = response.errorMessage
+        messageResponse = response
     }
     else if(res.status === 401 || 404){
         const response = await res.json();
         messageStyle = "ann-message font-medium border-solid border-2 border-rose-700 rounded-lg p-4 mb-3 bg-rose-200 text-rose-700"
         showMessage = !showMessage
-        messageResponse = response.errorMessage
+        messageResponse = response.message
     }
+
 } catch (error) {
     console.log(error);
   }
@@ -62,7 +61,7 @@ const checkMatch = async (userInfo) => {
     <div class="flex flex-row ">
     <sasNav @toAnn="changeView" @toUser="changeView" @toMatch="changeView"/>
     <div class="flex flex-col mt-20 ml-20">
-        <div :class="messageStyle" :disabled="showMessage">{{messageResponse}}</div>
+        <div :class="messageStyle" :v-show="showMessage" >{{ messageResponse }}</div>
     <div class="flex flex-col border-solid border-2 border-white rounded-lg">
     <div class="text-[2em] font-['Acme'] pt-3 px-5 mb-[-15px]">Match Password</div>
         <form @submit.prevent="checkMatch(userInfo)">
