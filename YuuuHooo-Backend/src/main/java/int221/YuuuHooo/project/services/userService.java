@@ -11,21 +11,16 @@ import int221.YuuuHooo.project.repositories.userRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +33,8 @@ public class userService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
+
+    private Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 1, 2048, 10);
 
     public List<UserHidePasswordDTO> getUser() {
         List<User> userList = userRepository.findAll(Sort.by("role", "username").ascending());
@@ -73,6 +69,7 @@ public class userService {
                         HttpStatusCode.valueOf(404),
                         "User id " + userId + " does not exist"
                 ));
+
 
         ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), request.getDescription(false).substring(4));
         if(!userUpdate.getUsername().equals(userInfo.getUsername()) && userRepository.findByUsername(userInfo.getUsername()) != null){
