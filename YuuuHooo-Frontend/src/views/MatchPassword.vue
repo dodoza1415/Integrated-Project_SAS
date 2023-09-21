@@ -21,17 +21,19 @@ const changeView = (view) => {
   router.push(`/admin/${view}`)
 }
 }
-
+let inputDisabled = ref(false)
 let messageStyle = ref("")
-let showMessage = ref(true)
+let showMessage = ref(false)
 let messageResponse = ref("")
 let userInfo = ref({
     username : "",
     password : ""
 })
 
-const checkMatch = async (userInfo) => {
+const checkMatch = async (userInfo , e) => {
+  inputDisabled.value = !inputDisabled.value
   try {
+    showMessage.value = !showMessage.value
     const res = await fetch(`${API_ROOT}/api/users/match`, {
       method: "POST",
       headers: {
@@ -42,14 +44,16 @@ const checkMatch = async (userInfo) => {
     if(res.ok){
         const response = await res.text();
         messageStyle = "ann-message font-medium border-solid border-2 border-lime-700 rounded-lg p-4 mb-3 bg-lime-100 text-lime-700"
-        showMessage = !showMessage
-        messageResponse = response
+        showMessage.value = !showMessage.value
+        messageResponse.value = response
+        inputDisabled.value = !inputDisabled.value
     }
     else if(res.status === 401 || 404){
         const response = await res.json();
         messageStyle = "ann-message font-medium border-solid border-2 border-rose-700 rounded-lg p-4 mb-3 bg-rose-200 text-rose-700"
-        showMessage = !showMessage
-        messageResponse = response.message
+        showMessage.value = !showMessage.value
+        messageResponse.value = response.message
+        inputDisabled.value = !inputDisabled.value
     }
 
 } catch (error) {
@@ -62,9 +66,9 @@ const checkMatch = async (userInfo) => {
     <sasNav @toAnn="changeView" @toUser="changeView" @toMatch="changeView"/>
     <div class="flex flex-col mt-20 ml-20">
         <div :class="messageStyle" :v-show="showMessage" >{{ messageResponse }}</div>
-    <div class="flex flex-col border-solid border-2 border-white rounded-lg">
+    <div class="flex flex-col border-solid border-2 border-black-150 rounded-lg">
     <div class="text-[2em] font-['Acme'] pt-3 px-5 mb-[-15px]">Match Password</div>
-        <form @submit.prevent="checkMatch(userInfo)">
+        <form @submit.prevent="checkMatch(userInfo)" >
           <div class="flex flex-col mb-[2em] mt-[2em] px-5">
             <div class="text-[1.2em] font-['Acme'] pb-2">Username</div>
             <input
@@ -73,7 +77,7 @@ const checkMatch = async (userInfo) => {
               maxlength="45"
               placeholder="username"
               v-model.trim="userInfo.username"
-              class="ann-username border-2 border-black rounded-md w-[25em] h-[2em] pl-[6px]"
+              class="ann-username border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px]" :disabled="inputDisabled"
             />
           </div>
           <div class="flex flex-col mb-[2em]  px-5">
@@ -84,15 +88,14 @@ const checkMatch = async (userInfo) => {
               minlength="8"
               maxlength="14"
               v-model.trim="userInfo.password"
-              class="ann-password border-2 border-black rounded-md w-[25em] h-[2em] pl-[6px]"
+              class="ann-password border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px]" :disabled="inputDisabled"
             />
           </div>
           <div class="px-5 pb-3">
           <button
               type="submit"
-              class="ann-button border-2 btn btn-active text-[1em] font-['Acme'] bg-slate-200 text-black hover:bg-green-300 pl-3"
-              :disabled="false"
-            >
+              class="ann-button border-2 btn btn-active text-sm font-['Acme'] bg-slate-200 text-slate-500  hover:bg-green-300 border-white px-5 mt-[-10px]"
+              :disabled="inputDisabled">
               Match or not
             </button>
         </div>
