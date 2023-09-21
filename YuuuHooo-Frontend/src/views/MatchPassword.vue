@@ -30,7 +30,7 @@ let userInfo = ref({
     password : ""
 })
 
-const checkMatch = async (userInfo , e) => {
+const checkMatch = async (userInfo) => {
   inputDisabled.value = !inputDisabled.value
   try {
     showMessage.value = !showMessage.value
@@ -77,24 +77,24 @@ const checkMatch = async (userInfo , e) => {
               maxlength="45"
               placeholder="username"
               v-model.trim="userInfo.username"
-              class="ann-username border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px]" :disabled="inputDisabled"
+              class="ann-username border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px] mt-[-5px] mb-[-5px]" :disabled="inputDisabled"
             />
           </div>
           <div class="flex flex-col mb-[2em]  px-5">
-            <div class="text-[1.2em] font-['Acme'] pb-2">Password</div>
+            <div class="text-[1.2em] font-['Acme'] pb-2 mt-[-10px]">Password</div>
             <input
               type="password"
               required
               minlength="8"
               maxlength="14"
               v-model.trim="userInfo.password"
-              class="ann-password border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px]" :disabled="inputDisabled"
+              class="ann-password border-2 border-black-150 rounded-md w-[25em] h-[2em] pl-[6px] mb-[-7px] mt-[-5px]" :disabled="inputDisabled"
             />
           </div>
           <div class="px-5 pb-3">
           <button
               type="submit"
-              class="ann-button border-2 btn btn-active text-sm font-['Acme'] bg-slate-200 text-slate-500  hover:bg-green-300 border-white px-5 mt-[-10px]"
+              class="ann-button border-2 btn btn-active text-sm font-['Acme'] bg-slate-200 text-slate-600  hover:bg-green-300 hover:border-white border-white px-5 mt-[-10px]"
               :disabled="inputDisabled">
               Match or not
             </button>
