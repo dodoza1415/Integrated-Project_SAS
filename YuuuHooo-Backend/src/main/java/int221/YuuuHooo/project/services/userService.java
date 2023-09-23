@@ -37,6 +37,7 @@ public class userService {
     private Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 1, 2048, 10);
 
     public List<UserHidePasswordDTO> getUser() {
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         List<User> userList = userRepository.findAll(Sort.by("role", "username").ascending());
         List<UserHidePasswordDTO> userHidePasswordDTOList = userList.stream().map(u
                 -> modelMapper.map(u, UserHidePasswordDTO.class)).collect(Collectors.toList());
