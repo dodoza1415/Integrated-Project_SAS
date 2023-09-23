@@ -7,7 +7,6 @@ import sasNav from "../components/sasNav.vue";
 const API_ROOT = import.meta.env.VITE_ROOT_API;
 
 const users = ref([]);
-
 onMounted(async () => {
   users.value = await getUsers();
   // console.log(users.value)

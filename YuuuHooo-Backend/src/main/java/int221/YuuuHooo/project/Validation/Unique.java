@@ -1,10 +1,8 @@
 package int221.YuuuHooo.project.Validation;
 
 
-import jakarta.persistence.Column;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.hibernate.validator.internal.constraintvalidators.hv.UniqueElementsValidator;
 
 import java.lang.annotation.*;
 

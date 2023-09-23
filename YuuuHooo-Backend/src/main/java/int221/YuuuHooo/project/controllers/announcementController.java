@@ -12,22 +12,17 @@ import int221.YuuuHooo.project.services.categoryService;
 import int221.YuuuHooo.project.utils.ListMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
-import java.time.Clock;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/announcements")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class announcementController {
     @Autowired
@@ -46,7 +41,7 @@ public class announcementController {
     private ListMapper listMapper;
 
 
-    @GetMapping("/announcements")
+    @GetMapping
     public List<AnnouncementDTO> getAnnouncement(@RequestParam(defaultValue = "admin") String mode) {
         List<Announcement> announcementBase = announcementService.getAnnouncement();
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
@@ -104,7 +99,7 @@ public class announcementController {
 
     }
 
-    @GetMapping("/announcements/pages")
+    @GetMapping("/pages")
     public PageDTO<AnnouncementDTO> getAnnouncementPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -189,7 +184,7 @@ public class announcementController {
 
 
 
-    @GetMapping("/announcements/{id}")
+    @GetMapping("/{id}")
     public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id, @RequestParam(defaultValue = "false") boolean count ) {
         if(count == true){
             Announcement announcement = announcementService.getAnnouncementById(id);
@@ -217,7 +212,7 @@ public class announcementController {
 //        return addAnnouncementDTO;
 //    }
 
-    @PostMapping("/announcements")
+    @PostMapping
     public AnnouncementByIdDTO addAnnoucement(@RequestBody AddAnnouncementDTO newAnnoucement) {
         Announcement announcement = modelMapper.map(newAnnoucement, Announcement.class);
         announcement.setCategory(categoryService.getCategoryById(announcement.getCategory().getCategoryId()));
@@ -226,12 +221,12 @@ public class announcementController {
         return announcementByIdDTO;
     }
 
-    @DeleteMapping("/announcements/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         announcementService.deleteAnnouncement(id);
     }
 
-    @PutMapping("/announcements/{id}")
+    @PutMapping("/{id}")
     public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,
                                                  @PathVariable int id) {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);

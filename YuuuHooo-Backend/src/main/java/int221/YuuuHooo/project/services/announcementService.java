@@ -1,11 +1,9 @@
 package int221.YuuuHooo.project.services;
 
 import int221.YuuuHooo.project.dtos.AddAnnouncementDTO;
-import int221.YuuuHooo.project.dtos.AnnouncementByIdDTO;
 import int221.YuuuHooo.project.dtos.AnnouncementDTO;
 import int221.YuuuHooo.project.dtos.PageDTO;
 import int221.YuuuHooo.project.entities.Announcement;
-import int221.YuuuHooo.project.entities.Category;
 import int221.YuuuHooo.project.repositories.announcementRepository;
 import int221.YuuuHooo.project.repositories.categoryRepository;
 import int221.YuuuHooo.project.utils.ListMapper;
@@ -17,11 +15,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class announcementService {

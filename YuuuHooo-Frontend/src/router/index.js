@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: "/",
       name: "Home",
-      component: UserViewAnnouncement,
+      component: Announcements,
     },
     {
       path: "/admin/announcement",

@@ -21,40 +21,40 @@ import java.util.List;
 
 @Validated
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class userController {
 
     @Autowired
     private userService userService;
 
-    @GetMapping("/users")
+    @GetMapping("")
     public List<UserHidePasswordDTO> getUser() {
         return userService.getUser();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public UserHidePasswordDTO getUserByID(@PathVariable int id) {
         return userService.getUserByID(id);
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public UserHidePasswordDTO addUser(@Valid @RequestBody UserDTO user) {
         return userService.addUser(user);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public UserHidePasswordDTO updateUser(@PathVariable int id, @Valid @RequestBody UserUpdateDTO updateUser, WebRequest request) {
         return userService.updateUser(id, updateUser, request);
     }
 
-    @PostMapping("/users/match")
+    @PostMapping("/match")
     public ResponseEntity<String> matchPassword(@RequestBody UserMatchPasswordDTO matchInfo){
         return userService.matchPassword(matchInfo);
     }
 
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }

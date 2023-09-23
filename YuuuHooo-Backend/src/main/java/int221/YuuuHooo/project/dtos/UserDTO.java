@@ -1,14 +1,12 @@
 package int221.YuuuHooo.project.dtos;
 
 import int221.YuuuHooo.project.Validation.Unique;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 
 @Getter

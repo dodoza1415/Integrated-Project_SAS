@@ -206,6 +206,19 @@ const checkPatternPassw = (password) => {
  }
 };
 
+//
+const confirmPassword = ref("")
+const passwordEqualStatus = ref("")
+const checkConfirmPassword = () => {
+  if(userInfo.value.password !== confirmPassword.value){
+    passwordEqualStatus.value = "The password DOES NOT Match!"
+  }else{
+    passwordEqualStatus.value = ""
+  }
+}
+
+
+
 </script>
 
 <template>
@@ -258,9 +271,10 @@ const checkPatternPassw = (password) => {
               minlength="8"
               maxlength="14"
               v-model="confirmPassword"
+              @input="checkConfirmPassword()"
               class="border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 ann-confirm-password"> {{}}</span>
+            <span class="text-red-500 ml-1 ann-confirm-password"> {{ passwordEqualStatus }}</span>
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Name</div>

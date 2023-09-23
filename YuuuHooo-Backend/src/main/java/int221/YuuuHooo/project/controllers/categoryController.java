@@ -8,23 +8,23 @@ import int221.YuuuHooo.project.services.categoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/categories")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class categoryController {
     @Autowired
     private categoryService categoryService;
 
-    @GetMapping("/categories")
+    @GetMapping
     public List<Category> getAllCategory() {
         return categoryService.getAllCategory();
     }
 
-    @GetMapping("/categories/{id}")
+    @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable int id) {
         return categoryService.getCategoryById(id);
     }
 
-    @PostMapping("/categories")
+    @PostMapping
     public int addCategory(@RequestBody Category newCategory) {
         return categoryService.addCategory(newCategory);
     }
