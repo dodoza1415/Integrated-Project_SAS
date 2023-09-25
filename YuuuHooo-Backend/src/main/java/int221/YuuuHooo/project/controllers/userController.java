@@ -21,14 +21,14 @@ import java.util.List;
 
 @Validated
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class userController {
 
     @Autowired
     private userService userService;
 
-    @GetMapping
+    @GetMapping("/users")
     public List<UserHidePasswordDTO> getUser() {
         return userService.getUser();
     }
@@ -38,7 +38,7 @@ public class userController {
         return userService.getUserByID(id);
     }
 
-    @PostMapping
+    @PostMapping("/users")
     public UserHidePasswordDTO addUser(@Valid @RequestBody UserDTO user) {
         return userService.addUser(user);
     }

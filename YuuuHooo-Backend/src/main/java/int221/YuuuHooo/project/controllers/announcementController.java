@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/announcements")
+@RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class announcementController {
     @Autowired
@@ -41,7 +41,7 @@ public class announcementController {
     private ListMapper listMapper;
 
 
-    @GetMapping
+    @GetMapping("/announcements")
     public List<AnnouncementDTO> getAnnouncement(@RequestParam(defaultValue = "admin") String mode) {
         List<Announcement> announcementBase = announcementService.getAnnouncement();
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("UTC"));
@@ -212,7 +212,7 @@ public class announcementController {
 //        return addAnnouncementDTO;
 //    }
 
-    @PostMapping
+    @PostMapping("/announcements")
     public AnnouncementByIdDTO addAnnoucement(@RequestBody AddAnnouncementDTO newAnnoucement) {
         Announcement announcement = modelMapper.map(newAnnoucement, Announcement.class);
         announcement.setCategory(categoryService.getCategoryById(announcement.getCategory().getCategoryId()));

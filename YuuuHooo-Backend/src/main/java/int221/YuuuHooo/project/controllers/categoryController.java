@@ -8,13 +8,13 @@ import int221.YuuuHooo.project.services.categoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5173", "http://intproj22.sit.kmutt.ac.th"})
 public class categoryController {
     @Autowired
     private categoryService categoryService;
 
-    @GetMapping
+    @GetMapping("/categories")
     public List<Category> getAllCategory() {
         return categoryService.getAllCategory();
     }
@@ -24,7 +24,7 @@ public class categoryController {
         return categoryService.getCategoryById(id);
     }
 
-    @PostMapping
+    @PostMapping("/categories")
     public int addCategory(@RequestBody Category newCategory) {
         return categoryService.addCategory(newCategory);
     }
