@@ -99,7 +99,7 @@ public class announcementController {
 
     }
 
-    @GetMapping("/pages")
+    @GetMapping("/announcements/pages")
     public PageDTO<AnnouncementDTO> getAnnouncementPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -184,7 +184,7 @@ public class announcementController {
 
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/announcements/{id}")
     public AnnouncementByIdDTO getAnnouncementById(@PathVariable Integer id, @RequestParam(defaultValue = "false") boolean count ) {
         if(count == true){
             Announcement announcement = announcementService.getAnnouncementById(id);
@@ -221,12 +221,12 @@ public class announcementController {
         return announcementByIdDTO;
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/announcements/{id}")
     public void delete(@PathVariable Integer id) {
         announcementService.deleteAnnouncement(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/announcements/{id}")
     public AddAnnouncementDTO updateAnnouncement(@RequestBody AddAnnouncementDTO updateAnnouncement,
                                                  @PathVariable int id) {
         AddAnnouncementDTO announcement = modelMapper.map(announcementService.getAnnouncementById(id), AddAnnouncementDTO.class);

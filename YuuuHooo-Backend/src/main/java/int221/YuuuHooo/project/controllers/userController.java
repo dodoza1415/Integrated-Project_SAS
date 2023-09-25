@@ -33,7 +33,7 @@ public class userController {
         return userService.getUser();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public UserHidePasswordDTO getUserByID(@PathVariable int id) {
         return userService.getUserByID(id);
     }
@@ -43,18 +43,18 @@ public class userController {
         return userService.addUser(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     public UserHidePasswordDTO updateUser(@PathVariable int id, @Valid @RequestBody UserUpdateDTO updateUser, WebRequest request) {
         return userService.updateUser(id, updateUser, request);
     }
 
-    @PostMapping("/match")
+    @PostMapping("/users/match")
     public ResponseEntity<String> matchPassword(@RequestBody UserMatchPasswordDTO matchInfo){
         return userService.matchPassword(matchInfo);
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
