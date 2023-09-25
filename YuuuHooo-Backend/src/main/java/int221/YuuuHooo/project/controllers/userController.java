@@ -28,7 +28,7 @@ public class userController {
     @Autowired
     private userService userService;
 
-    @GetMapping("")
+    @GetMapping
     public List<UserHidePasswordDTO> getUser() {
         return userService.getUser();
     }
