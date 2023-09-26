@@ -24,7 +24,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     private User userObj;
 
-    public int Id;
 
     @Override
     public void initialize(Unique constraintAnnotation) {
@@ -37,7 +36,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        System.out.println(Id);
+//        System.out.println(Id);
         if(request.getMethod().equals("POST")){
 //            System.out.println(request.getMethod());
             if(findByField(value) != null){

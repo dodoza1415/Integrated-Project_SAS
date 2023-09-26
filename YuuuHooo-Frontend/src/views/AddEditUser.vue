@@ -256,9 +256,9 @@ const checkConfirmPassword = () => {
               maxlength="14"
               v-model="userInfo.password"
               @input="checkPatternPassw(userInfo.password)"
-              class="border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+              class="ann-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 ann-password">
+            <span class="text-red-500 ml-1 ann-error-password">
               {{ checkPatternPasswResponse }}</span
             >
           </div>
@@ -272,9 +272,9 @@ const checkConfirmPassword = () => {
               maxlength="14"
               v-model="confirmPassword"
               @input="checkConfirmPassword()"
-              class="border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
+              class="ann-confirm-password border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1 ann-confirm-password"> {{ passwordEqualStatus }}</span>
+            <span class="text-red-500 ml-1 ann-error-confirm-password"> {{ passwordEqualStatus }}</span>
           </div>
           <div class="flex flex-col mb-[2em]">
             <div class="text-[1.5em] font-['Acme']">Name</div>
@@ -300,7 +300,7 @@ const checkConfirmPassword = () => {
               v-model.trim="userInfo.email"
               class="ann-email border-2 border-black rounded-md w-[70em] h-[2em] pl-[6px]"
             />
-            <span class="text-red-500 ml-1ann-error-email">
+            <span class="text-red-500 ml-1 ann-error-email">
               {{ indicateError("email") }}</span
             >
           </div>
