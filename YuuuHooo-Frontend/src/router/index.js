@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
+import AddAnnouncement from "../views/AddAnnouncement.vue";
+import AddEditUser from "../views/AddEditUser.vue";
 import Announcements from "../views/Announcements.vue";
 import Details from "../views/Details.vue";
-import NotFound from "../views/NotFound.vue";
-import AddAnnouncement from "../views/AddAnnouncement.vue";
 import EditAnnouncement from "../views/EditAnnouncement.vue";
+import Login from "../views/Login.vue";
+import MatchPassword from "../views/MatchPassword.vue";
+import NotFound from "../views/NotFound.vue";
+import User from "../views/User.vue";
 import UserViewAnnouncement from "../views/UserViewAnnouncement.vue";
-import UserViewDetails from "../views/UserViewDetails.vue"
-import User from "../views/User.vue"
-import AddEditUser from "../views/AddEditUser.vue"
-import MatchPassword from "../views/MatchPassword.vue"
+import UserViewDetails from "../views/UserViewDetails.vue";
 // import EditUser from "../views/EditUser.vue"
 
 const router = createRouter({
@@ -73,6 +74,11 @@ const router = createRouter({
       path: "/admin/user/match",
       name: "MatchPassword",
       component: MatchPassword,
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
     }
   ],
 });
