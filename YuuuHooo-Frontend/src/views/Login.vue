@@ -27,7 +27,7 @@ const checkLogin = async (userInfo) => {
     });
     if(res.ok){
         const response = await res.json();
-        localStorage.setItem('jwt' , response.token.value)
+        localStorage.setItem('token' , response.jwtToken.value)
         messageStyle = "ann-message font-medium border-solid border-2 border-lime-700 rounded-lg p-4 mb-3 bg-lime-100 text-lime-700"
         showMessage.value = !showMessage.value
         messageResponse.value = "Login Sucessful"
