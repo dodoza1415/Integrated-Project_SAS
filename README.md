@@ -25,14 +25,15 @@ A single-page web application that displays information about numerous announcem
 </div>
 
 > DevOps (Parts of Deployment)
-- Configure the virtual machine powered by Ubuntu and deploy the created software to the faculty server using `Docker` and `command line interface`.
+- Configure the virtual machine powered by Ubuntu and deploy the created software to the faculty server using `Docker`
+   <br> and `command line interface`.
 <div align="center">
 <img src="https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/ywjqppks5ffcnbfjuttq" width="90" height="85"> 
 </div>
 
 > Project Management Part
 - Daily meetings 4 times a week with team members and 2 meetings with advisors at the beginning and end of each sprint
-  via `Microsoft Teams`.
+  <br>via `Microsoft Teams`.
 - Utilize TaskBoard Online - `Trello` to view your to-do list and the status of each task extracted from Product Backlog Item.
 - Shared Code via `GitHub`.
 <div align="center">
@@ -40,3 +41,9 @@ A single-page web application that displays information about numerous announcem
   <img src="https://cdn.icon-icons.com/icons2/3041/PNG/512/trello_logo_icon_189227.png" width="90" height="85"> 
   <img src="https://static-00.iconduck.com/assets.00/github-icon-2048x1988-jzvzcf2t.png" width="90" height="85"> 
 </div>
+
+## User Interface and Functionality of the project
+> Admin Role
+
+- Announcement List Display → ผู้ใช้ที่มี Role Admin จะเห็น รายละเอียดเบื้องต้นของตัวประกาศ โดยเรียงลำดับจากประกาศที่เพิ่มาล่าสุดก่อนแล้วลดหลั่นลงไปตามลำดับ ข้อมูลที่แสดงจะประกอบไปด้วย : หัวข้อการประกาศ, ประเภทของการประกาศ, วันเวลาเปิด-ปิดของตัวประกาศ (แสดงวัน-เวลาตาม Timezone บน browser ของผู้ใช้), ตัวเลือกว่าประกาศนี้จะแสดงให้ ผู้ใช้ทั่วไปเห็นหรือไม่ และจำนวนครั้งที่มีการเข้าดูการประกาศนั้นๆจากผู้ใช้ที่มี Role User ทั่วไป
+<img src="https://drive.google.com/file/d/1a3RJyRiVEwgM52-MN2rr9RPDWweYlK-f/view?usp=sharing" width="130" height="95" align="center"> 
