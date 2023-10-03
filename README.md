@@ -17,4 +17,4 @@ A single-page web application that displays information about numerous announcem
 > Project Management Part
 - Daily meetings 4 times a week with team members and 2 meetings with advisors at the beginning and end of each sprint via `Microsoft Teams`.
 - Utilize TaskBoard Online - `Trello` to view your to-do list and the status of each task extracted from Product Backlog Item.
-- Shared Code via GitHub.
+- Shared Code via `GitHub`.
