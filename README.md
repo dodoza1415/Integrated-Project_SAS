@@ -12,7 +12,7 @@ A single-page web application that displays information about numerous announcem
 </div>
 
 > Back-end (Parts of Resource Provider)
-- Through defined APIs and methods created using the Java Programming language on the `Spring Boot Frameworkc, handle requests originating from front-end / client browsers.
+- Through defined APIs and methods created using the Java Programming language on the `Spring Boot Framework`, handle requests originating from front-end / client browsers.
 <div align="center">
 <img src="https://static.vecteezy.com/system/resources/previews/022/101/050/original/java-logo-transparent-free-png.png" width="90" height="85"> 
 <img src="https://miro.medium.com/v2/resize:fit:700/0*iD7UPcCzaDrqadk9.png" width="150" height="75">
@@ -31,7 +31,8 @@ A single-page web application that displays information about numerous announcem
 </div>
 
 > Project Management Part
-- Daily meetings 4 times a week with team members and 2 meetings with advisors at the beginning and end of each sprint via `Microsoft Teams`.
+- Daily meetings 4 times a week with team members and 2 meetings with advisors at the beginning and end of each sprint
+  via `Microsoft Teams`.
 - Utilize TaskBoard Online - `Trello` to view your to-do list and the status of each task extracted from Product Backlog Item.
 - Shared Code via `GitHub`.
 <div align="center">
