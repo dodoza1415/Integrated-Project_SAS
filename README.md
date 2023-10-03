@@ -58,11 +58,15 @@ A single-page web application that displays information about numerous announcem
 * เมื่อทำการกด submit ตัวประกาศก็จะปรากฎขึ้นในหน้า Announcement List
 <img src="./YuuuHooo-docs/IMG/after-add-announcementlist.png" align="center">
 
-3. View & Edit Announcement : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม View ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
+3. **View & Edit Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม View ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
 <img src="./YuuuHooo-docs/IMG/view-button.png" align="center">
 <img src="./YuuuHooo-docs/IMG/detail-page.png" align="center">
 
-* สามารถคลิกปุ่ม Edit เพื่อทำการแก้ไขข้อมูล Announcement ได้ โดยข้อมูลเดิมของตัว Announcement ก็จะถูกเติมลงในช่องว่างพร้อมให้แก้ไขได้เลย กรณีที่ไม่ได้ทำการแก้ไข ข้อมูลไม่มีการเปลี่ยนแปลง จะไม่สามารถคลิกปุ่ม submit ได้ แต่เมื่อทำการแก้ไขเรียบร้อย ข้อมูลมีการเปลี่ยนแปลงสามารถคลิกปุ่ม submit เพื่อบันทึกการเปลี่ยนแปลงได้ หรือ สามารถคลิกปุ่ม cancel เพื่อยกเลิกการทำงานได้
+* สามารถคลิกปุ่ม Edit เพื่อทำการแก้ไขข้อมูล Announcement ได้ โดยข้อมูลเดิมของตัว Announcement ก็จะถูกเติมลงในช่องว่างพร้อมให้แก้ไขได้เลย กรณีที่ไม่ได้ทำการแก้ไข ข้อมูลไม่มีการเปลี่ยนแปลง จะไม่สามารถคลิกปุ่ม `submit` ได้ แต่เมื่อทำการแก้ไขเรียบร้อย ข้อมูลมีการเปลี่ยนแปลงสามารถคลิกปุ่ม `submit` เพื่อบันทึกการเปลี่ยนแปลงได้ หรือ สามารถคลิกปุ่ม `cancel` เพื่อยกเลิกการทำงานได้
 
 <img src="./YuuuHooo-docs/IMG/edit-announcement.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-edit.png" align="center">
+
+4. **Delete Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อทำการลบตัว announcement นั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบจริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ตัว announcement นั้นก็จะหายไป ถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน
+<img src="./YuuuHooo-docs/IMG/delete-announcement.png" align="center">
+<img src="./YuuuHooo-docs/IMG/after-delete.png" align="center">
