@@ -2,7 +2,7 @@
 A single-page web application that displays information about numerous announcements
 
 ## Software development environment
-<img src="https://static-00.iconduck.com/assets.00/vue-js-icon-2048x1766-btrgkrhi.png" width="150" height="280">
+<img src="https://static-00.iconduck.com/assets.00/vue-js-icon-2048x1766-btrgkrhi.png" width="100" height="150">
 > Front-end (Parts of Users Interaction)
 - Create the user interface using `Vue.js` (Organize document structure, display format, and many functionalities as necessary to be in accordance with requirements) and use `TailwindCSS` to adorn the user interface.
 
