@@ -42,13 +42,13 @@ A single-page web application that displays information about numerous announcem
   <img src="https://static-00.iconduck.com/assets.00/github-icon-2048x1988-jzvzcf2t.png" width="90" height="85"> 
 </div>
 
-## User Interface and Functionality of the project
+## User Interface and Functionality
 > Admin Role
 
-1. **Announcement List Display** : ผู้ใช้ที่มี Role `Admin` จะเห็น รายละเอียดเบื้องต้นของตัวประกาศ โดยเรียงลำดับจากประกาศที่เพิ่มาล่าสุดก่อนแล้วลดหลั่นลงไปตามลำดับ ข้อมูลที่แสดงจะประกอบไปด้วย : หัวข้อการประกาศ, ประเภทของการประกาศ, วันเวลาเปิด-ปิดของตัวประกาศ (แสดงวัน-เวลาตาม Timezone บน browser ของผู้ใช้), ตัวเลือกว่าประกาศนี้จะแสดงให้ ผู้ใช้ทั่วไปเห็นหรือไม่ และจำนวนครั้งที่มีการเข้าดูการประกาศนั้นๆจากผู้ใช้ที่มี Role `User` ทั่วไป
+1. **[CRUD Operations] - Announcement List Display** : ผู้ใช้ที่มี Role `Admin` จะเห็น รายละเอียดเบื้องต้นของตัวประกาศ โดยเรียงลำดับจากประกาศที่เพิ่มาล่าสุดก่อนแล้วลดหลั่นลงไปตามลำดับ ข้อมูลที่แสดงจะประกอบไปด้วย : หัวข้อการประกาศ, ประเภทของการประกาศ, วันเวลาเปิด-ปิดของตัวประกาศ (แสดงวัน-เวลาตาม Timezone บน browser ของผู้ใช้), ตัวเลือกว่าประกาศนี้จะแสดงให้ ผู้ใช้ทั่วไปเห็นหรือไม่ และจำนวนครั้งที่มีการเข้าดูการประกาศนั้นๆจากผู้ใช้ที่มี Role `User` ทั่วไป
 <img src="./YuuuHooo-docs/IMG/announcement-list.png" align="center">
 
-2. **Add New Announcement** : ผุ้ใช้ที่มี Role `Admin` สามารถเพิ่มข้อมูลประกาศใหม่ได้ โดยคลิกที่ปุ่ม `Add Announcement` ที่มุมบนขวา
+2. **[CRUD Operations] - Add New Announcement** : ผุ้ใช้ที่มี Role `Admin` สามารถเพิ่มข้อมูลประกาศใหม่ได้ โดยคลิกที่ปุ่ม `Add Announcement` ที่มุมบนขวา
 <img src="./YuuuHooo-docs/IMG/add-button.png" align="center">
 
 * เมื่อเข้าสู่หน้า Add announcement ก็สามารถทำการกรอกข้อมูลสำหรับตัว announcement ใหม่ที่ต้องการเพิ่มได้เลย โดยกำหนดไว้ว่าต้องทำการกรอกข้อมูล ส่วนที่เป็น Title , Category , Description ทั้ง 3 ส่วนนี้ก่อนจึงจะกดปุ่ม `submit` เพื่อเป็นการสร้าง announcement ใหม่ได้ หรือ สามารถกดปุ่ม `cancel` ได้เลยถ้าต้องการยกเลิกการทำงาน
@@ -58,7 +58,7 @@ A single-page web application that displays information about numerous announcem
 * เมื่อทำการกด submit ตัวประกาศก็จะปรากฎขึ้นในหน้า Announcement List
 <img src="./YuuuHooo-docs/IMG/after-add-announcementlist.png" align="center">
 
-3. **View & Edit Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม View ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
+3. **[CRUD Operations] - View & Edit Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม View ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
 <img src="./YuuuHooo-docs/IMG/view-button.png" align="center">
 <img src="./YuuuHooo-docs/IMG/detail-page.png" align="center">
 
@@ -67,6 +67,14 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/edit-announcement.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-edit.png" align="center">
 
-4. **Delete Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อทำการลบตัว announcement นั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบจริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ตัว announcement นั้นก็จะหายไป ถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน
+4. **[CRUD Operations] - Delete Announcement** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อทำการลบตัว announcement นั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบจริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ตัว announcement นั้นก็จะหายไป ถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน
 <img src="./YuuuHooo-docs/IMG/delete-announcement.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-delete.png" align="center">
+
+5. Timezone : แสดงผลวัน-เวลา dynamic ตาม local timezone ที่กำหนดบน browser 
+<img src="./YuuuHooo-docs/IMG/default-timezone.png" align="center">
+<div align="center">
+<span align="center"><i>default timezone (เวลาประเทศไทย)</i></span>
+<img src="./YuuuHooo-docs/IMG/change-timezone.png" align="center">
+<span align="center"><i>change timezone</i></span>
+</div>
