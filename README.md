@@ -87,6 +87,14 @@ A single-page web application that displays information about numerous announcem
 <div align="center">
 <span><i>change timezone</i></span>
 </div>
+<br>
 
 **6. `[CRUD Operations] - User List Display`** : สามารถคลิกที่แถบนำทาง (Navigation Bar) ทางด้านซ้าย ในส่วนของ User เพื่อแสดงรายการ user ได้ ซึ่งข้อมูลที่แสดงจะประกอบไปด้วย Username , Name (ทั้งชื่อ-นามสกุล) , E-mail , Role (admin , announcer , user ทั่วไป), CreatedOn (วัน-เวลาที่สร้าง User นั้นขึ้นมา) และ UpdatedOn (วัน-เวลาที่ทำการแก้ไขข้อมูล User ที่มีอยู่ ถ้าไม่ได้มีการแก้ไขเกิดขึ้น ข้อมูลจะต้องตรงกับ createdOn)
+
 <img src="./YuuuHooo-docs/IMG/user-list-page.png" align="center">
+
+**7. `[CRUD Operations] - Add New User`** : ในหน้าของ User List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `Add User` เพื่อทำการเพิ่มข้อมูล User ใหม่ได้
+
+<img src="./YuuuHooo-docs/IMG/add-user-button.png" align="center">
+
+<img src="./YuuuHooo-docs/IMG/plane-add-user.png" align="center">
