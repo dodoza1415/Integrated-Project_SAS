@@ -98,3 +98,36 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/add-user-button.png" align="center">
 
 <img src="./YuuuHooo-docs/IMG/plain-add-user.png" align="center">
+
+- โดยในการสร้าง User ใหม่นั้นมีเงื่อนไข ดังนี้
+   - ต้องกรอกข้อมูลให้ครบทุก Field ถ้ากรอกข้อมูลไม่ครบจะไม่สามารถ submit ได้และจะมี pop-up ขึ้นแจ้งเตือนใน field ถัดไปที่จำเป็นต้องกรอกข้อมูล
+
+<img src="./YuuuHooo-docs/IMG/username-not-found.png" align="center">
+<img src="./YuuuHooo-docs/IMG/password-not-found.png" align="center">
+<img src="./YuuuHooo-docs/IMG/name-not-found.png" align="center">
+<img src="./YuuuHooo-docs/IMG/email-not-found.png" align="center">
+<img src="./YuuuHooo-docs/IMG/role-not-found.png" align="center">
+
+   - มีการเช็คข้อมูลใน field : Username , Name และ Email ต้องมีคุณสมบัติเป็น Unique คือข้อมูลต้องห้ามซ้ำกับข้อมูลที่มีเก็บไว้อยู่แล้ว
+
+<img src="./YuuuHooo-docs/IMG/username-not-unique.png" align="center">
+
+   - มีการเช็ค format ของ field [ password ] จำเป็นต้องประกอบไปด้วย ตัวอักษร A-Z , a-z , ตัวเลข และ อักขระพิเศษ รวมทั้งมีความยาวอยู่ระหว่าง 8 - 14 ตัว เพื่อเพิ่มความซับซ้อน ลดโอกาสที่จะถูกคาดเดาข้อมูลรหัสผ่านได้
+
+<img src="./YuuuHooo-docs/IMG/password-not-valid.png" align="center">
+
+   - ข้อมูลใน field [ confirm password ] จะต้องตรงกับข้อมูลใน field [ password ]
+
+<img src="./YuuuHooo-docs/IMG/password-not-match.png" align="center">
+
+   - มีการเช็ค pattern ของ field [ Email ] จำเป็นต้องสอดคล้องกับ input type ที่เป็น email (มี @ ตามด้วยตัวอักษร + มี . ต่อท้ายตามด้วยตัวอักษร)
+
+<img src="./YuuuHooo-docs/IMG/email-not-valid.png" align="center">
+
+-   เมื่อกรอกข้อมูลจนครบทุก field และ ถูกต้องตามเงื่อนไขที่กำหนด สามารถคลิกที่ปุ่ม save จะมี Alert ขึ้นมาถามก่อนว่าต้องการบันทึกข้อมูล user นี้หรือไม่ ถ้าต้องการก็คลิก ok เพื่อบันทึกข้อมูล User ถ้ายังมีส่วนที่ตกหล่น ต้องการแก้ไขก็กด cancel ออกมาก่อนได้ แต่ถ้าต้องการยกเลิกการบันทึกข้อมูล user ใหม่ก็คลิกปุ่ม cancel ข้างปุ่ม save ได้เลยจะเป็นการยกเลิกการทำงาน ซึ่งก็จะมี Alert เตือนเช่นกันว่าต้องการจะยกเลิกจริงหรือไม่
+
+<img src="./YuuuHooo-docs/IMG/confirm-add-user.png" align="center">
+
+- เมื่อกลับมายังหน้า User List ก็จะมีข้อมูลของ User ที่สร้างไปก่อนหน้าแสดงขึ้นมา
+
+<img src="./YuuuHooo-docs/IMG/after-add-user.png" align="center">
