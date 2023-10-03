@@ -50,4 +50,9 @@ A single-page web application that displays information about numerous announcem
 
 2. **Add New Announcement** : ผุ้ใช้ที่มี Role `Admin` สามารถเพิ่มข้อมูลประกาศใหม่ได้ โดยคลิกที่ปุ่ม `Add Announcement` ที่มุมบนขวา
 <img src="./YuuuHooo-docs/IMG/add-button.png" align="center">
-
+<br>
+- เมื่อเข้าสู่หน้า Add announcement ก็สามารถทำการกรอกข้อมูลสำหรับตัว announcement ใหม่ที่ต้องการเพิ่มได้เลย โดยกำหนดไว้ว่าต้องทำการกรอกข้อมูล ส่วนที่เป็น Title , Category , Description ทั้ง 3 ส่วนนี้ก่อนจึงจะกดปุ่ม `submit` เพื่อเป็นการสร้าง announcement ใหม่ได้ หรือ สามารถกดปุ่ม `cancel` ได้เลยถ้าต้องการยกเลิกการทำงาน
+<img src="./YuuuHooo-docs/IMG/plain-add-page.png" align="center">
+<img src="./YuuuHooo-docs/IMG/fullfield-add-page.png" align="center">
+- เมื่อทำการกด submit ตัวประกาศก็จะปรากฎขึ้นในหน้า Announcement List
+<img src="./YuuuHooo-docs/IMG/after-add-announcementlist.png" align="center">
