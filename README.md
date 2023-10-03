@@ -151,3 +151,19 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/delete-confirm.png" align="center">
 <img src="./YuuuHooo-docs/IMG/delete-complete.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-delete-user.png" align="center">
+
+**10. `Check Match Password`** : ผู้ใช้สามารถคลิกที่ Match Password บริเวณแถบนำทางด้านข้างเพื่อเข้าสู่หน้า check match password ได้ โดยจะให้ทำการกรอกข้อมูล Username และ Password ของผู้ใช้ เพื่อทำการ check ก่อนทำการ log-in (Authentication) ว่าข้อมูลบัญชีผู้ใช้ดังกล่าวมีจัดเก็บอยู่จริงหรือไม่
+
+<img src="./YuuuHooo-docs/IMG/match-page.png" align="center">
+
+-   ถ้ากรณีที่ Username และ Password ถูกต้อง match กับข้อมูลที่มีเก็บอยู่ในฐานข้อมูล (Status Code: 200) จะรับ response จากฝั่ง back-end และแจ้งขึ้นมาว่า 'Password Matched'
+
+<img src="./YuuuHooo-docs/IMG/password-match.png" align="center">
+
+-   ถ้ากรณีที่ Username ไม่ถูกต้อง หรือ ไม่พบข้อมูลที่ตรงกันอยู่ในฐานข้อมูล (Status Code: 404) จะรับ response จากฝั่ง back-end และแจ้งขึ้นมาว่า 'The specified username DOES NOT exist'
+
+<img src="./YuuuHooo-docs/IMG/user-not-exist.png" align="center">
+
+-   ถ้ากรณีที่ Username ถูกต้อง แต่ข้อมูล password ที่กรอกมา ไม่สอดคล้องกับ ข้อมูล password ของ user ดังกล่าวที่เก็บอยู่ในฐานข้อมูล (Status Code: 401) จะรับ response จากฝั่ง back-end และแจ้งขึ้นมาว่า 'Password NOT Matched'
+
+<img src="./YuuuHooo-docs/IMG/password-not-match-404.png" align="center">
