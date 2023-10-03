@@ -144,3 +144,10 @@ A single-page web application that displays information about numerous announcem
 - เมื่อกลับมายังหน้า User List ข้อมูล User ตัวที่มีการแก้ไขก็จะเปลี่ยนตามข้อมูลที่บันทึกลงไปใหม่
 
 <img src="./YuuuHooo-docs/IMG/after-edit-user.png" align="center">
+
+**9. `[CRUD Operations] - Delete Exist User`** : ในหน้าของ User List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ข้อมูล User ตัวใดตัวหนึ่ง เพื่อทำการลบตัว User ตัวนั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบข้อมูลผู้ใช้นี้จริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ก็จะแจ้งว่าตัว User นั้นได้ถูกลบเรียบร้อยแล้ว และข้อมูล user ที่ลบไปแล้วก็จะหายไปจากหน้า User List ส่วนถ้าเลือกคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงานไม่ทำการลบข้อมูล User ดังกล่าว
+
+<img src="./YuuuHooo-docs/IMG/delete-button.png" align="center">
+<img src="./YuuuHooo-docs/IMG/delete-confirm.png" align="center">
+<img src="./YuuuHooo-docs/IMG/delete-complete.png" align="center">
+<img src="./YuuuHooo-docs/IMG/after-delete-user.png" align="center">
