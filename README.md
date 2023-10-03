@@ -79,12 +79,14 @@ A single-page web application that displays information about numerous announcem
 
 <img src="./YuuuHooo-docs/IMG/default-timezone.png" align="center">
 <div align="center">
-   
-<span><i>default timezone (เวลาประเทศไทย)</i></span>
-   
-<img src="./YuuuHooo-docs/IMG/change-timezone.png" align="center">
 
+<span><i>default timezone (เวลาประเทศไทย)</i></span>
+
+</div>
+<img src="./YuuuHooo-docs/IMG/change-timezone.png" align="center">
+<div align="center">
 <span><i>change timezone</i></span>
 </div>
 
-**6.`[CRUD Operations] - User List Display`** :
+**6. `[CRUD Operations] - User List Display`** : สามารถคลิกที่แถบนำทาง (Navigation Bar) ทางด้านซ้าย ในส่วนของ User เพื่อแสดงรายการ user ได้ ซึ่งข้อมูลที่แสดงจะประกอบไปด้วย Username , Name (ทั้งชื่อ-นามสกุล) , E-mail , Role (admin , announcer , user ทั่วไป), CreatedOn (วัน-เวลาที่สร้าง User นั้นขึ้นมา) และ UpdatedOn (วัน-เวลาที่ทำการแก้ไขข้อมูล User ที่มีอยู่ ถ้าไม่ได้มีการแก้ไขเกิดขึ้น ข้อมูลจะต้องตรงกับ createdOn)
+<img src="./YuuuHooo-docs/IMG/user-list-page.png" align="center">
