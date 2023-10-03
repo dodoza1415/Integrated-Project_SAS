@@ -97,4 +97,4 @@ A single-page web application that displays information about numerous announcem
 
 <img src="./YuuuHooo-docs/IMG/add-user-button.png" align="center">
 
-<img src="./YuuuHooo-docs/IMG/plane-add-user.png" align="center">
+<img src="./YuuuHooo-docs/IMG/plain-add-user.png" align="center">
