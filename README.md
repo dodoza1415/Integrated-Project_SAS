@@ -60,7 +60,7 @@ A single-page web application that displays information about numerous announcem
 * เมื่อทำการกด `submit` ตัวประกาศก็จะปรากฎขึ้นในหน้า Announcement List
 <img src="./YuuuHooo-docs/IMG/after-add-announcementlist.png" align="center">
 
-**3. `[CRUD Operations] - View & Edit Announcement`** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `View` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
+**3. `[CRUD Operations] - View & Edit Exist Announcement`** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `View` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ Announcement นั้นๆ
 
 <img src="./YuuuHooo-docs/IMG/view-button.png" align="center">
 <img src="./YuuuHooo-docs/IMG/detail-page.png" align="center">
@@ -70,7 +70,7 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/edit-announcement.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-edit.png" align="center">
 
-**4. `[CRUD Operations] - Delete Announcement`** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อทำการลบตัว announcement นั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบจริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ตัว announcement นั้นก็จะหายไป ถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน
+**4. `[CRUD Operations] - Delete Exist Announcement`** : ในหน้าของ Announcement List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `delete` ที่ Announcement ตัวใดตัวหนึ่ง เพื่อทำการลบตัว announcement นั้นทิ้งได้ โดยจะมี alert เตือนผู้ใช้ก่อนว่าต้องการจะลบจริงหรือไม่ ป้องกันการลบโดยไม่ได้ตั้งใจ ถ้ายืนยันที่จะลบก็คลิกปุ่ม `ok` ตัว announcement นั้นก็จะหายไป ถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน
 
 <img src="./YuuuHooo-docs/IMG/delete-announcement.png" align="center">
 <img src="./YuuuHooo-docs/IMG/after-delete.png" align="center">
@@ -108,19 +108,19 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/email-not-found.png" align="center">
 <img src="./YuuuHooo-docs/IMG/role-not-found.png" align="center">
 
-   - มีการเช็คข้อมูลใน field : Username , Name และ Email ต้องมีคุณสมบัติเป็น Unique คือข้อมูลต้องห้ามซ้ำกับข้อมูลที่มีเก็บไว้อยู่แล้ว
+   - มีการเช็คข้อมูลใน field : `Username` , `Name` และ `Email` ต้องมีคุณสมบัติเป็น Unique คือข้อมูลต้องห้ามซ้ำกับข้อมูลที่มีเก็บไว้อยู่แล้ว
 
 <img src="./YuuuHooo-docs/IMG/username-not-unique.png" align="center">
 
-   - มีการเช็ค format ของ field [ password ] จำเป็นต้องประกอบไปด้วย ตัวอักษร A-Z , a-z , ตัวเลข และ อักขระพิเศษ รวมทั้งมีความยาวอยู่ระหว่าง 8 - 14 ตัว เพื่อเพิ่มความซับซ้อน ลดโอกาสที่จะถูกคาดเดาข้อมูลรหัสผ่านได้
+   - มีการเช็ค format ของ field `password` จำเป็นต้องประกอบไปด้วย ตัวอักษร A-Z , a-z , ตัวเลข และ อักขระพิเศษ รวมทั้งมีความยาวอยู่ระหว่าง 8 - 14 ตัว เพื่อเพิ่มความซับซ้อน ลดโอกาสที่จะถูกคาดเดาข้อมูลรหัสผ่านได้
 
 <img src="./YuuuHooo-docs/IMG/password-not-valid.png" align="center">
 
-   - ข้อมูลใน field [ confirm password ] จะต้องตรงกับข้อมูลใน field [ password ]
+   - ข้อมูลใน field `confirm password` จะต้องตรงกับข้อมูลใน field `password`
 
 <img src="./YuuuHooo-docs/IMG/password-not-match.png" align="center">
 
-   - มีการเช็ค pattern ของ field [ Email ] จำเป็นต้องสอดคล้องกับ input type ที่เป็น email (มี @ ตามด้วยตัวอักษร + มี . ต่อท้ายตามด้วยตัวอักษร)
+   - มีการเช็ค pattern ของ field `Email` จำเป็นต้องสอดคล้องกับ input type ที่เป็น email (มี @ ตามด้วยตัวอักษร + มี . ต่อท้ายตามด้วยตัวอักษร)
 
 <img src="./YuuuHooo-docs/IMG/email-not-valid.png" align="center">
 
@@ -131,3 +131,16 @@ A single-page web application that displays information about numerous announcem
 - เมื่อกลับมายังหน้า User List ก็จะมีข้อมูลของ User ที่สร้างไปก่อนหน้าแสดงขึ้นมา
 
 <img src="./YuuuHooo-docs/IMG/after-add-user.png" align="center">
+
+**8. `[CRUD Operations] - Update Exist User`** : ในหน้าของ User List ผู้ใช้ที่มี Role Admin สามารถคลิกปุ่ม `edit` ที่ข้อมูล user ตัวใดตัวหนึ่ง เพื่อดูรายละเอียดทั้งหมดของ user นั้นๆ
+
+<img src="./YuuuHooo-docs/IMG/edit-button.png" align="center">
+<img src="./YuuuHooo-docs/IMG/user-detail-page.png" align="center">
+
+* ข้อมูลเดิมของตัว User จะถูกเติมลงใน input field แต่ละ field ให้โดยอัตโนมัติ สามารถทำการแก้ไขข้อมูล User ได้เลย กรณีที่ไม่ได้ทำการแก้ไข ข้อมูลไม่มีการเปลี่ยนแปลงคลิกปุ่ม `save` ก็จะนำกลับไปหน้า User List , หรือถ้าคลิกปุ่ม `cancel` ก็จะเป็นการยกเลิกการทำงาน แต่ถ้าเมื่อใดที่ได้ทำการแก้ไขข้อมูลเรียบร้อย ข้อมูลมีการเปลี่ยนแปลงสามารถคลิกปุ่ม `save` เพื่อบันทึกการเปลี่ยนแปลงได้ โดยจะมี Alert ขึ้นมาเตือนก่อนว่าต้องการจะบันทึกการแก้ไขนี้หรือไม่ ถ้าต้องการก็ให้เลือก `ok` ถ้ายังต้องการแก้ไขเพิ่มเติมก็เลือก `cancel` ออกมาก่อนได้ เพื่อทำการแก้ไขเพิ่มเติมได้
+
+<img src="./YuuuHooo-docs/IMG/confirm-edit-user.png" align="center">
+
+- เมื่อกลับมายังหน้า User List ข้อมูล User ตัวที่มีการแก้ไขก็จะเปลี่ยนตามข้อมูลที่บันทึกลงไปใหม่
+
+<img src="./YuuuHooo-docs/IMG/after-edit-user.png" align="center">
