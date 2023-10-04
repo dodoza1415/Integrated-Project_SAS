@@ -191,3 +191,6 @@ A single-page web application that displays information about numerous announcem
 
 <img src="./YuuuHooo-docs/IMG/close-user-ann.png" align="center">
 <img src="./YuuuHooo-docs/IMG/ann-desc-close.png" align="center">
+
+> [!NOTE]
+> In testing, the software will be tested on a local host but can also be [public](https://intproj22.sit.kmutt.ac.th/nw2/) accessed from the same source that is deployed on the faculty server.
