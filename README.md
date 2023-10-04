@@ -189,3 +189,4 @@ Editing data is not permitted for role users. can only `read`
 * สามารถคลิกที่ข้อมูลตัว Title เพื่อเข้าไปดูรายละเอียดเพิ่มเติมของ announcement ได้ก็จะมี `Announcement Description` เพิ่มขึ้นมา
 
 <img src="./YuuuHooo-docs/IMG/close-user-ann.png" align="center">
+<img src="./YuuuHooo-docs/IMG/ann-desc-close.png" align="center">
