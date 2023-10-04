@@ -182,7 +182,7 @@ Editing data is not permitted for role users. can only `read`
 
 <img src="./YuuuHooo-docs/IMG/active-user-ann.png" align="center">
 <img src="./YuuuHooo-docs/IMG/change-category.png" align="center">
-<img src="./YuuuHooo-docs/IMG/ann-desc.png" align="center">
+<img src="./YuuuHooo-docs/IMG/ann-desc-active.png" align="center">
 
 **2. `[CRUD Operations] - Closed Announcement List Display`** : ผู้ใช้ที่มี Role `User` จะเห็นข้อมูล Announcement List เฉพาะส่วนที่เป็น `Title` , `Category` โดยทำการแสดงข้อมูลเฉพาะ Announcement ที่มีสถานะเป็น `Closed` เท่านั้นคือ เวลาปัจจุบัน เกินเวลาที่ admin ตั้งไว้ให้ closed announcement ก็จะเปลี่ยนจากสถานะ `active` -> `closed`
 * แสดงข้อมูล Announcement List แยกตาม `Category`ที่เลือก โดยยังอยู่ในขอบเขตที่เป็น Closed Announcement อยู่
