@@ -172,3 +172,20 @@ A single-page web application that displays information about numerous announcem
 -   ถ้ากรณีที่ Username ถูกต้อง แต่ข้อมูล password ที่กรอกมา ไม่สอดคล้องกับ ข้อมูล password ของ user ดังกล่าวที่เก็บอยู่ในฐานข้อมูล (Status Code: `401`) จะรับ response จากฝั่ง back-end และแจ้งขึ้นมาว่า `Password NOT Matched`
 
 <img src="./YuuuHooo-docs/IMG/password-not-match-404.png" align="center">
+
+> Normal User Role
+* Editing data is not permitted for role users. can only read
+  
+**1. `[CRUD Operations] - Active Announcement List Display`** : ผู้ใช้ที่มี Role `User` จะเห็นข้อมูล Announcement List เฉพาะส่วนที่เป็น `Title` , `Category` โดยทำการแสดงข้อมูลเฉพาะ Announcement ที่มีสถานะเป็น `Active` เท่านั้นคือ เวลาปัจจุบันยังไม่ถึงเวลาที่ admin ตั้งไว้ให้ closed announcement
+* แสดงข้อมูล Announcement List แยกตาม `Category` ที่เลือก โดยยังอยู่ในขอบเขตที่เป็น Active Announcememnt อยู่
+* สามารถคลิกที่ข้อมูลตัว Title เพื่อเข้าไปดูรายละเอียดเพิ่มเติมของ announcement ได้ก็จะมี `Announcement Description` เพิ่มขึ้นมา
+
+<img src="./YuuuHooo-docs/IMG/active-user-ann-404.png" align="center">
+<img src="./YuuuHooo-docs/IMG/change-category.png" align="center">
+<img src="./YuuuHooo-docs/IMG/ann-desc.png" align="center">
+
+**2. `[CRUD Operations] - Closed Announcement List Display`** : ผู้ใช้ที่มี Role `User` จะเห็นข้อมูล Announcement List เฉพาะส่วนที่เป็น `Title` , `Category` โดยทำการแสดงข้อมูลเฉพาะ Announcement ที่มีสถานะเป็น `Closed` เท่านั้นคือ เวลาปัจจุบัน เกินเวลาที่ admin ตั้งไว้ให้ closed announcement ก็จะเปลี่ยนจากสถานะ `active` -> `closed`
+* แสดงข้อมูล Announcement List แยกตาม `Category`ที่เลือก โดยยังอยู่ในขอบเขตที่เป็น Closed Announcememnt อยู่
+* สามารถคลิกที่ข้อมูลตัว Title เพื่อเข้าไปดูรายละเอียดเพิ่มเติมของ announcement ได้ก็จะมี `Announcement Description` เพิ่มขึ้นมา
+
+<img src="./YuuuHooo-docs/IMG/close-user-ann-404.png" align="center">
