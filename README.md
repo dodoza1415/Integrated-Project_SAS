@@ -174,7 +174,8 @@ A single-page web application that displays information about numerous announcem
 <img src="./YuuuHooo-docs/IMG/password-not-match-404.png" align="center">
 
 > Normal User Role
-Editing data is not permitted for role users. can only `read`
+
+* Editing data is not permitted for role users. can only `read`
   
 **1. `[CRUD Operations] - Active Announcement List Display`** : ผู้ใช้ที่มี Role `User` จะเห็นข้อมูล Announcement List เฉพาะส่วนที่เป็น `Title` , `Category` โดยทำการแสดงข้อมูลเฉพาะ Announcement ที่มีสถานะเป็น `Active` เท่านั้นคือ เวลาปัจจุบันยังไม่ถึงเวลาที่ admin ตั้งไว้ให้ closed announcement
 * แสดงข้อมูล Announcement List แยกตาม `Category` ที่เลือก โดยยังอยู่ในขอบเขตที่เป็น Active Announcement อยู่
